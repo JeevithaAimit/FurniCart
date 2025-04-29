@@ -1,0 +1,371 @@
+/* Container */
+.container {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Title */
+  .title {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  /* Search Filters */
+  .search-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .search-bar,
+  .date-filter {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Orders Table */
+  .orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    background: #fff;
+  }
+  
+  .orders-table th,
+  .orders-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .orders-table th {
+    background-color: #2a2a2a;
+    color: white;
+  }
+  
+  /* Menu Icon */
+  .menu-icon {
+    cursor: pointer;
+    color: #333;
+    font-size: 18px;
+    transition: 0.3s;
+  }
+  
+  .menu-icon:hover {
+    color: #007bff;
+  }
+  
+  /* Popup Modal */
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .popup-box {
+    position: relative; /* Ensures positioning works */
+    background: white;
+    padding: 20px;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+  /* Popup Buttons */
+  .popup-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .popup-buttons button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
+  }
+  
+  .reject-btn {
+    background: red;
+  }
+  
+  .packed-btn {
+    background: orange;
+  }
+  
+  .shipped-btn {
+    background: blue;
+  }
+  
+  .delivered-btn {
+    background: green;
+  }
+  
+  .popup-buttons button:hover {
+    opacity: 0.8;
+  }
+  
+  /* Close Button */
+  .close-btn {
+    margin-top: 15px;
+    background: #333;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .close-btn:hover {
+    background: #555;
+  }
+  .status-badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Default Pending Status */
+.status-badge.pending {
+  background-color: gray;
+}
+
+/* Packed (Blue) */
+.status-badge.packed {
+  background-color: blue;
+}
+
+/* Shipped (Orange) */
+.status-badge.shipped {
+  background-color: orange;
+}
+
+/* Delivered (Green) */
+.status-badge.delivered {
+  background-color: green;
+}
+
+/* Rejected (Red) */
+.status-badge.rejected {
+  background-color: red;
+}
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+  }
+  
+  /* Default Pending Status */
+  .status-badge.pending {
+    background-color: gray;
+  }
+  
+  /* Placed (Blue) */
+  .status-badge.placed {
+    background-color: blue;
+  }
+  
+  /* Shipped (Orange) */
+  .status-badge.shipped {
+    background-color: orange;
+  }
+  
+  /* Delivered (Green) */
+  .status-badge.delivered {
+    background-color: green;
+  }
+  
+  /* Rejected (Red) */
+  .status-badge.rejected {
+    background-color: red;
+  }
+  .status-badge.packed {
+    background-color: rgb(122, 1, 84);
+  }
+  
+  .popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popup-box{
+    text-align: left;
+}
+/* View Order Popup */
+.view-popup {
+    width: 60%;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: left; /* Aligns text to the left */
+    position: relative; /* Needed for close button positioning */
+}
+
+/* Close Button (X) */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+/* Items Section */
+.items-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+}
+
+/* Individual Item Card */
+.item-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left; /* Ensures content inside is left-aligned */
+    border-radius: 10px;
+    width: 150px;
+}
+
+.item-card img {
+    width: 100%;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* Total Price */
+.total-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: green;
+}
+.close-btn {
+    padding: 10px;
+    margin-top: 10px;
+    background: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Popup Box */
+.popup-boxButton {
+    background: white;
+    padding: 20px;
+    width: 30%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* View Order Popup */
+.view-popup {
+    width: 60%;
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+    gap: 10px; /* Adds spacing between buttons */
+    margin-top: 10px;
+    margin-left: 33%;
+}
+/* Popup Buttons - Adjusted Size */
+.popup-buttons button {
+    padding: 8px 12px;  /* Reduced padding */
+    margin: 4px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px; /* Slightly smaller text */
+    width:50%
+}
+
+/* Specific Button Colors */
+.popup-buttons button:nth-child(1) { background: #dc3545; color: white; } /* Rejected */
+.popup-buttons button:nth-child(2) { background: #ffc107; color: black; } /* Packed */
+.popup-buttons button:nth-child(3) { background: #17a2b8; color: white; } /* Shipped */
+.popup-buttons button:nth-child(4) { background: #28a745; color: white; } /* Delivered */
+
+/* Close Button */
+.popup-boxButton .close-btn {
+    position: absolute;
+    top: 18 0px;
+    right: 540px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+}
+
+.close-btn:hover {
+    color: red;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+

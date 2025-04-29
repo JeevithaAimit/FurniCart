@@ -1,0 +1,294 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #ece9e6, #ffffff);
+    transition: background 0.3s ease-in-out;
+}
+
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+.dashboard-container h1{
+    margin-left: 40px;
+}
+
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #222;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+    left: -450px;
+    transition: left 0.3s ease-in-out;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Logout Button Styling */
+.logout-btn {
+    position: absolute;
+    bottom: 70px;
+    /* left: 10%; */
+    /* transform: translateX(-50%); */
+    width: 60%;
+    padding: 10px;
+    background: #222;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    gap: 8px; /* Space between icon and text */
+  }
+  
+  .logout-btn:hover {
+    background: #444;
+    transform: translateX(5px);
+    color: #00c6ff;
+
+  }
+  
+ 
+.sidebar.open {
+    left: 0;
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    letter-spacing: 1px;
+  
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    border-bottom: 1px solid #444;
+    transition: background 0.3s ease;
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar ul li:hover {
+    background: #444;
+    transform: translateX(5px);
+}
+
+/* Sidebar Button (Styled Like a Menu Item) */
+.sidebar-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    padding: 12px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-btn:hover {
+    background: none;
+    color: #00c6ff;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    display: block;
+    transition: color 0.3s ease;
+}
+
+.sidebar ul li a:hover {
+    color: #00c6ff;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.close-btn:hover {
+    transform: rotate(90deg);
+    background-color: rgb(39, 38, 38);
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    margin-left: 0;
+    padding: 20px;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+.sidebar.open + .main-content {
+    margin-left: 250px;
+}
+
+.menu-btn {
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    margin-left: -20px;
+    transition: transform 0.3s;
+    color: black;
+}
+
+.menu-btn:hover {
+    transform: scale(1.1);
+    background-color: white;
+}
+
+/* Stats Section */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+    border-radius: 15px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    transform: scale(1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: float 3s infinite ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card .icon {
+    font-size: 40px;
+    color: #00c6ff;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .icon {
+    transform: rotate(360deg);
+}
+
+.card h3 {
+    margin: 10px 0;
+}
+.dashboard h2{
+    margin-left: -40px;
+    color: white;
+}
+
+.inventory-container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    animation: fadeInUp 0.8s ease-in-out;
+}
+
+.inventory-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #222;
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.inventory-table th, .inventory-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.inventory-table th {
+    background: #f4f4f4;
+    font-weight: bold;
+}
+
+.inventory-table td {
+    background: white;
+}
+
+.inventory-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .stats {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        width: 90%;
+    }
+
+    .sidebar {
+        width: 200px;
+    }
+
+    .sidebar.open + .main-content {
+        margin-left: 200px;
+    }
+}

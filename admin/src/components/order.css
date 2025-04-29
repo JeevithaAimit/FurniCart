@@ -1,0 +1,107 @@
+/* Order Container */
+.order-container {
+    max-width: 100%;
+    padding: 20px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Heading */
+  .order-container h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Table */
+  .order-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Table Header */
+  .order-table thead {
+    background: #007bff;
+    color: white;
+  }
+  
+  .order-table th {
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  /* Table Body */
+  .order-table tbody tr {
+    transition: background 0.3s ease-in-out;
+  }
+  
+  /* Table Row Hover Effect */
+  .order-table tbody tr:hover {
+    background: #f0f8ff;
+    transform: scale(1.01);
+    transition: all 0.2s ease-in-out;
+  }
+  
+  /* Table Data */
+  .order-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+  }
+  
+  /* Status Badge */
+  .status-delivered {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .status-shipped {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .status-placed {
+    color: blue;
+    font-weight: bold;
+  }
+  
+  /* Responsive Table */
+  @media screen and (max-width: 768px) {
+    .order-table, .order-table thead, .order-table tbody, .order-table th, .order-table td, .order-table tr {
+      display: block;
+    }
+  
+    .order-table thead {
+      display: none;
+    }
+  
+    .order-table tr {
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      background: white;
+    }
+  
+    .order-table td {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: none;
+    }
+  
+    .order-table td::before {
+      content: attr(data-label);
+      font-weight: bold;
+      color: #007bff;
+    }
+  }
+  
