@@ -1,0 +1,50 @@
+
+.page-container {
+    padding: 40px;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  h1, h2 {
+    color: #2c3e50;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+  
+  .content-section {
+    margin-top: 20px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  
+  h2 {
+    margin-top: 30px;
+  }
+  
+  .highlight-box {
+    background-color: #eaf6ff;
+    border-left: 5px solid #007bff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .contact-box {
+    background-color: #fff0f0;
+    border-left: 5px solid #ff4b4b;
+  }
+  
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    text-decoration: underline;
+  }

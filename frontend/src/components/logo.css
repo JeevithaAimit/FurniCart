@@ -1,0 +1,74 @@
+.top-brands {
+    text-align: center;
+    padding: 30px;
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 25px;
+    font-family: 'Satisfy', cursive;
+    color: #333;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Brand Grid */
+.brand-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+/* Brand Card */
+.brand-card {
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #ffffff, #e3e3e3);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    animation: floatEffect 3s infinite ease-in-out;
+}
+
+/* Floating Animation */
+@keyframes floatEffect {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Brand Image */
+.brand-card img {
+    width: 90px;
+    height: auto;
+    transition: transform 0.3s ease;
+}
+
+/* Hover Effects */
+.brand-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(255, 140, 0, 0.5);
+    background: linear-gradient(135deg, #ffd700, #ff8c00); /* Gold to Orange */
+    animation: neonGlow 1.5s infinite alternate;
+}
+
+/* Image Zoom on Hover */
+.brand-card:hover img {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* Neon Glow Animation */
+@keyframes neonGlow {
+    0% { box-shadow: 0 0 5px #ffcc00; }
+    50% { box-shadow: 0 0 15px #ffcc00; }
+    100% { box-shadow: 0 0 5px #ffcc00; }
+}

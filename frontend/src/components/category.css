@@ -1,0 +1,91 @@
+.category-container {
+  text-align: center;
+  padding: 20px;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 20px;
+  font-family: 'Satisfy', cursive;
+  color: #333;
+}
+
+/* Grid Layout */
+.category-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Category Button */
+.category-button {
+  width: 130px;
+  height: 130px;
+  border-radius: 15px;
+  border: none;
+  background: radial-gradient(circle, #32210a, #060606);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  animation: floatAnimation 3s infinite ease-in-out;
+  text-decoration: none;
+}
+
+/* Floating Animation */
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Icon Styling */
+.category-button img {
+  width: 60px;
+  height: auto;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Button Text */
+.category-button span {
+  margin-top: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+.category-button a {
+  text-decoration: none;
+  color: white; /* Ensure the text color remains white */
+}
+
+/* Hover Effects */
+.category-button:hover {
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.8);
+  transform: scale(1.1);
+}
+
+/* Neon Glow Animation */
+@keyframes neonGlow {
+  0% { box-shadow: 0 0 5px #ffcc00; }
+  50% { box-shadow: 0 0 20px #ffcc00; }
+  100% { box-shadow: 0 0 5px #ffcc00; }
+}
+
+.category-button:hover {
+  animation: neonGlow 1s infinite alternate;
+}
+
+/* Rotate Effect on Hover */
+.category-button:hover img {
+  transform: rotate(15deg);
+}

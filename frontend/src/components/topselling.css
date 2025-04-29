@@ -1,0 +1,198 @@
+.top-selling {
+  text-align: center;
+  padding: 30px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.recent-products h2{
+font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+text-align: center;
+}
+
+
+.product-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+/* Product Card Styling */
+.product-card {
+  width: 250px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: white;
+  padding: 10px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+}
+
+.product-inner {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hover Effect on Inner Wrapper */
+.product-card:hover .product-inner {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Wishlist (Favorite) Button */
+.favorite-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.favorite-button:hover {
+  transform: scale(1.2);
+}
+
+.heart-icon {
+  font-size: 20px;
+  transition: color 0.3s ease-in-out;
+}
+
+/* Product Image */
+.product-card img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.product-card h3 {
+  font-size: 16px;
+  margin: 10px 0;
+  color: #333;
+}
+
+/* Price Styling */
+.price {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #888;
+  margin-right: 10px;
+}
+
+.discount-price {
+  color: #e44d26;
+  font-weight: bold;
+}
+
+/* Rating Stars */
+.rating {
+  display: flex;
+  justify-content: center;
+  margin: 5px 0;
+}
+
+.star {
+  font-size: 18px;
+  color: #ffc107;
+  margin: 0 2px;
+}
+
+/* Add to Cart Button */
+.add-to-cart {
+  background-color: #ff9900;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.add-to-cart:hover {
+  background-color: #e68a00;
+}
+
+/* Modal Styling */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 70%;
+  max-width: 900px;
+  position: relative;
+  display: flex;
+}
+
+.modal-body {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.image-container {
+  position: relative;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+}
+
+.modal-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Zoom Preview */
+.zoom-preview {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 250px;
+  height: 250px;
+  background-size: 300%;
+  border: 2px solid #ddd;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+.modal-details {
+  flex-grow: 1;
+}
+
+/* Close Modal Button */
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.close-modal:hover {
+  color: red;
+}

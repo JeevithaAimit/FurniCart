@@ -1,0 +1,126 @@
+/* Background */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  }
+  
+  /* Glassmorphism form */
+  .form-container {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 30px;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  /* Smooth animation for register mode */
+  .form-container .register-mode {
+    transform: scale(1.05);
+  }
+  
+  /* Form elements */
+  .form-container input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Buttons */
+  .form-container button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff6b6b;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .form-container button:hover {
+    background-color: #ff3b3b;
+  }
+  
+  /* Toggle link */
+  .form-container .toggle-link {
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 14px;
+    text-decoration: underline;
+  }
+  
+    .form-container.toggle-link:hover {
+    text-decoration: none;
+  }
+  
+  /* Logout section */
+  .logout-section {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 30px;
+    width: 300px;
+  }
+  
+  /* Logout button */
+  .logout-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+  
+  .logout-icon {
+    font-size: 40px;
+    color: white;
+    transition: transform 0.3s ease;
+  }
+  
+  .logout-icon:hover {
+    transform: scale(1.2);
+  }
+  
+  /* Error message */
+  .error-message {
+    color: #ff3b3b;
+    font-size: 14px;
+  }
+  
+  /* Password Input with Eye Icon */
+.password-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  
+  .password-container input {
+    width: 100%;
+    padding-right: 40px;
+  }
+  
+  .eye-icon {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    color: rgb(0, 0, 0);
+    font-size: 1.2rem;
+    transition: color 0.3s;
+  }
+  
+  .eye-icon:hover {
+    color: #ffde59;
+  }
+  
+
+  
