@@ -1,0 +1,117 @@
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0eafc, #cfdef3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+}
+
+.login {
+  background: #ffffff;
+  padding: 40px 45px;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login h2 {
+  margin-bottom: 25px;
+  color: #34495e;
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.login input,
+.login select {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  background: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+  color: #333;
+  transition: 0.3s;
+}
+
+.login input::placeholder,
+.login select {
+  color: #aaa;
+}
+
+.login input:focus,
+.login select:focus {
+  border-color: #3498db;
+  outline: none;
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.4);
+  background: #fff;
+}
+
+.login button {
+  width: 100%;
+  padding: 12px;
+  background: #3498db;
+  border: none;
+  color: white;
+  border-radius: 12px;
+  font-size: 16px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.login button:hover {
+  background: #2980b9;
+  transform: scale(1.02);
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 13px;
+  margin-top: -6px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.switch-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #555;
+  /* cursor: pointer; */
+}
+
+.switch-link span{
+  cursor: pointer;
+  color: blue;
+}
+.switch-link a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+  margin-left: 5px;
+  transition: color 0.3s;
+ 
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+  color: #2c81ba;
+}
