@@ -1,47 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 import "./footer.css";
 import { Link } from "react-router-dom";
 import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
+import axios from "axios";
 
 const Footer = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post("http://localhost:8500/api/contact", formData);
+
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", phone: "", message: "" }); // clear form
+    } catch (error) {
+      console.error(error);
+      alert("Failed to send message");
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="footer-section">
         <h4>CONTACT US</h4>
-        <form className="contact-form">
-          <input type="text" placeholder="Your Name*" required />
-          <input type="email" placeholder="Your Email*" required />
-          <input type="tel" placeholder="Your Phone*" required />
-          <textarea placeholder="Your Message*" required></textarea>
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Your Name*"
+            required
+            value={formData.name}
+            onChange={handleChange}
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email*"
+            required
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Your Phone*"
+            required
+            value={formData.phone}
+            onChange={handleChange}
+          />
+          <textarea
+            name="message"
+            placeholder="Your Message*"
+            required
+            value={formData.message}
+            onChange={handleChange}
+          ></textarea>
           <button type="submit">SEND</button>
         </form>
       </div>
 
       <div className="footer-section">
+        <h4>QUICK LINK</h4>
         <ul className="category-list">
-          <h4>QUICK LINK</h4>
-          <li><a href="/products/Sofa">Sofas Sets</a></li>
-          <li><a href="/products/BeanBags">Bean Bags</a></li>
-          <li><a href="/products/Chair">Chairs</a></li>
-          <li><a href="/products/Shoe">Shoe Racks</a></li>
-          <li><a href="/products/Bedroom">Bedroom Sets</a></li>
-          <li><a href="/products/Dining">Dining Sets</a></li>
-          <li><a href="/products/Table">Study Tables</a></li>
-          <li><a href="/products/Wardrobes">Wardrobes</a></li>
-          <li><a href="/products/">Book Shelfs</a></li>
+          <li><Link to="/products/Sofa">Sofas Sets</Link></li>
+          <li><Link to="/products/BeanBags">Bean Bags</Link></li>
+          <li><Link to="/products/Chair">Chairs</Link></li>
+          <li><Link to="/products/Shoe">Shoe Racks</Link></li>
+          <li><Link to="/products/Bedroom">Bedroom Sets</Link></li>
+          <li><Link to="/products/Dining">Dining Sets</Link></li>
+          <li><Link to="/products/Table">Study Tables</Link></li>
+          <li><Link to="/products/Wardrobes">Wardrobes</Link></li>
+          <li><Link to="/products/Bookshelf">Book Shelves</Link></li>
         </ul>
       </div>
 
       <div className="footer-section">
+        <h4>INFORMATION</h4>
         <ul className="category-info">
-          <h4>INFORMATION</h4>
           <li><Link to="/About">About</Link></li>
-          <li><a href="/terms-and-conditions">Terms and Conditions</a></li>
-          <li><a href="/shipping-policy">Shipping policy</a></li>
-          <li><a href="/warranty">Warranty</a></li>
-          <li><a href="/privacy-policy">Privacy policy</a></li>
-          <li><a href="/faq">FAQ</a></li>
-          <li><a href="/">Contact us</a></li>
+          <li><Link to="/terms-and-conditions">Terms and Conditions</Link></li>
+          <li><Link to="/shipping-policy">Shipping Policy</Link></li>
+          <li><Link to="/warranty">Warranty</Link></li>
+          <li><Link to="/privacy-policy">Privacy Policy</Link></li>
+          <li><Link to="/faq">FAQ</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
         </ul>
         <div className="social-media">
           <div className="social-icons">
@@ -54,7 +106,9 @@ const Footer = () => {
       </div>
 
       <div className="recaptcha-notice">
-        <p className="contact-details">📞 Phone: 0824-2988298 | 📱 Mobile: +91 8892882988 | ✉ Email: info@kakunjesoftware.com</p>
+        <p className="contact-details">
+          📞 Phone: 0824-2988298 | 📱 Mobile: +91 8892882988 | ✉ Email: info@kakunjesoftware.com
+        </p>
         This site is protected by reCAPTCHA. Google's <a href="https://policies.google.com/privacy">Privacy Policy</a> and <a href="https://policies.google.com/terms">Terms of Service</a> apply.
       </div>
     </footer>
@@ -62,4 +116,14 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+
+
+
+
+
+
+
+
 
