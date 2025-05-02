@@ -28,35 +28,28 @@ const ProductDetails = () => {
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
     const storedUser = JSON.parse(localStorage.getItem("user"));
-  
+
     if (!storedUser || !storedUser.id) {
       toast.error("User not found. Please log in again.");
       return;
     }
-  
+
     try {
-      // First, submit the review.
       const addRes = await axios.post("http://localhost:8500/api/reviews/add", {
         productId: product._id,
-        productName: product.name, // using product name for matching on backend
+        productName: product.name,
         category: product.category,
         customerId: storedUser.id,
         customerName: storedUser.name,
         review: reviewText,
         rating,
       });
-  
-      // You can log the response to see what status was returned.
-      console.log("Add Review Response:", addRes.data);
-  
-      // Then, check the purchase status for extra verification if needed.
+
       const purchaseRes = await axios.post("http://localhost:8500/api/reviews/check-purchase", {
         customerId: storedUser.id,
-        productName: product.name, // using product name for check
+        productName: product.name,
       });
-  
-      console.log("Check Purchase Response:", purchaseRes.data);
-  
+
       if (purchaseRes.data.purchased) {
         toast.success("✅ Thank you for your review and for purchasing this product!");
         setHasPurchased(true);
@@ -64,28 +57,16 @@ const ProductDetails = () => {
         toast.error("⚠️ You must purchase this product before submitting a review.");
         setHasPurchased(false);
       }
-  
-      // Clear the review form and refresh reviews.
+
       setReviewText("");
       setRating(0);
       fetchReviews();
-  
-      // Optionally, show a popup:
       setShowReviewPopup(true);
-      
     } catch (error) {
       console.error("Review submission failed:", error);
-      if (error.response?.data?.message) {
-        toast.error("Error: " + error.response.data.message);
-      } else if (error.message) {
-        toast.error("Error: " + error.message);
-      } else {
-        toast.error("Something went wrong while submitting the review.");
-      }
+      toast.error(error.response?.data?.message || "Something went wrong while submitting the review.");
     }
   };
-  
-
 
   const fetchReviews = async () => {
     try {
@@ -115,7 +96,14 @@ const ProductDetails = () => {
 
   if (!product) return <h2>Loading...</h2>;
 
-  const handleIncrease = () => setQuantity((prev) => Math.min(prev + 1, 5));
+  const handleIncrease = () => {
+    if (quantity < product.quantity) {
+      setQuantity((prev) => prev + 1);
+    } else {
+      toast.warn(`⚠️ Only ${product.quantity} item(s) available in stock.`);
+    }
+  };
+
   const handleDecrease = () => setQuantity((prev) => Math.max(prev - 1, 1));
 
   const gstAmount = (product.discountPrice * gstRate) / 100;
@@ -129,7 +117,13 @@ const ProductDetails = () => {
     }
     if (!product) return;
 
+    if (quantity > product.quantity) {
+      toast.error("Not enough stock available.");
+      return;
+    }
+
     addToCart(product);
+    toast.success("Added to cart!");
   };
 
   return (
@@ -159,7 +153,6 @@ const ProductDetails = () => {
             ))}
         </div>
 
-        {/* Review Form */}
         <div className="review-form">
           <h3>Leave a Review</h3>
           <div className="rating-stars-input">
@@ -182,13 +175,12 @@ const ProductDetails = () => {
           <button onClick={handleReviewSubmit}>Submit Review</button>
         </div>
 
-        {/* Review Popup */}
         {showReviewPopup && (
           <div className="popup-box">
             {hasPurchased ? (
               <>
                 <p>✅ Thank you for your review and for purchasing this product!</p>
-                <button onClick={() => setShowReviewPopup()}>Close</button>
+                <button onClick={() => setShowReviewPopup(false)}>Close</button>
               </>
             ) : (
               <>
@@ -200,36 +192,33 @@ const ProductDetails = () => {
           </div>
         )}
 
-        {/* All Reviews */}
-        {/* All Reviews */}
-<div className="all-reviews">
-  <h3>Customer Reviews</h3>
-  {reviews.filter((rev) => rev.status === "Ordered" || rev.status === "Success").length === 0 ? (
-    <p>No verified reviews yet.</p>
-  ) : (
-    reviews
-      .filter((rev) => rev.status === "Ordered" || rev.status === "Success")
-      .map((rev, index) => (
-        <div key={index} className="review-item">
-          <div className="review-header">
-            <strong>{rev.customerName}</strong>
-            <div className="review-stars-time">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <span key={star} className={star <= rev.rating ? "star filled" : "star"}>
-                  ★
-                </span>
-              ))}
-            </div>
-          </div>
-          <p className="review-text">"{rev.review}"</p>
-          <span className="review-time">
-            {formatDistanceToNow(new Date(rev.createdAt), { addSuffix: true })}
-          </span>
+        <div className="all-reviews">
+          <h3>Customer Reviews</h3>
+          {reviews.filter((rev) => rev.status === "Ordered" || rev.status === "Success").length === 0 ? (
+            <p>No verified reviews yet.</p>
+          ) : (
+            reviews
+              .filter((rev) => rev.status === "Ordered" || rev.status === "Success")
+              .map((rev, index) => (
+                <div key={index} className="review-item">
+                  <div className="review-header">
+                    <strong>{rev.customerName}</strong>
+                    <div className="review-stars-time">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <span key={star} className={star <= rev.rating ? "star filled" : "star"}>
+                          ★
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                  <p className="review-text">"{rev.review}"</p>
+                  <span className="review-time">
+                    {formatDistanceToNow(new Date(rev.createdAt), { addSuffix: true })}
+                  </span>
+                </div>
+              ))
+          )}
         </div>
-      ))
-  )}
-</div>
-
       </div>
 
       <div className="product-info">
@@ -312,4 +301,8 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+
+
+
 
