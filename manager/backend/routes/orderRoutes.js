@@ -362,6 +362,7 @@ router.get("/pending-orders/count", async (req, res) => {
 });
 
 // Allowed statuses
+// Allowed statuses
 const VALID_STATUSES = ["Pending", "Packed", "Shipped", "Delivered", "Rejected"];
 
 router.put("/orders/:id/status", async (req, res) => {
@@ -375,8 +376,8 @@ router.put("/orders/:id/status", async (req, res) => {
             return res.status(400).json({ message: "Status is required" });
         }
 
-        const allowedStatuses = ["Pending", "Shipped", "Delivered"];
-        if (!allowedStatuses.includes(status)) {
+        // Check if the status is valid
+        if (!VALID_STATUSES.includes(status)) {
             return res.status(400).json({ message: "Invalid status value" });
         }
 

@@ -59,24 +59,26 @@ const Package = () => {
 
     const handleStatusChange = async (newStatus) => {
         if (!selectedOrder) return;
-
+    
         try {
             const response = await axios.put(
                 `http://localhost:8000/api/orders/${selectedOrder._id}/status`,
                 { status: newStatus },
                 { headers: { "Content-Type": "application/json" } }
             );
-
+    
+            console.log("API response:", response);
+    
             if (response.status === 200) {
                 console.log("✅ Order status updated:", newStatus);
-
+    
                 // Update UI Immediately
                 setOrders((prevOrders) =>
                     prevOrders.map((order) =>
                         order._id === selectedOrder._id ? { ...order, status: newStatus } : order
                     )
                 );
-
+    
                 closePopup();
             } else {
                 console.error("❌ Failed to update status");
@@ -85,6 +87,7 @@ const Package = () => {
             console.error("❌ Error updating status:", error.response?.data || error.message);
         }
     };
+    
 
     const totalPages = Math.max(1, Math.ceil(filteredOrders.length / ordersPerPage));
     const pageNumbers = [];
@@ -269,30 +272,31 @@ const Package = () => {
                         <h2>Update Order Status</h2>
                         <p><strong>Order ID:</strong> {selectedOrder._id}</p>
                         <div className="popup-buttons">
-                            <button 
-                                onClick={() => handleStatusChange("Rejected")} 
-                                disabled={["Rejected", "Packed", "Shipped", "Delivered"].includes(selectedOrder.status)}
-                            >
-                                Rejected
-                            </button>
-                            <button 
-                                onClick={() => handleStatusChange("Packed")} 
-                                disabled={["Packed", "Shipped", "Delivered"].includes(selectedOrder.status)}
-                            >
-                                Packed
-                            </button>
-                            <button 
-                                onClick={() => handleStatusChange("Shipped")} 
-                                disabled={["Shipped", "Delivered"].includes(selectedOrder.status)}
-                            >
-                                Shipped
-                            </button>
-                            <button 
-                                onClick={() => handleStatusChange("Delivered")} 
-                                disabled={selectedOrder.status === "Delivered"}
-                            >
-                                Delivered
-                            </button>
+                        <button 
+                            onClick={() => handleStatusChange("Rejected")} 
+                            disabled={["Rejected", "Packed", "Shipped", "Delivered"].includes(selectedOrder.status)}
+                        >
+                            Rejected
+                        </button>
+                        <button 
+                            onClick={() => handleStatusChange("Packed")} 
+                            disabled={["Packed", "Shipped", "Delivered"].includes(selectedOrder.status)}
+                        >
+                            Packed
+                        </button>
+                        <button 
+                            onClick={() => handleStatusChange("Shipped")} 
+                            disabled={["Shipped", "Delivered"].includes(selectedOrder.status)}
+                        >
+                            Shipped
+                        </button>
+                        <button 
+                            onClick={() => handleStatusChange("Delivered")} 
+                            disabled={selectedOrder.status === "Delivered"}
+                        >
+                            Delivered
+                        </button>
+
                         </div>
                     </div>
                 </div>
