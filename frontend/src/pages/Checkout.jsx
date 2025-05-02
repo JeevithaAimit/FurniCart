@@ -24,17 +24,17 @@ const CheckOut = () => {
   const [orderId, setOrderId] = useState(null);
   const [invoicePdfBlob, setInvoicePdfBlob] = React.useState(null);
 
-const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
 
-const customerId = user?.id; // ✅ FIXED: use `id` instead of `_id`
-console.log("🧑‍💼 Logged in user:", user);
-console.log("🆔 Customer ID:", customerId);
-
-
+  const customerId = user?.id; // ✅ FIXED: use `id` instead of `_id`
+  console.log("🧑‍💼 Logged in user:", user);
+  console.log("🆔 Customer ID:", customerId);
 
 
 
-  
+
+
+
   // Removed duplicate declaration of formData
 
 
@@ -91,7 +91,7 @@ console.log("🆔 Customer ID:", customerId);
       [name]: type === "checkbox" ? checked : value,
     }));
 
-     if (name === "useBillingAsShipping" && checked) {
+    if (name === "useBillingAsShipping" && checked) {
       setFormData((prev) => ({
         ...prev,
         shippingAddress: prev.billingAddress,
@@ -112,7 +112,7 @@ console.log("🆔 Customer ID:", customerId);
     }
   };
 
- 
+
   const handleSaveAddress = (e) => {
     setSaveAddress(e.target.checked);
   };
@@ -166,7 +166,7 @@ console.log("🆔 Customer ID:", customerId);
     }
 
     const orderData = {
-      customerId: customerId, 
+      customerId: customerId,
       name: formData.firstName + " " + formData.lastName,
       email: formData.email,
       phone: formData.phone,
@@ -189,9 +189,9 @@ console.log("🆔 Customer ID:", customerId);
         productName: item.name,
         price: item.discountPrice,
         quantity: item.quantity,
-        mainImage: item.mainImage || "https://via.placeholder.com/100",
-        category: item.category 
-,
+        mainImage: item.image || "https://via.placeholder.com/100", // Bug Fix: Use item.image
+        category: item.category
+        ,
       })),
       totalPrice: totalAmount,
     };
@@ -284,11 +284,11 @@ console.log("🆔 Customer ID:", customerId);
       alert("Missing invoice or user email.");
       return;
     }
-  
+
     const emailFormData = new FormData();
     emailFormData.append("invoice", invoicePdfBlob, "invoice.pdf");
     emailFormData.append("email", formData.email);
-  
+
     try {
       const response = await axios.post("http://localhost:8500/api/send-invoice-email", emailFormData);
       if (response.data.success) {
@@ -301,12 +301,12 @@ console.log("🆔 Customer ID:", customerId);
       alert("❌ Email sending failed.");
     }
   };
-  
-  
+
+
 
   const generatePDF = () => {
     const doc = new jsPDF();
-  
+
     // Convert number to words
     const numberToWords = (num) => {
       const a = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
@@ -321,9 +321,9 @@ console.log("🆔 Customer ID:", customerId);
       };
       return convert(Math.floor(num)) + ' Rupees Only';
     };
-  
+
     const orderDate = new Date().toLocaleDateString();
-  
+
     // Title
     autoTable(doc, {
       head: [['FurniCart']],
@@ -336,7 +336,7 @@ console.log("🆔 Customer ID:", customerId);
       },
       margin: { top: 14 },
     });
-  
+
     // Order ID and Date
     autoTable(doc, {
       body: [[`Order ID: ${orderId || 'N/A'}`, '', `Order Date: ${orderDate}`]],
@@ -352,13 +352,13 @@ console.log("🆔 Customer ID:", customerId);
       },
       startY: doc.lastAutoTable.finalY + 5
     });
-  
+
     // Billing & Shipping Address
     const billing = `${formData.firstName} ${formData.lastName}\n${formData.billingAddress}, ${formData.billingCity}, ${formData.billingState}, ${formData.billingCountry} - ${formData.billingZip}`;
     const shipping = formData.useBillingAsShipping
       ? billing
       : `${formData.firstName} ${formData.lastName}\n${formData.shippingAddress}, ${formData.shippingCity}, ${formData.shippingState}, ${formData.shippingCountry} - ${formData.shippingZip}`;
-  
+
     autoTable(doc, {
       head: [['Billing Address', 'Shipping Address']],
       body: [[billing, shipping]],
@@ -381,7 +381,7 @@ console.log("🆔 Customer ID:", customerId);
       },
       theme: 'grid'
     });
-  
+
     // Product Table
     autoTable(doc, {
       head: [["Sl.No", "Description", "Rate", "Qty", "GST", "Amount"]],
@@ -419,12 +419,12 @@ console.log("🆔 Customer ID:", customerId);
         lineWidth: 0.7
       }
     });
-  
+
     // Totals
     const subtotal = cart.reduce((sum, item) => sum + item.quantity * (item.discountPrice || item.price), 0);
     const gst = subtotal * 0.18;
     const total = subtotal + gst;
-  
+
     autoTable(doc, {
       body: [
         ['Subtotal', `RS:${subtotal.toFixed(2)}`],
@@ -446,7 +446,7 @@ console.log("🆔 Customer ID:", customerId);
         1: { cellWidth: 50, halign: 'right' }
       }
     });
-  
+
     // Payment Section
     autoTable(doc, {
       body: [
@@ -467,76 +467,76 @@ console.log("🆔 Customer ID:", customerId);
         1: { cellWidth: 100, halign: 'left' }
       }
     });
-  
+
     // Thank You Note
     doc.setFontSize(10);
     doc.setTextColor(0, 0, 0);
     doc.text("Thank you for shopping with us!", 14, doc.lastAutoTable.finalY + 10);
-  
+
     // Signature Section
     const pageHeight = doc.internal.pageSize.height;
     const signatureY = pageHeight - 50;
-  
+
     doc.setFont("helvetica", "normal");
     doc.setFontSize(11);
     doc.setTextColor(0, 0, 0);
     doc.text("Signature", 150, signatureY - 10, { align: 'center' });
-  
+
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
     doc.text("FurniCart", 150, signatureY + 10, { align: 'center' });
-  
+
     const blob = doc.output("blob");
     setInvoicePdfBlob(blob);
     doc.save(`Invoice_${orderId || 'order'}.pdf`);
   };
-  
-  
-  
+
+
+
   return (
     <div className="checkout-container">
       <div className="checkout-content">
-      <div className="order-summary">
+        <div className="order-summary">
           <h2>Order Summary</h2>
           <table>
-        <thead>
-          <tr>
-          <th>Image</th>
-            <th>Product</th>
-            <th>Category</th>
-            <th>Qty</th>
-            <th>Price (₹)</th>
-            
-          </tr>
-        </thead>
-        <tbody>
-          {cart.map((item) => (
-            <tr key={item.id}>
-                <td>
-                <img
-                    src={item.image ?? "https://via.placeholder.com/100"}
-                    alt={item.name || "Product Image"}
-                    className="cart-item-image"
-                  />
-               
-              </td>
-              <td>{item.name}</td>
-              <td>{item.category}</td>
-              <td>{item.quantity}</td>
-              <td>{item.discountPrice ? item.discountPrice.toFixed(2) : "N/A"}</td>
-            </tr>
-          ))}
-        </tbody>
-   
-      </table>
-      <div className="totals">
-        <h3>Subtotal: ₹{subtotal}</h3>
-        <h3>GST (18%): ₹{gstAmount}</h3>
-        <h2>Total: ₹{totalAmount}</h2>
-      </div>
-            <h1 className="place-order">
-        <span className="arrow">↓</span>
-      </h1>
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Qty</th>
+                <th>Price (₹)</th>
+
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item) => (
+                <tr key={item.id}>
+                  <td>
+                    <img
+                      src={item.image ?? "https://via.placeholder.com/100"}
+                      alt={item.name || "Product Image"}
+                      className="cart-item-image"
+                    />
+
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.category}</td>
+                  <td>{item.quantity}</td>
+                  <td>{item.discountPrice ? item.discountPrice.toFixed(2) : "N/A"}</td>
+                </tr>
+              ))}
+            </tbody>
+
+          </table>
+          <div className="totals">
+            <h3>Subtotal: ₹{subtotal}</h3>
+            <h3>GST (18%): ₹{gstAmount}</h3>
+            <h2>Total: ₹{totalAmount}</h2>
+          </div>
+          <h1 className="place-order">
+            <span className="arrow">↓</span>
+          </h1>
 
         </div>
 
@@ -644,11 +644,11 @@ console.log("🆔 Customer ID:", customerId);
               {orderId && (
                 <div>
                   <button className="download-btn" onClick={generatePDF}>
-  ⬇️ Download Invoice
-</button>
+                    ⬇️ Download Invoice
+                  </button>
                   <button onClick={sendInvoiceViaEmail} className="btn-whatsapp">
-  📧 Share via Email
-</button>
+                    📧 Share via Email
+                  </button>
                 </div>
               )}
             </div>
