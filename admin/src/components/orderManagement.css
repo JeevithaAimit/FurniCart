@@ -225,6 +225,45 @@
 .popup-box{
     text-align: left;
 }
+.view-popup h2{
+  font-size: 30px;
+}
+
+.view-popup p {
+  margin: 2px 0;       /* Reduce space between lines */
+  line-height: 1.4;    /* Adjust line spacing */
+}
+
+.view-popup h3 {
+  margin: 10px 0 5px;  /* Reduce spacing around headings */
+}
+
+.view-popup .shipping-address p,
+.view-popup .items-section p {
+  margin: 2px 0;
+  line-height: 1.4;
+}
+
+.view-popup .items-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.view-popup .item-card {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+  text-align: center;
+  width: 120px;
+}
+
+.view-popup .product-image {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+}
+
 /* View Order Popup */
 .view-popup {
     width: 60%;
@@ -233,6 +272,8 @@
     border-radius: 10px;
     text-align: left; /* Aligns text to the left */
     position: relative; /* Needed for close button positioning */
+    height: 90%;
+    font-size: 15px;
 }
 
 /* Close Button (X) */
@@ -282,7 +323,7 @@
 }
 .close-btn {
     padding: 10px;
-    margin-top: 10px;
+    margin-top: -10px;
     background: red;
     color: white;
     border: none;
@@ -306,66 +347,71 @@
 
 /* Popup Box */
 .popup-boxButton {
-    background: white;
-    padding: 20px;
-    width: 30%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
+  background: white;
+  padding: 20px;
+  width: 30%;
+  border-radius: 10px;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  position: relative; /* Enables absolute positioning for children */
 }
 
 /* View Order Popup */
 .view-popup {
-    width: 60%;
+  width: 60%;
 }
 
+/* Popup Buttons Container */
 .popup-buttons {
-    display: flex;
-    justify-content: center; /* Centers horizontally */
-    flex-wrap: wrap; /* Allows wrapping for smaller screens */
-    gap: 10px; /* Adds spacing between buttons */
-    margin-top: 10px;
-    margin-left: 33%;
-}
-/* Popup Buttons - Adjusted Size */
-.popup-buttons button {
-    padding: 8px 12px;  /* Reduced padding */
-    margin: 4px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 14px; /* Slightly smaller text */
-    width:50%
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+  margin-left: 33%;
 }
 
-/* Specific Button Colors */
+/* Buttons Styling */
+.popup-buttons button {
+  padding: 8px 12px;
+  margin: 4px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  width: 50%;
+}
+
+/* Button Colors */
 .popup-buttons button:nth-child(1) { background: #dc3545; color: white; } /* Rejected */
 .popup-buttons button:nth-child(2) { background: #ffc107; color: black; } /* Packed */
 .popup-buttons button:nth-child(3) { background: #17a2b8; color: white; } /* Shipped */
 .popup-buttons button:nth-child(4) { background: #28a745; color: white; } /* Delivered */
 
-/* Close Button */
+/* Close Button (Top-right inside popup) */
 .popup-boxButton .close-btn {
-    position: absolute;
-    top: 18 0px;
-    right: 540px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #333;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #333;
 }
 
-.close-btn:hover {
-    color: red;
+.popup-boxButton .close-btn:hover {
+  color: red;
 }
 
+/* Disabled Button Style */
 button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+  cursor: not-allowed;
+  opacity: 0.5;
 }
+
 
 

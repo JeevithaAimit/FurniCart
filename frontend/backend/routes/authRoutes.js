@@ -35,6 +35,8 @@ router.post("/register", async (req, res) => {
   }
 });
 
+
+
 // ✅ Login Endpoint (Fixed)
 router.post("/login", async (req, res) => {
   const { email, password } = req.body; // ✅ Check if request body exists

@@ -268,7 +268,8 @@ const Package = () => {
             {selectedOrder && (
                 <div className="popup-overlay">
                     <div className="popup-boxButton">
-                        <button className="close-btn" onClick={closePopup}>&times;</button>
+                    <button className="close-btn" onClick={closePopup}>X</button>
+                        
                         <h2>Update Order Status</h2>
                         <p><strong>Order ID:</strong> {selectedOrder._id}</p>
                         <div className="popup-buttons">

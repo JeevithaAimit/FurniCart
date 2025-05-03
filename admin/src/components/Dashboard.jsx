@@ -112,16 +112,16 @@ const Dashboard = () => {
       </button>
     </li>
   ))}
-</ul>
+</ul><br /> <br /> <br /> <br />
         <button
           className="sidebar-btn"
-          onClick={() => window.open("http://localhost:3002/", "_blank")}
+          onClick={() => window.open("http://localhost:3001/", "_blank")}
         >
            Manager Login
         </button>
 
         <button className="logout-btn" onClick={handleLogout}>
-          <FaSignOutAlt /> Logout
+         Logout
         </button>
       </div>
 

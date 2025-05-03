@@ -3,6 +3,9 @@ import "./payment.css";
 
 const Payment = () => {
   const [payments, setPayments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const recordsPerPage = 10;
+  
 
   useEffect(() => {
     fetchPayments();
@@ -35,6 +38,11 @@ const Payment = () => {
       setPayments([]);
     }
   };
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+const currentRecords = payments.slice(indexOfFirstRecord, indexOfLastRecord);
+const totalPages = Math.ceil(payments.length / recordsPerPage);
 
   return (
     <div className="payment-container">
@@ -87,6 +95,35 @@ const Payment = () => {
           )}
         </tbody>
       </table>
+
+      <div className="pagination">
+  <button
+    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+    disabled={currentPage === 1}
+    className="nav-button"
+  >
+    Prev
+  </button>
+
+  {Array.from({ length: totalPages }, (_, index) => (
+    <button
+      key={index + 1}
+      onClick={() => setCurrentPage(index + 1)}
+      className={currentPage === index + 1 ? "active-page" : ""}
+    >
+      {index + 1}
+    </button>
+  ))}
+
+  <button
+    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+    disabled={currentPage === totalPages}
+    className="nav-button"
+  >
+    Next
+  </button>
+</div>
+
     </div>
   );
 };

@@ -16,9 +16,9 @@ const Dining = () => {
 const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12;
   const diningTypes = ["All", "Dining Tables",
-   " Dining Chairs",
+   "Dining Chairs",
     "4 Seater",
-   " 6 Seater"];
+   "6 Seater"];
 
   const priceRanges = [
     { label: "Below 10k", min: 0, max: 10000 },

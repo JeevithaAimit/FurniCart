@@ -11,11 +11,13 @@ text-align: center;
 
 
 .product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 4 cards per row */
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
 }
+
 
 /* Product Card Styling */
 .product-card {
@@ -195,4 +197,22 @@ text-align: center;
 
 .close-modal:hover {
   color: red;
+}
+
+@media (max-width: 1024px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -398,7 +398,7 @@ app.delete("/customers/:id", async (req, res) => {
 
 app.get("/products/recent", async (req, res) => {
   try {
-    const recentProducts = await Product.find().sort({ createdAt: -1 }).limit(8);
+    const recentProducts = await Product.find().sort({ createdAt: -1 }).limit(10);
     res.json(recentProducts);
   } catch (error) {
     console.error("Error fetching recent products:", error);

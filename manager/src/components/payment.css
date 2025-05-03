@@ -73,6 +73,34 @@
     text-align: center;   /* Centers text */
   }
   
+  .pagination {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .pagination button {
+    margin: 0 4px;
+    padding: 6px 12px;
+    background-color: #eee;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .pagination button.active-page {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .pagination button.nav-button {
+    background-color: #ccc;
+  }
+  
+  .pagination button:disabled {
+    background-color: #ddd;
+    cursor: not-allowed;
+  }
   
   .no-data {
     text-align: center;

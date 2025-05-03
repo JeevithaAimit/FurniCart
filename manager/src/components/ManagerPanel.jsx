@@ -72,9 +72,25 @@ const Sidebar = ({ onLogout }) => {
     }
   };
   
-  const handleAdminLogin = () => {
-    window.location.href = "http://localhost:3000/"; // Redirects to Admin Login in the same tab
+  const handleAdminLogin = async () => {
+    const ports = [ 3002, 3000];
+  
+    for (let port of ports) {
+      const url = `http://localhost:${port}`;
+      try {
+        const response = await fetch(url, { method: "HEAD" });
+        if (response.ok) {
+          window.location.href = url;
+          return;
+        }
+      } catch (err) {
+        console.log(`Server on port ${port} is not available.`);
+      }
+    }
+  
+    alert("None of the Admin Login servers (3001, 3002, 3000) are available.");
   };
+  
 
   return (
     <>
