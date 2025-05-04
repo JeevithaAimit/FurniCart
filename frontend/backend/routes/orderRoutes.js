@@ -4,7 +4,7 @@ const router = express.Router();
 const OrderModel = require("../models/Order");
 const Customer = require("../models/customer");
 const Cart = require("../models/cartModel");  // ✅ Import Cart model
-
+const Delivery = require("../models/deliveryModel"); // ✅ This is what you missed
 
 
 
@@ -201,36 +201,36 @@ router.put("/logout", async (req, res) => {
 //       res.status(500).json({ error: error.message || "Internal Server Error" });
 //     }
 //   });
-router.post("/feedback", async (req, res) => {
-  try {
-      const { orderId, rating, feedback, complaint } = req.body;
+// router.post("/feedback", async (req, res) => {
+//   try {
+//       const { orderId, rating, feedback, complaint } = req.body;
 
-      console.log("🔍 Received Order ID:", orderId);
+//       console.log("🔍 Received Order ID:", orderId);
 
-      if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
-          return res.status(400).json({ message: "Invalid Order ID format" });
-      }
+//       if (!orderId || !mongoose.Types.ObjectId.isValid(orderId)) {
+//           return res.status(400).json({ message: "Invalid Order ID format" });
+//       }
 
-      // 🔹 Find the delivered order
-      const delivery = await Delivery.findOne({ orderId });
+//       // 🔹 Find the delivered order
+//       const delivery = await Delivery.findOne({ orderId });
 
-      if (!delivery) {
-          return res.status(404).json({ message: "Order not found" });
-      }
+//       if (!delivery) {
+//           return res.status(404).json({ message: "Order not found" });
+//       }
 
-      // 🔹 Update feedback & complaint
-      delivery.rating = rating;
-      delivery.feedback = feedback;
-      delivery.complaint = complaint;
-      await delivery.save();
+//       // 🔹 Update feedback & complaint
+//       delivery.rating = rating;
+//       delivery.feedback = feedback;
+//       delivery.complaint = complaint;
+//       await delivery.save();
 
-      res.json({ message: "Feedback submitted successfully!" });
+//       res.json({ message: "Feedback submitted successfully!" });
 
-  } catch (error) {
-      console.error("❌ Error submitting feedback:", error);
-      res.status(500).json({ message: "Server error" });
-  }
-});
+//   } catch (error) {
+//       console.error("❌ Error submitting feedback:", error);
+//       res.status(500).json({ message: "Server error" });
+//   }
+// });
 
 router.get("/get", async (req, res) => {
   try {

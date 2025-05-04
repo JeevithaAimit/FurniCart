@@ -7,6 +7,7 @@ const productRoutes = require("./routes/products");
 const managerRoutes = require('./routes/managerRoutes');
 const multer = require("multer");
 const cloudinary = require("cloudinary").v2;
+const feedbackRoutes = require("./routes/feedback"); // Or separate file if needed
 const streamifier = require("streamifier");
 
 
@@ -165,7 +166,7 @@ app.use("/api", acceptOrderRoutes);
 app.use("/api/orders", acceptOrderRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/products", productRoutes);
-
+app.use('/api/feedbacks', feedbackRoutes); // This must match the frontend path
 
 
 // 🚀 Start Server

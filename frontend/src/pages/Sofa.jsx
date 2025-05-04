@@ -291,9 +291,9 @@ const Sofa = () => {
 
                   <div className="rating">
                     <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalfAlt />
-                  <p className="short-description">
+                  {/* <p className="short-description">
                     {product.description ? product.description.split(" ").slice(0, 20).join(" ") : ""}
-                  </p>
+                  </p> */} <br /> <br />
                   </div>
                   {product.quantity === 0 ? (
                   <button className="outOfStock" disabled>

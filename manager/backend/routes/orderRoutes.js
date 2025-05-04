@@ -273,25 +273,25 @@ router.get("/order-summary", async (req, res) => {
 });
 
 
-router.get("/feedbacks", async (req, res) => {
-    try {
-        const feedbacks = await Delivery.find(
-            { feedback: { $exists: true, $ne: "" } }, // Only retrieve records with feedback
-            { orderId: 1, email: 1, feedback: 1, complaint: 1, rating: 1, _id: 0 } // Select fields
-        );
+// router.get("/feedbacks", async (req, res) => {
+//     try {
+//         const feedbacks = await Delivery.find(
+//             { feedback: { $exists: true, $ne: "" } }, // Only retrieve records with feedback
+//             { orderId: 1, email: 1, feedback: 1, complaint: 1, rating: 1, _id: 0 } // Select fields
+//         );
 
-        console.log("🔍 Feedbacks from DB:", feedbacks);
+//         console.log("🔍 Feedbacks from DB:", feedbacks);
 
-        if (feedbacks.length === 0) {
-            return res.status(404).json({ message: "No feedback available" });
-        }
+//         if (feedbacks.length === 0) {
+//             return res.status(404).json({ message: "No feedback available" });
+//         }
 
-        res.json(feedbacks);
-    } catch (error) {
-        console.error("❌ Error fetching feedbacks:", error);
-        res.status(500).json({ message: "Server error" });
-    }
-});
+//         res.json(feedbacks);
+//     } catch (error) {
+//         console.error("❌ Error fetching feedbacks:", error);
+//         res.status(500).json({ message: "Server error" });
+//     }
+// });
 
 router.get("/orders-by-category/:category", async (req, res) => {
     try {

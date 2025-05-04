@@ -14,6 +14,7 @@ const paymentRoutes = require("./routes/paymentRoutes");
 const sendInvoiceEmailRoute = require('./routes/sendInvoiceEmailRoute');
 const reviewRoutes = require("./routes/reviews");
 const contactRoutes = require("./routes/contactRoutes");
+const feedbackRoutes = require("./routes/feedbackRoutes");
 
 const app = express();
 app.use(express.json());
@@ -27,7 +28,7 @@ app.use("/api", paymentRoutes);
 app.use('/api', sendInvoiceEmailRoute);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/contact", contactRoutes);
-
+app.use("/api", feedbackRoutes);
 
 app.use(express.urlencoded({ extended: true })); // ✅ Parse form data
 

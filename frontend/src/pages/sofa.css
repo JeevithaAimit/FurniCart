@@ -12,8 +12,8 @@
   border: 2px solid #4285f4; /* Blue border */
   border-radius: 24px; /* Rounded corners */
   background: white;
-  padding: 5px 10px;
-  height: 46px;
+  /* padding: 5px 10px; */
+  height: 60px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
 }
 
@@ -101,6 +101,7 @@
   border-radius: 8px;
   min-width: 250px;
   transition: box-shadow 0.3s ease-in-out;
+  margin-top: -100px;
 }
 
 .filters:hover {
@@ -166,7 +167,7 @@
   background: #24903b;
   color: white;
   padding: 10px 20px;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   border: none;
   cursor: pointer;
   margin-top: -10px;
@@ -177,7 +178,7 @@
   background: #0056b3;
 }
 
-.short-description {
+/* .short-description {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
@@ -187,7 +188,7 @@
   max-height: 3em;
   line-height: 1.5em;
   color: #555;
-}
+} */
 .product-name {
   white-space: nowrap;         /* Prevent text from wrapping */
   overflow: hidden;            /* Hide overflowing text */
@@ -202,7 +203,7 @@
   color: #666;
   cursor: not-allowed;
   padding: 10px 20px;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   border: none;
   margin-top: -10px;
   transition: background 0.3s ease-in-out;

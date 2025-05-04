@@ -26,7 +26,7 @@
   color: #666;
   cursor: not-allowed;
   padding: 10px 20px;
-  border-radius: 25px;
+  /* border-radius: 25px; */
   border: none;
   margin-top: -10px;
   transition: background 0.3s ease-in-out;
@@ -59,7 +59,7 @@
 
 .search-button:hover {
   /* background: #218838; */
-  transform: scale(1.05);
+  /* transform: scale(1.05); */
 }
 
 /* 📌 Page Heading */

@@ -8,17 +8,19 @@ const FeedbackList = () => {
 
     useEffect(() => {
         const fetchFeedbacks = async () => {
-            try {
-                const response = await axios.get("http://localhost:8000/api/feedbacks");
-                console.log("✅ Fetched Feedbacks:", response.data); // Debugging output
-                setFeedbacks(response.data);
-            } catch (error) {
-                console.error("❌ Error fetching feedbacks:", error.response?.data || error.message);
-            }
+          try {
+            const response = await axios.get('http://localhost:8000/api/feedbacks');
+            console.log("✅ Feedbacks:", response.data);
+            setFeedbacks(response.data); // ← Add this line
+          } catch (error) {
+            console.log("❌ Error fetching feedbacks:", error.response?.data || error.message);
+          }
         };
-    
+      
         fetchFeedbacks();
-    }, []);
+      }, []);
+      
+      
     
 
     return (
