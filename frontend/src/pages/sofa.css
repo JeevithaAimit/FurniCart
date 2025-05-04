@@ -160,7 +160,7 @@
   color: #28a745;
 }
 .rating{
-  font-size: 23px;
+  font-size: 33px;
 }
 
 .product-card .view-details {
@@ -326,8 +326,8 @@
     font-size: 14px;
   }
 
-  .rating {
-    font-size: 18px;
+.rating {
+    font-size: 38px;
   }
 }
 

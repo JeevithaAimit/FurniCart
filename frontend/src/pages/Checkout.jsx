@@ -7,7 +7,6 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import axios from "axios"; // ✅ Make sure axios is imported
 
-
 const CheckOut = () => {
   const [saveAddress, setSaveAddress] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -34,9 +33,7 @@ const CheckOut = () => {
 
 
 
-
   // Removed duplicate declaration of formData
-
 
   const upiId = "yourupiid@upi";
   const upiLink = `upi://pay?pa=${upiId}&pn=FurniCart&am=${totalAmount}&cu=INR`;
@@ -111,7 +108,6 @@ const CheckOut = () => {
       }));
     }
   };
-
 
   const handleSaveAddress = (e) => {
     setSaveAddress(e.target.checked);
@@ -303,7 +299,6 @@ const CheckOut = () => {
   };
 
 
-
   const generatePDF = () => {
     const doc = new jsPDF();
 
@@ -490,7 +485,6 @@ const CheckOut = () => {
     setInvoicePdfBlob(blob);
     doc.save(`Invoice_${orderId || 'order'}.pdf`);
   };
-
 
 
   return (

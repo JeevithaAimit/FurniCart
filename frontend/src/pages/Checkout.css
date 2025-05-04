@@ -68,7 +68,6 @@ width: 8px;
   margin-top: 10px;
 }
 
-
 /* Right Side - Checkout Form */
 .checkout-details {
   flex: 2;
@@ -581,7 +580,6 @@ width: 8px;
   color: red;
 }
 
-
 .place-order {
   font-size: 28px;
   font-weight: bold;
@@ -598,7 +596,6 @@ width: 8px;
   cursor: pointer;
 }
 
-
 /* Arrow Animation */
 .arrow {
   display: inline-block;
@@ -606,6 +603,50 @@ width: 8px;
   margin-top: -20px;
   animation: bounce 1.2s infinite alternate;
   text-align: center;
+}
+
+.download-btn,
+.btn-whatsapp {
+  padding: 10px 16px;
+  margin: 10px 8px 0 0;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.download-btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-whatsapp:hover {
+  background-color: #1e7e34;
+  transform: translateY(-1px);
+}
+
+/* Optional: Responsive adjustment */
+@media (max-width: 600px) {
+  .download-btn,
+  .btn-whatsapp {
+    width: 100%;
+    font-size: 15px;
+  }
 }
 
 @keyframes bounce {
@@ -619,4 +660,5 @@ width: 8px;
 .save{
   margin-left: -380px;
 }
+
 

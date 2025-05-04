@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
-import HeroSection from "./components/herosection";
+import HeroSection from "./components/herosection"; // Corrected the casing for import
 import TopSelling from "./components/TopSelling";
 import Footer from "./components/Footer";
 import Banner from "./components/Banner";
@@ -10,7 +10,6 @@ import Category from "./components/Category";
 import ProductDetails from "./pages/ProductDetails"; // ✅ Import Product Details Page
 import Cart from "./pages/Cart"; 
 import LoginPage from "./pages/LoginPage"; 
-
 
 // ✅ Import Category Pages
 import Sofa from "./pages/Sofa";
@@ -30,10 +29,6 @@ import Privacy from './pages/Privacy';
 import FAQ from './pages/FAQ';
 import Checkout from "./pages/Checkout";
 import Tracking from "./pages/Tracking";
-
-
-
-
 
 function App() {
   return (
@@ -61,7 +56,6 @@ function App() {
         <Route path="/products/table" element={<Table />} />
         <Route path="/products/wardrobes" element={<Wardrobes />} />
         <Route path="/products/book" element={<Book />} />
-        
 
         {/* ✅ Product Details Page */}
         <Route path="/product/:productId" element={<ProductDetails />} />
@@ -69,32 +63,32 @@ function App() {
         {/* ✅ About Page */}
         <Route path="/about" element={<About />} />
 
-
         {/* ✅ Terms & Conditions Page */}
         <Route path="/terms-and-conditions" element={<TermsConditions />} />
 
         {/* ✅ Shipping Page */}
-        <Route path="/Shipping-policy" element={<Shipping />} />
+        <Route path="/shipping-policy" element={<Shipping />} /> {/* Changed to lowercase for consistency */}
 
         {/* ✅ Warranty Page */}
-        <Route path="/Warranty" element={<Warranty />} />
+        <Route path="/warranty" element={<Warranty />} /> {/* Changed to lowercase for consistency */}
 
         {/* ✅ Privacy Policy Page */}
-        <Route path="/Privacy-policy" element={<Privacy />} />
+        <Route path="/privacy-policy" element={<Privacy />} /> {/* Changed to lowercase for consistency */}
 
         {/* ✅ FAQ Page */}
-        <Route path="/FAQ" element={<FAQ />} />
+        <Route path="/faq" element={<FAQ />} /> {/* Changed to lowercase for consistency */}
 
         {/* ✅ Cart Page */}
         <Route path="/cart" element={<Cart />} />
 
+        {/* ✅ Login Page */}
         <Route path="/login" element={<LoginPage />} />
 
+        {/* ✅ Checkout Page */}
         <Route path="/checkout" element={<Checkout />} />
 
-        <Route path="/Tracking" element={<Tracking />} />
-
-
+        {/* ✅ Tracking Page */}
+        <Route path="/tracking" element={<Tracking />} /> {/* Changed to lowercase for consistency */}
       </Routes>
 
       {/* ✅ WhatsApp Floating Button */}

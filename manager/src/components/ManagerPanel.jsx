@@ -1,4 +1,3 @@
-// ManagerPanel.jsx
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Link, useNavigate, Navigate } from "react-router-dom";
 import axios from "axios";
@@ -7,7 +6,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./ManagerPanel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-// Pages
+import { FaUserEdit, FaUserTag, FaSignOutAlt, FaCheck, FaTimes, FaCamera } from "react-icons/fa";
 import Package from "./Package";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
@@ -17,8 +16,6 @@ import Account from "./Account";
 import Feedback from "./Feedback";
 import Review from "./Review";
 import OrderManagement from "./OrderManagement";
-
-import { FaUserEdit, FaUserTag, FaSignOutAlt, FaCheck, FaTimes, FaCamera } from "react-icons/fa";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -54,16 +51,12 @@ const Sidebar = ({ onLogout }) => {
     if (!profilePicFile) return;
     const formData = new FormData();
     formData.append("profilePic", profilePicFile);
-  
+
     try {
-      const res = await axios.put(
-        `http://localhost:8000/api/managers/${manager._id}/profile-pic`,
-        formData
-      );
-      // Directly update the manager state with the new profile picture URL
+      const res = await axios.put(`http://localhost:8000/api/managers/${manager._id}/profile-pic`, formData);
       setManager((prevManager) => ({
         ...prevManager,
-        profilePic: res.data.profilePic, // Ensure that this is the Cloudinary URL or correct image path
+        profilePic: res.data.profilePic,
       }));
       setShowProfilePicPopup(false);
       setProfilePicFile(null);
@@ -71,10 +64,9 @@ const Sidebar = ({ onLogout }) => {
       alert("Failed to update profile picture");
     }
   };
-  
+
   const handleAdminLogin = async () => {
-    const ports = [ 3002, 3000];
-  
+    const ports = [3002, 3000];
     for (let port of ports) {
       const url = `http://localhost:${port}`;
       try {
@@ -87,32 +79,27 @@ const Sidebar = ({ onLogout }) => {
         console.log(`Server on port ${port} is not available.`);
       }
     }
-  
+
     alert("None of the Admin Login servers (3001, 3002, 3000) are available.");
   };
-  
 
   return (
     <>
       <div className="sidebar">
-        {/* <h2>Manager Panel</h2> */}
-
         {manager && (
-  <div
-    className="top-profile"
-    onClick={() => setShowPopup(true)}
-    style={{ cursor: "pointer" }}
-  >
-    <img
-      src="https://cdn-icons-png.flaticon.com/512/149/149071.png" // Dummy user icon
-      alt="User Icon"
-      className="manager-avatar"
-    />
-    <h2 className="managerName">{manager.name}</h2>
-  </div>
-)}
-
-
+          <div
+            className="top-profile"
+            onClick={() => setShowPopup(true)}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+              alt="User Icon"
+              className="manager-avatar"
+            />
+            <h2 className="managerName">{manager.name}</h2>
+          </div>
+        )}
         <ul>
           <li><Link to="/dashboard">Dashboard</Link></li>
           <li><Link to="/dashboard/orderManagement">Order Management</Link></li>
@@ -132,57 +119,56 @@ const Sidebar = ({ onLogout }) => {
           <li><Link to="/dashboard/payment">Payment</Link></li>
           <li><Link to="/dashboard/account">Accounts</Link></li>
           <li><Link to="/dashboard/reviews">Product Reviews</Link></li>
-          
         </ul>
-   <button onClick={handleAdminLogin} className="admin-login">Admin Login</button>
-
-
+        <button onClick={handleAdminLogin} className="admin-login">Admin Login</button>
         <button onClick={onLogout} className="logout-btn">Logout</button>
       </div>
 
-      {/* 🔹 Profile Popup */}
+      {/* Profile Popup */}
       {showPopup && manager && (
         <div className="popup-overlay" onClick={() => setShowPopup(false)}>
           <div className="popup-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-btn" onClick={() => setShowPopup(false)}>✖</button>
-            {/* <img src={manager.profilePic} alt="Manager" className="popup-profile-pic" /> */}
-            <h2>{isEditingName ? (
-              <div className="edit-name-popup">
-                <input
-                  type="text"
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
-                  className="edit-name-input"
-                />
-                <div className="edit-name-actions">
-                  <button className="icon-btn" onClick={async () => {
-                    try {
-                      const res = await axios.put(
-                        `http://localhost:8000/api/managers/${manager._id}/name`,
-                        { name: newName }
-                      );
-                      setManager(res.data);
-                      setIsEditingName(false);
-                    } catch {
-                      alert("Failed to update name");
-                    }
-                  }}><FaCheck /></button>
-                  <button className="icon-btn" onClick={() => setIsEditingName(false)}><FaTimes /></button>
+            <h2>
+              {isEditingName ? (
+                <div className="edit-name-popup">
+                  <input
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="edit-name-input"
+                  />
+                  <div className="edit-name-actions">
+                    <button
+                      className="icon-btn"
+                      onClick={async () => {
+                        try {
+                          const res = await axios.put(
+                            `http://localhost:8000/api/managers/${manager._id}/name`,
+                            { name: newName }
+                          );
+                          setManager(res.data);
+                          setIsEditingName(false);
+                        } catch {
+                          alert("Failed to update name");
+                        }
+                      }}
+                    >
+                      <FaCheck />
+                    </button>
+                    <button
+                      className="icon-btn"
+                      onClick={() => setIsEditingName(false)}
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ) : manager.name}</h2>
-
+              ) : manager.name}
+            </h2>
             <p><strong>Email:</strong> {manager.email}</p>
             <p><strong>Phone:</strong> {manager.phone}</p>
-
             <div className="popup-actions-icon">
-              {/* <button
-                className="icon-btn"
-                onClick={() => setShowProfilePicPopup(true)}
-                title="Edit Profile Picture"
-              >
-                <FaCamera />
-              </button> */}
               <button
                 className="icon-btn"
                 title="Edit Name"
@@ -207,24 +193,6 @@ const Sidebar = ({ onLogout }) => {
           </div>
         </div>
       )}
-
-      {/* 🔹 Profile Picture Update Popup */}
-      {showProfilePicPopup && (
-        <div className="popup-overlay" onClick={() => setShowProfilePicPopup(false)}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <h3>Change Profile Picture</h3>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => setProfilePicFile(e.target.files[0])}
-            />
-            <div className="edit-name-actions">
-              <button className="icon-btn" onClick={handleProfilePicUpload}><FaCheck /></button>
-              <button className="icon-btn" onClick={() => setShowProfilePicPopup(false)}><FaTimes /></button>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 };
@@ -240,14 +208,13 @@ const Dashboard = () => {
       try {
         const [totalRes, deliveredRes, rejectedRes] = await Promise.all([
           axios.get("http://localhost:8000/api/total-orders"),
-          axios.get("http://localhost:8000/api/delivered-orders"),
+          axios.get("http://localhost:8000/api/orders/delivered"),
           axios.get("http://localhost:8000/api/rejected-orders/count"),
         ]);
-  
-        console.log("Delivered Orders Response:", deliveredRes.data);  // Log the response
+
+        console.log("Delivered Orders Response:", deliveredRes.data);
         setTotalOrders(totalRes.data.totalOrders);
-        setDeliveredOrders(deliveredRes.data.deliveredOrders); // ✅ CORRECT
-  
+        setDeliveredOrders(deliveredRes.data.length || 0); // ✅ Set to the length of the array
         setRejectedOrders(rejectedRes.data.rejectedCount);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -255,7 +222,6 @@ const Dashboard = () => {
     };
     fetchOrders();
   }, []);
-  
 
   const chartData = {
     labels: ["Total Orders", "Delivered Orders", "Rejected Orders"],
@@ -270,9 +236,18 @@ const Dashboard = () => {
       <h1>Dashboard</h1>
       <div className="dashboard-content">
         <div className="cards">
-          <div className="card">Total Orders<br /><span className="count">{totalOrders}</span></div>
-          <div className="card">Delivered Orders<br /><span className="count">{deliveredOrders}</span></div>
-          <div className="card">Rejected Orders<br /><span className="count">{rejectedOrders}</span></div>
+          <div className="card">
+            Total Orders<br />
+            <span className="count">{totalOrders}</span>
+          </div>
+          <div className="card">
+            Delivered Orders<br />
+            <span className="count">{deliveredOrders}</span> {/* This should now show the correct count */}
+          </div>
+          <div className="card">
+            Rejected Orders<br />
+            <span className="count">{rejectedOrders}</span>
+          </div>
         </div>
         <div className="chart"><Pie data={chartData} /></div>
       </div>
@@ -313,3 +288,4 @@ const ManagerPanel = () => {
 };
 
 export default ManagerPanel;
+

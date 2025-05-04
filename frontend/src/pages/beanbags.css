@@ -229,7 +229,9 @@
   color: green;
   font-size: 20px;
 }
-
+.rating{
+  font-size: 33px;
+}
 .original-price {
   text-decoration: line-through;
   color: gray;
