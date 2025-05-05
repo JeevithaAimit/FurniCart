@@ -661,4 +661,55 @@ width: 8px;
   margin-left: -380px;
 }
 
+@media (max-width: 768px) {
+  .order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .order-summary thead {
+    display: none; /* Hide table header on mobile */
+  }
+
+  .order-summary tbody,
+  .order-summary tr,
+  .order-summary td {
+    display: block;
+    width: 100%;
+  }
+
+  .order-summary tr {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+
+  .order-summary td {
+    padding: 8px 10px;
+    text-align: left;
+    position: relative;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+
+  .order-summary td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    width: 110px;
+    color: #333;
+  }
+
+  .cart-item-image {
+    max-width: 100px;
+    height: auto;
+    border-radius: 5px;
+  }
+  .save{
+    margin-left: -10px;
+    font-size: 10px;
+  }
+}
 

@@ -1,28 +1,38 @@
+/* General Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container */
 .tracking-container {
   text-align: center;
-  max-width: 500px;
-  margin: 50px auto;
+  max-width: 600px;
+  margin: 20px auto;
   padding: 20px;
   border: 2px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
-  margin-top:10px;
 }
 
+/* Header */
 h2 {
   font-size: 24px;
   margin-bottom: 20px;
 }
 
+/* Input */
 input {
   padding: 10px;
   font-size: 16px;
   margin-bottom: 10px;
-  width: 70%;
+  width: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
 
+/* Button */
 button {
   padding: 10px 20px;
   font-size: 16px;
@@ -32,66 +42,58 @@ button {
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s;
+  margin-top: 10px;
 }
 
 button:hover {
   background-color: #218838;
 }
 
+/* Status Message */
 h3 {
   font-size: 18px;
   margin-top: 20px;
-  opacity: 0; /* Start with text invisible */
-  animation: fadeIn 2s forwards; /* Apply fade-in animation */
+  opacity: 0;
+  animation: fadeIn 2s forwards;
 }
 
 @keyframes fadeIn {
   0% {
-    opacity: 0; /* Start with no opacity */
+    opacity: 0;
   }
   100% {
-    opacity: 1; /* Fade to fully visible */
+    opacity: 1;
   }
 }
 
-/* Truck animation */
-.truck-animation {
+/* Truck Animation */
+.truck-animation, .truck-container {
   margin-top: 20px;
   position: relative;
-  height: 60px;  /* Adjust based on truck image height */
+  height: 60px;
 }
 
 .truck {
   position: absolute;
+  width: 80px;
   bottom: 0;
-  width: 80px;  /* Adjust to truck image size */
-  height: auto;
   animation: truckMove 5s infinite linear;
 }
 
 @keyframes truckMove {
   0% {
-    left: -100px;  /* Start off-screen */
+    left: -100px;
   }
   50% {
-    left: 80%;  /* Move to near the right edge */
+    left: 80%;
   }
   100% {
-    left: 100%;  /* End off-screen */
+    left: 100%;
   }
 }
 
-
-
-
-.tracking-container {
-  text-align: center;
-  padding: 20px;
-}
-
+/* Tracking Bar */
 .tracking-bar-container {
-  width: 100%;
-  text-align: center;
   margin-top: 20px;
 }
 
@@ -110,7 +112,6 @@ h3 {
   transition: width 0.5s ease-in-out;
 }
 
-/* Status Labels */
 .tracking-status {
   display: flex;
   justify-content: space-between;
@@ -121,8 +122,6 @@ h3 {
   font-size: 14px;
   font-weight: bold;
   color: #888;
-  position: relative;
-  padding-bottom: 5px;
 }
 
 .tracking-status .active {
@@ -133,46 +132,26 @@ h3 {
   color: red;
 }
 
-.truck-container {
-  margin-top: 30px;
-  position: relative;
-  height: -10px; /* Adjust the height */
-}
-
-.truck {
-  width: 80px; /* Adjust the size */
-  position: absolute;
-  bottom: 0;
-  animation: truckAnimation 5s infinite linear;
-}
-
-@keyframes truckAnimation {
-  0% {
-    left: -100px; /* Start from left off-screen */
-  }
-  100% {
-    left: 100%; /* Move to the right off-screen */
-  }
-}
+/* Order Items */
 .order-items-container {
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
   justify-content: center;
+  margin-top: 20px;
 }
 
 .order-item-card {
-  width: 120px;
-  text-align: center;
+  width: 140px;
   background: #fff;
   padding: 10px;
   border-radius: 10px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 .order-item-image {
   width: 100%;
-  height: auto;
   border-radius: 5px;
 }
 
@@ -191,6 +170,7 @@ h3 {
   color: #333;
 }
 
+/* Feedback Form */
 .feedback-container {
   margin-top: 20px;
   padding: 15px;
@@ -202,6 +182,7 @@ h3 {
 .rating {
   display: flex;
   gap: 5px;
+  justify-content: center;
   margin-bottom: 10px;
 }
 
@@ -215,6 +196,7 @@ h3 {
   color: gold;
 }
 
+/* Text Area */
 textarea {
   width: 100%;
   height: 80px;
@@ -224,21 +206,7 @@ textarea {
   border-radius: 5px;
 }
 
-button {
-  margin-top: 10px;
-  padding: 10px 15px;
-  background: #28a745;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-button:hover {
-  background: #218838;
-}
-
-/* Dropdown Styling */
+/* Dropdown */
 select {
   width: 100%;
   padding: 10px;
@@ -248,26 +216,17 @@ select {
   background-color: #fff;
   color: #333;
   cursor: pointer;
-  outline: none;
   transition: border-color 0.3s ease-in-out;
+  margin-top: 10px;
 }
 
-select:hover {
-  border-color: #007bff;
-}
-
+select:hover,
 select:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-/* Option Styling */
-select option {
-  background-color: #fff;
-  color: #333;
-  padding: 10px;
-}
-
+/* Feedback Popup */
 .feedback-popup-overlay {
   position: fixed;
   top: 0;
@@ -285,9 +244,8 @@ select option {
   background: white;
   padding: 20px;
   border-radius: 10px;
-  width: 400px;
-  /* margin-top: 120px; */
-  margin-left: 1030px;
+  width: 90%;
+  max-width: 400px;
   text-align: center;
   position: relative;
   animation: fadeIn 0.3s ease-in-out;
@@ -301,44 +259,57 @@ select option {
   cursor: pointer;
 }
 
-.rating {
-  margin: 10px 0;
+/* Responsive Media Queries */
+@media (max-width: 768px) {
+  .tracking-container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+  }
+
+  .order-item-card {
+    width: 45%;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+
+  .truck {
+    width: 60px;
+  }
+
+  .feedback-popup {
+    margin: 0;
+    width: 90%;
+  }
 }
 
-.star {
-  font-size: 25px;
-  cursor: pointer;
-  color: #ccc;
-  transition: color 0.2s;
-}
+@media (max-width: 480px) {
+  .order-item-card {
+    width: 100%;
+  }
 
-.star.filled {
-  color: gold;
-}
+  .rating {
+    flex-wrap: wrap;
+  }
 
-textarea, select {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-}
+  .star {
+    font-size: 20px;
+  }
 
-button {
-  background: #28a745;
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
+  input,
+  textarea,
+  select {
+    font-size: 14px;
+  }
 
-button:hover {
-  background: #218838;
-}
+  button {
+    font-size: 14px;
+    padding: 8px 12px;
+  }
 
-/* Fade-in animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  .truck {
+    width: 50px;
+  }
 }

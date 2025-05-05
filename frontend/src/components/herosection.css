@@ -69,3 +69,9 @@
 .btn a{
   background-color: red;
 }
+
+@media screen and (max-width: 768px) {
+  .hero h2 span{
+    font-size: 30px;
+  }
+}

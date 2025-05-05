@@ -617,3 +617,123 @@
   display: flex;
   align-items: center;
 }
+
+/* Bouncing Animation */
+@keyframes iconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Mobile View - Hide Nav Links and Move Categories to Sidebar */
+@media screen and (max-width: 768px) {
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-links {
+    display: none; /* Hide nav links on mobile */
+  }
+
+  .sidebar .category-links {
+    display: block; /* Show category links in sidebar */
+  }
+
+  .menu-icon {
+    display: block; /* Show menu icon */
+      margin-top: -40px;
+    margin-right: -20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    left: -100%;
+    z-index: 1001;
+    padding-top: 50px;
+  }
+
+  .sidebar.show {
+    left: 0;
+  }
+
+  .sidebar a {
+    font-size: 16px;
+    padding: 20px;
+  }
+
+  .sidebar .close-btn {
+    font-size: 30px;
+  }
+}
+
+/* Mobile View - Show Menu Icon */
+@media screen and (max-width: 576px) {
+  .navbar {
+    flex-direction: column;
+  }
+
+  .sidebar a {
+    padding: 18px;
+  }
+
+  .menu-icon {
+    display: block;
+    font-size: 30px;
+    margin-left: auto;
+    
+  }
+
+  .cart-icon {
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+  .menu-icon {
+    display: block;
+    font-size: 26px;
+    cursor: pointer;
+    margin-top: -40px;
+    
+  }
+  
+  .icons{
+    margin-left: -30px;
+  }
+  .sidebar.show {
+    left: 0;
+  }
+}
+
+/* Sidebar Menu Toggle */
+@media screen and (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .menu-icon {
+    display: block;
+    font-size: 26px;
+    cursor: pointer;
+    margin-top: -40px;
+    margin-right: -20px;
+  }
+  
+  .icons{
+    margin-left: -30px;
+  }
+  .sidebar.show {
+    left: 0;
+  }
+
+
+  /* .navbar .nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  } */
+}

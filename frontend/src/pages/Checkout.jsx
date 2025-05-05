@@ -504,23 +504,25 @@ const CheckOut = () => {
               </tr>
             </thead>
             <tbody>
-              {cart.map((item) => (
-                <tr key={item.id}>
-                  <td>
-                    <img
-                      src={item.image ?? "https://via.placeholder.com/100"}
-                      alt={item.name || "Product Image"}
-                      className="cart-item-image"
-                    />
+  {cart.map((item) => (
+    <tr key={item.id}>
+      <td data-label="Image">
+        <img
+          src={item.image ?? "https://via.placeholder.com/100"}
+          alt={item.name || "Product Image"}
+          className="cart-item-image"
+        />
+      </td>
+      <td data-label="Product">{item.name}</td>
+      <td data-label="Category">{item.category}</td>
+      <td data-label="Qty">{item.quantity}</td>
+      <td data-label="Price (₹)">
+        {item.discountPrice ? item.discountPrice.toFixed(2) : "N/A"}
+      </td>
+    </tr>
+  ))}
+</tbody>
 
-                  </td>
-                  <td>{item.name}</td>
-                  <td>{item.category}</td>
-                  <td>{item.quantity}</td>
-                  <td>{item.discountPrice ? item.discountPrice.toFixed(2) : "N/A"}</td>
-                </tr>
-              ))}
-            </tbody>
 
           </table>
           <div className="totals">

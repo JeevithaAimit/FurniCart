@@ -9,13 +9,15 @@ font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans
 text-align: center;
 }
 
-
+.recent-products{
+  padding: 50px;
+}
 .product-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 4 cards per row */
   gap: 20px;
   justify-items: center;
-  padding: 20px;
+  padding: 60px;
 }
 
 

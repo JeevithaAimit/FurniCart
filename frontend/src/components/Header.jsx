@@ -382,6 +382,7 @@ const [showCartItems, setShowCartItems] = useState(false);
         <Link to="/products/Table" onClick={() => setSidebar(false)}>Study Table </Link>
         <Link to="/products/Wardrobes" onClick={() => setSidebar(false)}>Wardrobes </Link>
         <Link to="/products/Book" onClick={() => setSidebar(false)}>Book Shelfs </Link>
+        <a href="/tracking" className="track-icon"><FaTruck /></a>
 
       </div>
 

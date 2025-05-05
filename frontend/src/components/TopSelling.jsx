@@ -1,6 +1,6 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import { FaShoppingCart, FaHeart, FaStar, FaRegStar } from "react-icons/fa";
 import "./topselling.css";
 
@@ -9,6 +9,7 @@ const BASE_URL = "http://localhost:5000";
 const TopSelling = () => {
   const [recentProducts, setRecentProducts] = useState([]);
   const [favorites, setFavorites] = useState(new Set());
+  const navigate = useNavigate(); // ✅ Fix: useNavigate for navigation
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,7 +26,9 @@ const TopSelling = () => {
   const toggleFavorite = (productId) => {
     setFavorites((prevFavorites) => {
       const newFavorites = new Set(prevFavorites);
-      newFavorites.has(productId) ? newFavorites.delete(productId) : newFavorites.add(productId);
+      newFavorites.has(productId)
+        ? newFavorites.delete(productId)
+        : newFavorites.add(productId);
       return newFavorites;
     });
   };
@@ -77,7 +80,9 @@ const TopSelling = () => {
                 {product.discountPrice ? (
                   <>
                     <span className="original-price">₹{product.price}</span>
-                    <span className="discount-price">₹{product.discountPrice}</span>
+                    <span className="discount-price">
+                      ₹{product.discountPrice}
+                    </span>
                   </>
                 ) : (
                   <span>₹{product.price}</span>
@@ -106,7 +111,7 @@ const TopSelling = () => {
             </div>
           ))
         ) : (
-          <p>No products available</p> // Display a message if no products are found
+          <p>No products available</p>
         )}
       </div>
     </section>
