@@ -374,3 +374,131 @@ button:hover {
   font-weight: bold;
   color: #444;
 }
+/* Tablet Screen (max-width: 992px) */
+@media (max-width: 992px) {
+  .addProduct {
+    padding: 20px;
+    margin: 10px;
+  }
+
+  .form-section {
+    padding: 15px;
+  }
+
+  .product-table th,
+  .product-table td {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .modal-content {
+    width: 90%;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .modal-sub-image {
+    width: 80px;
+    height: 80px;
+  }
+
+  .pagination button {
+    padding: 5px 10px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile Screen (max-width: 768px) */
+
+@media (max-width: 768px) {
+  .addProduct {
+    padding: 15px;
+    margin: 10px;
+  }
+
+  h2 {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .form-section {
+    padding: 10px;
+  }
+
+  .form-section h3 {
+    font-size: 16px;
+  }
+
+  input,
+  select,
+  textarea {
+    font-size: 14px;
+    padding: 10px;
+    width: 100%;
+  }
+
+  .product-table {
+    font-size: 14px;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .product-table th,
+  .product-table td {
+    white-space: nowrap;
+    padding: 10px;
+  }
+
+  .filter-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .search-input,
+  .category-dropdown {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .view-btn-details {
+    width: auto;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .modal-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .modal-sub-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .alert {
+    width: 90%;
+    top: 15px;
+    right: 5%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .close-btn {
+    font-size: 18px;
+  }
+}

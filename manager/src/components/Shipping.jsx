@@ -51,7 +51,7 @@ const Shipping = () => {
       <h1 className="title">Shipped Orders</h1>
 
       <div className="search-container">
-        <FaSearch className="search-icon" />
+        {/* <FaSearch className="search-icon" /> */}
         <input
           type="text"
           placeholder="Search by Order ID"

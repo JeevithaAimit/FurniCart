@@ -444,7 +444,8 @@ app.get("/orders", async (req, res) => {
       items: order.items.map((item) => ({
         productName: item.productName,
         quantity: item.quantity,
-        price: item.price
+        price: item.price,
+        mainImage:item.mainImage
       }))
     }));
 

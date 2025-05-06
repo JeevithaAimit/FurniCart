@@ -171,14 +171,23 @@
     background-color: blue;
     color: white;
   }
+
+  .status.packed {
+    background-color: rgb(90, 5, 79);
+    color: white;
+  }
   
   .status.shipped {
-    background-color: red;
+    background-color: rgb(128, 128, 5);
     color: white;
   }
   
   .status.delivered {
     background-color: green;
+    color: white;
+  }
+  .status.rejected {
+    background-color: rgb(212, 28, 28);
     color: white;
   }
   
@@ -211,6 +220,33 @@
     color: white;
   }
   
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    gap: 6px;
+}
+
+.pagination button {
+    padding: 6px 12px;
+    border: none;
+    background: #eee;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.pagination button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
   /* Responsive Design */
   @media (max-width: 1024px) {
     .order-table {

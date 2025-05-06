@@ -151,7 +151,7 @@ const Package = () => {
       <h1 className="title">Order List</h1>
 
       <div className="search-container">
-        <FaSearch className="search-icon" />
+        {/* <FaSearch className="search-icon" /> */}
         <input
           type="text"
           placeholder="Search by Order ID"

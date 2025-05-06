@@ -20,7 +20,7 @@ import OrderManagement from "./OrderManagement";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // 🔹 Sidebar
-const Sidebar = ({ onLogout }) => {
+const Sidebar = ({ onLogout, onClose }) => {
   const [ordersDropdown, setOrdersDropdown] = useState(false);
   const [manager, setManager] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -86,6 +86,7 @@ const Sidebar = ({ onLogout }) => {
   return (
     <>
       <div className="sidebar">
+      <button className="close-sidebar-btn" onClick={onClose}>✖</button>
         {manager && (
           <div
             className="top-profile"
@@ -258,6 +259,8 @@ const Dashboard = () => {
 // 🔹 Manager Panel
 const ManagerPanel = () => {
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
 
   const handleLogout = () => {
     localStorage.clear();
@@ -266,7 +269,16 @@ const ManagerPanel = () => {
 
   return (
     <div className="manager-panel">
-      <Sidebar onLogout={handleLogout} />
+ {/* Show the sidebar if sidebarOpen is true */}
+ {sidebarOpen && <Sidebar onLogout={handleLogout} onClose={() => setSidebarOpen(false)} />}
+
+{/* Button to open the sidebar on mobile */}
+{!sidebarOpen && (
+  <button className="open-sidebar-btn" onClick={() => setSidebarOpen(true)}>
+    ☰
+  </button>
+)}
+
       <div className="content">
         <Routes>
           <Route path="/" element={<Dashboard />} />

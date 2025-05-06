@@ -456,3 +456,183 @@ button:disabled {
   font-weight: bold;
   color: #999;
 }
+/* Phones (480px and below) */
+@media (max-width: 480px) {
+  .popup-overlay {
+    background: rgba(0, 0, 0, 0.7); /* Darker overlay for better visibility */
+  }
+
+  .popup-box,
+  .view-popup,
+  .popup-boxButton {
+    width: 90%; /* Adjust the width to 90% for smaller popups */
+    padding: 10px;
+    border-radius: 8px; /* Slightly rounded corners */
+    max-width: 320px; /* Limit the maximum width for smaller screens */
+    margin: auto; /* Center the popup */
+  }
+
+  .popup-buttons {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center; /* Center buttons for better mobile view */
+  }
+
+  .popup-buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px; /* Consistent button rounding */
+  }
+
+  .item-card {
+    max-width: 100%; /* Cards will take full width */
+    padding: 8px; /* Some padding around items */
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: #333;
+  }
+
+  .title {
+    font-size: 18px;
+    margin-bottom: 10px; /* Adjust margin for small screens */
+  }
+
+  .search-bar,
+  .date-filter {
+    font-size: 14px;
+    padding: 8px;
+    width: 100%; /* Ensure search bar takes full width */
+  }
+
+  /* Pagination adjustments */
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .page-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .popup-box .close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+
+  .content{
+    width: 1100px;
+  }
+  .popup-overlay {
+    background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+  }
+  
+  .search-container{
+    width: 50%;
+  }
+
+  .date-filter{
+    width: 100%;
+  }
+  .popup-box,
+  .view-popup,
+  .popup-boxButton {
+    width: 85%; /* Slightly smaller for tablet */
+    padding: 15px;
+    max-width: 450px; /* Limit max width */
+    margin: auto; /* Center the popup */
+    margin-left: 550px;
+    margin-top: 170px;
+  }
+
+  .popup-buttons {
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    margin-left: -5px;
+  }
+
+  .popup-buttons button {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .item-card {
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .orders-table {
+    font-size: 12px;
+    
+  }
+
+  .popup-box .close-btn {
+    top: 10px;
+    right: 15px;
+  }
+
+  /* Table container with horizontal scroll for tablets */
+  .popup-box .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling */
+    margin-top: 15px;
+  }
+
+  .popup-box .orders-table {
+    width: 100%;
+    table-layout: fixed; /* Fixed layout for table */
+  }
+
+  .popup-box .orders-table th,
+  .popup-box .orders-table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+  }
+}
+/* Large Screen (Desktop) */
+@media (min-width: 1024px) {
+  .popup-box {
+    width: 40%; /* Keep popup moderate size for desktop */
+  }
+
+  .view-popup {
+    width: 50%;
+  }
+
+  .pagination {
+    justify-content: flex-start;
+  }
+}
+
+/* Ultra Large Screen (Large Desktop) */
+@media (min-width: 1440px) {
+  .popup-box {
+    width: 35%; /* Smaller for ultra-large screens */
+  }
+
+  .view-popup {
+    width: 45%;
+  }
+}

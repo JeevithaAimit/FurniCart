@@ -116,4 +116,78 @@
       white-space: nowrap;
     }
   }
-  
+  /* ✅ Tablet & Small Screens (≤768px) */
+@media (max-width: 768px) {
+  .payment-container {
+    padding: 15px;
+    margin: 15px;
+    border-radius: 8px;
+  }
+
+  .payment-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .payment-table th:nth-child(7),
+  .payment-table td:nth-child(7) {
+    width: 300px;
+  }
+
+  .pagination {
+    flex-wrap: wrap;
+  }
+
+  .pagination button {
+    margin: 5px;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .no-data {
+    font-size: 14px;
+    padding: 15px;
+  }
+}
+
+/* ✅ Mobile Screens (≤480px) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+  }
+
+  .payment-container {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 6px;
+  }
+
+  .payment-table th,
+  .payment-table td {
+    font-size: 12px;
+    padding: 8px 10px;
+  }
+
+  .payment-table th:nth-child(7),
+  .payment-table td:nth-child(7) {
+    width: 250px;
+  }
+
+  .pagination button {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+
+  .no-data {
+    font-size: 13px;
+    padding: 10px;
+  }
+}

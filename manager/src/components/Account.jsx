@@ -13,6 +13,16 @@ const AccountPage = () => {
     const [selectedCategory, setSelectedCategory] = useState("");
     const [categoryOrders, setCategoryOrders] = useState([]);
 
+    const [currentPage, setCurrentPage] = useState(1);
+const recordsPerPage = 4;
+
+// Calculate pagination data
+const indexOfLastRecord = currentPage * recordsPerPage;
+const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+const currentRecords = categoryOrders.slice(indexOfFirstRecord, indexOfLastRecord);
+const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
+
+
     // Fetch Order Summary
     useEffect(() => {
         const fetchOrderSummary = async () => {
@@ -29,6 +39,7 @@ const AccountPage = () => {
     // Fetch Orders by Selected Category
     useEffect(() => {
         if (selectedCategory) {
+            setCurrentPage(1); // Reset to first page
             axios.get(`http://localhost:8000/api/orders-by-category/${selectedCategory}`)
                 .then(res => setCategoryOrders(res.data))
                 .catch(err => console.error("Error fetching orders:", err));
@@ -121,6 +132,7 @@ const AccountPage = () => {
 
     {/* Orders Table (Only Shows if a Category is Selected) */}
     {selectedCategory && categoryOrders.length > 0 ? (
+    <>
         <table className="category-orders-table">
             <thead>
                 <tr>
@@ -135,7 +147,7 @@ const AccountPage = () => {
                 </tr>
             </thead>
             <tbody>
-                {categoryOrders.map(order => (
+                {currentRecords.map(order => (
                     <tr key={order.orderId}>
                         <td>{order.orderId}</td>
                         <td>{order.name}</td>
@@ -149,9 +161,38 @@ const AccountPage = () => {
                 ))}
             </tbody>
         </table>
-    ) : selectedCategory && categoryOrders.length === 0 ? (
-        <p>No orders found for this category.</p>
-    ) : null}
+
+        {/* Pagination Controls */}
+        <div className="pagination">
+            <button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                disabled={currentPage === 1}
+            >
+                Prev
+            </button>
+
+            {Array.from({ length: totalPages }, (_, index) => (
+                <button 
+                    key={index + 1}
+                    className={currentPage === index + 1 ? "active" : ""}
+                    onClick={() => setCurrentPage(index + 1)}
+                >
+                    {index + 1}
+                </button>
+            ))}
+
+            <button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+                disabled={currentPage === totalPages}
+            >
+                Next
+            </button>
+        </div>
+    </>
+) : selectedCategory && categoryOrders.length === 0 ? (
+    <p>No orders found for this category.</p>
+) : null}
+
 </div>
 
         </div>

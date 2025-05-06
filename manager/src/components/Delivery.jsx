@@ -51,7 +51,7 @@ const Deliver = () => {
 
       {/* ✅ Search & Date Filter */}
       <div className="search-container">
-        <FaSearch className="search-icon" />
+        {/* <FaSearch className="search-icon" /> */}
         <input
           type="text"
           placeholder="Search by Order ID"
