@@ -31,12 +31,34 @@ body {
 }
 
 .zoom-container {
-  width: 100%;
-  max-width: 400px;
-  height: auto;
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+}
+.carousel-arrow:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+.carousel-arrow.left {
+  left: 8px;
+}
+.carousel-arrow.right {
+  right: 8px;
 }
 
 .main-image {
@@ -155,7 +177,9 @@ body {
   font-size: 16px;
   color: #555;
   margin-bottom: 15px;
+  text-align: justify;
 }
+
 
 /* Quantity Selector */
 .quantity-container {
@@ -184,10 +208,16 @@ body {
   border: none;
   width: 35px;
   height: 35px;
+  display: flex;                
+  justify-content: center;     
+  align-items: center;         
   cursor: pointer;
   font-size: 18px;
   transition: transform 0.3s, background 0.3s;
+  margin: 5px;                    
+  padding: 0;                   
 }
+
 
 .quantity-selector button:hover {
   background: #e64a19;
