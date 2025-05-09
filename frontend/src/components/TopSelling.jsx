@@ -42,7 +42,7 @@ const TopSelling = () => {
       <h2>Recently Added Products</h2>
       <div className="product-grid">
         {recentProducts.length > 0 ? (
-          recentProducts.slice(0, 10).map((product) => (
+          recentProducts.slice(0, 8).map((product) => (
             <div
               key={product._id}
               className="product-card"
@@ -89,7 +89,7 @@ const TopSelling = () => {
                 )}
               </div>
 
-              <div className="rating">
+              {/* <div className="rating">
                 {Array.from({ length: 5 }, (_, i) =>
                   i < (product.rating || 4) ? (
                     <FaStar key={i} className="star filled" />
@@ -97,17 +97,18 @@ const TopSelling = () => {
                     <FaRegStar key={i} className="star" />
                   )
                 )}
-              </div>
+              </div> */}
 
-              <button
-                className="add-to-cart"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleViewProduct(product);
-                }}
-              >
-                <FaShoppingCart /> Add to Cart
-              </button>
+{product.quantity > 0 ? (
+  <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+   ADD TO CART
+  </button>
+) : (
+  <button className="out-of-stock-btn" disabled>
+OUT OF STOCK  
+</button>
+)}
+
             </div>
           ))
         ) : (

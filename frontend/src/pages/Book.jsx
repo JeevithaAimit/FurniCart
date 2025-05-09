@@ -297,7 +297,7 @@ const Bookshelf = () => {
                  <div className="product-grid">
                    {currentProducts.length > 0 ? (
                      currentProducts.map((product) => (
-                       <div key={product._id} className="product-card">
+                       <div key={product._id} className="product-card" onClick={() => handleViewDetails(product._id)}>
                          <div className="wishlist-icon" onClick={() => toggleWishlist(product._id)}>
                            {wishlist[product._id] ? <FaHeart className="heart-icon active" /> : <FaRegHeart className="heart-icon" />}
                          </div>
@@ -306,15 +306,15 @@ const Bookshelf = () => {
                          <div className="price">
                            <span className="discount-price">₹{product.discountPrice}</span>
                            <span className="original-price">₹{product.price}</span>
-                         </div>
+                         </div><br />
        
        
-                         <div className="rating">
+                         {/* <div className="rating">
                        <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalfAlt />
                      <p className="short-description">
-                     {/* {product.description ? product.description.split(" ").slice(0, 20).join(" ") : ""}... */}
+            
                       </p>
-                     </div>
+                     </div> */}
                       {product.quantity === 0 ? (
                                       <button className="outOfStock" disabled>
                                         OUT OF STOCK

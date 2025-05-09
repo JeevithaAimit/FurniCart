@@ -251,7 +251,7 @@ const Chairs = () => {
           <div className="product-grid">
             {currentProducts.length > 0 ? (
               currentProducts.map((product) => (
-                <div key={product._id} className="product-card">
+                <div key={product._id} className="product-card" onClick={() => handleViewDetails(product._id)}>
                   <img src={product.mainImage} alt={product.name} className="product-image" />
                   <h4 className="product-name">{product.name}</h4>
                   <div className="wishlist-icon" onClick={() => toggleWishlist(product._id)}>
@@ -260,13 +260,13 @@ const Chairs = () => {
                   <div className="price">
                     <span className="discount-price">₹{product.discountPrice || product.price}</span>
                     {product.discountPrice && <span className="original-price">₹{product.price}</span>}
-                  </div>
-                  <div className="rating">
+                  </div> <br />
+                  {/* <div className="rating">
                     <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalfAlt />
                   <p className="short-description">
-                    {/* {product.description ? product.description.split(" ").slice(0, 20).join(" ") : ""}... */}
+                   
                   </p>
-                  </div>
+                  </div> */}
                   {product.quantity === 0 ? (
                                       <button className="outOfStock" disabled>
                                         OUT OF STOCK

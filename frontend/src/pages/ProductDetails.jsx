@@ -332,18 +332,21 @@ const ProductDetails = () => {
         </h2>
 
         <div className="stars">
-          {[...Array(4)].map((_, i) => (
-            <FontAwesomeIcon
-              key={i}
-              icon={faStar}
-              className="star-full-star"
-            />
-          ))}
-          <FontAwesomeIcon
-            icon={faStarHalfAlt}
-            className="star-half-star"
-          />
-        </div>
+  {[1, 2, 3, 4, 5].map((i) => {
+    const rating = averageRating || 5; // default to 5 if undefined or 0
+
+    if (rating >= i) {
+      return <FontAwesomeIcon key={i} icon={faStar} className="star-full-star" />;
+    } else if (rating >= i - 0.5) {
+      return <FontAwesomeIcon key={i} icon={faStarHalfAlt} className="star-half-star" />;
+    } else {
+      return <FontAwesomeIcon key={i} icon={faStar} className="star-empty-star" style={{ color: "#ccc" }} />;
+    }
+  })}
+  {/* <span className="average-rating-text">({(averageRating || 5).toFixed(1)}/5)</span> */}
+</div>
+
+
 
         <h3 className="desc-heading">Description</h3>
         <p className="description">{product.description}</p>

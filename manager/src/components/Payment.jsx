@@ -3,9 +3,12 @@ import "./payment.css";
 
 const Payment = () => {
   const [payments, setPayments] = useState([]);
+  const [filteredPayments, setFilteredPayments] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 10;
-  
+  const recordsPerPage = 8; // Display 8 records per page
+  const [searchTerm, setSearchTerm] = useState("");
+  // const [selectedDate, setSelectedDate] = useState("");
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
 
   useEffect(() => {
     fetchPayments();
@@ -16,7 +19,7 @@ const Payment = () => {
       const response = await fetch("http://localhost:8000/api/payments");
       if (!response.ok) throw new Error("Failed to fetch payments");
       const data = await response.json();
-      console.log("🔹 Payment Data:", data); // ✅ Debug API Response
+      console.log("🔹 Payment Data:", data); // Debug API Response
 
       // Filter out payments where orderId or essential details are missing
       const filteredPayments = data.filter((payment) => 
@@ -33,20 +36,76 @@ const Payment = () => {
       );
 
       setPayments(filteredPayments);
+      setFilteredPayments(filteredPayments);
     } catch (error) {
       console.error("❌ Error fetching payments:", error);
       setPayments([]);
     }
   };
 
+  // Filtering function
+  const filterPayments = () => {
+    let filtered = [...payments];
+
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (payment) =>
+          payment.orderId?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          payment.orderId?._id.includes(searchTerm)
+      );
+    }
+
+
+
+    if (selectedPaymentMethod) {
+      filtered = filtered.filter(
+        (payment) => payment.paymentMethod === selectedPaymentMethod
+      );
+    }
+
+    setFilteredPayments(filtered);
+  };
+
+  useEffect(() => {
+    filterPayments();
+  }, [searchTerm, selectedPaymentMethod]);
+
   const indexOfLastRecord = currentPage * recordsPerPage;
-const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-const currentRecords = payments.slice(indexOfFirstRecord, indexOfLastRecord);
-const totalPages = Math.ceil(payments.length / recordsPerPage);
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  const currentRecords = filteredPayments.slice(indexOfFirstRecord, indexOfLastRecord);
+  const totalPages = Math.ceil(filteredPayments.length / recordsPerPage);
 
   return (
     <div className="payment-container">
       <h1>Payment Details</h1>
+
+      <div className="search-dropdown-container">
+  {/* Search Bar */}
+  <input
+          type="text"
+          placeholder="Search by Order ID or Name"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+        />
+
+  {/* Dropdown for Payment Method Filter */}
+  <div className="payment-method-filter">
+    <label htmlFor="payment-method">Payment Method:</label>
+    <select
+      id="payment-method"
+      value={selectedPaymentMethod}
+      onChange={(e) => setSelectedPaymentMethod(e.target.value)}
+    >
+      <option value="">All Payment Methods</option>
+      <option value="Credit Card">Credit Card</option>
+      <option value="UPI">UPI</option>
+      <option value="Cash on Delivery">Cash on Delivery</option>
+    </select>
+  </div>
+</div>
+
+
       <table className="payment-table">
         <thead>
           <tr>
@@ -59,8 +118,8 @@ const totalPages = Math.ceil(payments.length / recordsPerPage);
           </tr>
         </thead>
         <tbody>
-          {payments.length > 0 ? (
-            payments.map((payment) => (
+          {currentRecords.length > 0 ? (
+            currentRecords.map((payment) => (
               <tr key={payment._id}>
                 <td><strong>{payment.orderId?._id}</strong></td>
                 <td>{payment.orderId?.name}</td>
@@ -97,33 +156,32 @@ const totalPages = Math.ceil(payments.length / recordsPerPage);
       </table>
 
       <div className="pagination">
-  <button
-    onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-    disabled={currentPage === 1}
-    className="nav-button"
-  >
-    Prev
-  </button>
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="nav-button"
+        >
+          Prev
+        </button>
 
-  {Array.from({ length: totalPages }, (_, index) => (
-    <button
-      key={index + 1}
-      onClick={() => setCurrentPage(index + 1)}
-      className={currentPage === index + 1 ? "active-page" : ""}
-    >
-      {index + 1}
-    </button>
-  ))}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            onClick={() => setCurrentPage(index + 1)}
+            className={currentPage === index + 1 ? "active-page" : ""}
+          >
+            {index + 1}
+          </button>
+        ))}
 
-  <button
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-    className="nav-button"
-  >
-    Next
-  </button>
-</div>
-
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className="nav-button"
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };

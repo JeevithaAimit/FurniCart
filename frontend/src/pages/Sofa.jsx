@@ -274,7 +274,7 @@ const Sofa = () => {
               console.log("Discount Price:", product.discountPrice);
               console.log("Price:", product.price);
               return (
-                <div key={product._id} className="product-card">
+                <div key={product._id} className="product-card" onClick={() => handleViewDetails(product._id)}>
                   <div className="wishlist-icon" onClick={() => toggleWishlist(product._id)}>
                     {wishlist[product._id] ? <FaHeart className="heart-icon active" /> : <FaRegHeart className="heart-icon" />}
                   </div>
@@ -288,13 +288,12 @@ const Sofa = () => {
                       ₹{product.price ?? "N/A"}
                     </span>
                   </div>
-
-                  <div className="rating">
+                <br />
+                  {/* <div className="rating">
                     <FaStar /><FaStar /><FaStar /><FaStar /><FaStarHalfAlt />
-                  {/* <p className="short-description">
-                    {product.description ? product.description.split(" ").slice(0, 20).join(" ") : ""}
-                  </p> */} <br /> <br />
-                  </div>
+               
+                   <br /> <br />
+                  </div> */}
                   {product.quantity === 0 ? (
                   <button className="outOfStock" disabled>
                     OUT OF STOCK

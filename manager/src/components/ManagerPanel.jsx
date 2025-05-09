@@ -17,6 +17,7 @@ import Feedback from "./Feedback";
 import Review from "./Review";
 import OrderManagement from "./OrderManagement";
 
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // 🔹 Sidebar
@@ -30,6 +31,8 @@ const Sidebar = ({ onLogout, onClose }) => {
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
+  const [financeDropdown, setFinanceDropdown] = useState(false);
+
 
   const fetchManagerData = async () => {
     const managerId = localStorage.getItem("managerId");
@@ -102,25 +105,38 @@ const Sidebar = ({ onLogout, onClose }) => {
           </div>
         )}
         <ul>
-          <li><Link to="/dashboard">Dashboard</Link></li>
-          <li><Link to="/dashboard/orderManagement">Order Management</Link></li>
-          <li className="dropdown">
-            <button onClick={() => setOrdersDropdown(!ordersDropdown)} className="dropdown-btn">
-              Our Orders ▼
-            </button>
-            {ordersDropdown && (
-              <ul className="dropdown-menu">
-                <li><Link to="/dashboard/package">Package</Link></li>
-                <li><Link to="/dashboard/shipping">Shipping</Link></li>
-                <li><Link to="/dashboard/delivered">Delivered</Link></li>
-              </ul>
-            )}
-          </li>
-          <li><Link to="/dashboard/feedback">Feedback</Link></li>
-          <li><Link to="/dashboard/payment">Payment</Link></li>
-          <li><Link to="/dashboard/account">Accounts</Link></li>
-          <li><Link to="/dashboard/reviews">Product Reviews</Link></li>
-        </ul>
+  <li><Link to="/dashboard">Dashboard</Link></li>
+  <li><Link to="/dashboard/orderManagement">Order Management</Link></li>
+  
+  <li className="dropdown">
+    <button onClick={() => setOrdersDropdown(!ordersDropdown)} className="dropdown-btn">
+      Our Orders ▼
+    </button>
+    {ordersDropdown && (
+      <ul className="dropdown-menu">
+        <li><Link to="/dashboard/package">Package</Link></li>
+        <li><Link to="/dashboard/shipping">Shipping</Link></li>
+        <li><Link to="/dashboard/delivered">Delivered</Link></li>
+      </ul>
+    )}
+  </li>
+
+  <li className="dropdown">
+    <button onClick={() => setFinanceDropdown(!financeDropdown)} className="dropdown-btn">
+      Finance ▼
+    </button>
+    {financeDropdown && (
+      <ul className="dropdown-menu">
+        <li><Link to="/dashboard/account">Our Accounts</Link></li>
+        <li><Link to="/dashboard/payment">Customer Payment</Link></li>
+      </ul>
+    )}
+  </li>
+
+  <li><Link to="/dashboard/feedback">Feedback</Link></li>
+  <li><Link to="/dashboard/reviews">Product Reviews</Link></li>
+</ul>
+
         <button onClick={handleAdminLogin} className="admin-login">Admin Login</button>
         <button onClick={onLogout} className="logout-btn">Logout</button>
       </div>

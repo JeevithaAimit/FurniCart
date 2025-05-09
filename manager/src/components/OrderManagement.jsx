@@ -49,15 +49,22 @@ const Package = () => {
     const closeViewPopup = () => setViewOrder(null);
 
     const filteredOrders = orders.filter((order) => {
+        // Match by order ID or customer name
         const orderIdMatch = order._id.toLowerCase().includes(searchQuery.toLowerCase());
+        const customerNameMatch = (order.name || "").toLowerCase().includes(searchQuery.toLowerCase());
+    
+        // Match by order date if searchDate is set
         const orderDate = order.createdAt ? new Date(order.createdAt).toISOString().split("T")[0] : "";
         const orderDateMatch = searchDate ? orderDate === searchDate : true;
+    
+        // Match by status filter
         const statusMatch =
-        statusFilter === "All" || (order.status && order.status.toLowerCase() === statusFilter.toLowerCase());
-
-        return orderIdMatch && orderDateMatch && statusMatch;
-
+            statusFilter === "All" || (order.status && order.status.toLowerCase() === statusFilter.toLowerCase());
+    
+        // Combine all the filters
+        return (orderIdMatch || customerNameMatch) && orderDateMatch && statusMatch;
     });
+    
 
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
@@ -114,7 +121,7 @@ const Package = () => {
             <div className="search-container">
                 <input
                     type="text"
-                    placeholder="Search by Order ID"
+                    placeholder="Search by Order ID or Name"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="search-bar"
