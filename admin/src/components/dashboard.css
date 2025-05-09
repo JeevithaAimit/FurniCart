@@ -49,6 +49,7 @@ body {
     /* justify-content: center; */
     font-size: 16px;
     gap: 8px; /* Space between icon and text */
+    margin-left: 23px;
   }
   
   .logout-btn:hover {
@@ -90,7 +91,7 @@ body {
 }
 
 /* Sidebar Button (Styled Like a Menu Item) */
-.sidebar-btn {
+.sidebar.open .sidebar-btn {
     background: none;
     border: none;
     color: white;
@@ -100,11 +101,28 @@ body {
     cursor: pointer;
     padding: 12px;
     transition: background 0.3s ease, color 0.3s ease;
+    margin-left: 14px;
+    /* margin-top: 31px; */
 }
 
-.sidebar-btn:hover {
+.manager-btn{
+    margin-left: 26px;
+    margin-top: 30px;
     background: none;
-    color: #00c6ff;
+    border: none;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    padding: 12px;
+    
+    transition: background 0.3s ease, color 0.3s ease;
+}
+.sidebar-btn:hover,
+.manager-btn:hover {
+    background: none;
+    /* color: #00c6ff; */
 }
 
 .sidebar ul li a {

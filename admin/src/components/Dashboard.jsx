@@ -110,16 +110,19 @@ const Dashboard = () => {
       >
         {section.charAt(0).toUpperCase() + section.slice(1)} {/* Optional: You can make this friendlier */}
       </button>
+      
     </li>
+    
   ))}
-</ul><br /> <br /> <br /> <br />
-        <button
-          className="sidebar-btn"
+   <button
+          className="manager-btn"
           onClick={() => window.open("http://localhost:3001/", "_blank")}
         >
            Manager Login
         </button>
 
+</ul><br /> <br /> <br /> <br />
+       
         <button className="logout-btn" onClick={handleLogout}>
          Logout
         </button>
