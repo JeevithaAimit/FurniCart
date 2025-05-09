@@ -4,6 +4,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./ProductDetails.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 import {
   faStar,
   faStarHalfAlt,
@@ -17,11 +21,13 @@ import "react-toastify/dist/ReactToastify.css";
 import { formatDistanceToNow } from "date-fns";
 import RatingBars from "../components/RatingBars";
 
+
+
 const ProductDetails = () => {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { addToCart } = useCart();
-
+  const [showAllReviews, setShowAllReviews] = useState(false);
   const [product, setProduct] = useState(null);
   // ← track by index instead of URL
   const [imageIndex, setImageIndex] = useState(0);
@@ -87,6 +93,11 @@ const ProductDetails = () => {
   const handleDecrease = () => {
     setQuantity((q) => Math.max(q - 1, 1));
   };
+
+  const averageRating =
+  reviews.length > 0
+    ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length
+    : 0;
 
   // Add to Cart
   const handleAddToCart = () => {
@@ -239,43 +250,70 @@ const ProductDetails = () => {
         )}
 
         {/* ========== ALL REVIEWS ========== */}
-        <div className="all-reviews">
-          <h3>Customer Reviews</h3>
-          {reviews.length > 0 && <RatingBars reviews={reviews} />}
-          {reviews.filter((r) => r.status === "Ordered" || r.status === "Success")
-            .length === 0 ? (
-            <p>No verified reviews yet.</p>
-          ) : (
-            reviews
-              .filter((r) => r.status === "Ordered" || r.status === "Success")
-              .map((rev, i) => (
-                <div key={i} className="review-item">
-                  <div className="review-header">
-                    <strong>{rev.customerName}</strong>
-                    <div className="review-stars-time">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <span
-                          key={s}
-                          className={
-                            s <= rev.rating ? "star filled" : "star"
-                          }
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <p className="review-text">"{rev.review}"</p>
-                  <span className="review-time">
-                    {formatDistanceToNow(new Date(rev.createdAt), {
-                      addSuffix: true,
-                    })}
+       {/* ========== ALL REVIEWS ========== */}
+<div className="all-reviews">
+  <h3>Customer Reviews</h3>
+
+  {reviews.length > 0 && <RatingBars reviews={reviews} />}
+
+  {reviews.filter((r) => r.status === "Ordered" || r.status === "Success").length === 0 ? (
+    <p>No verified reviews yet.</p>
+  ) : (
+    <>
+      {reviews
+        .filter((r) => r.status === "Ordered" || r.status === "Success")
+        .slice(0, showAllReviews ? reviews.length : 1)
+        .map((rev, i) => (
+          <div key={i} className="review-item">
+            <div className="review-header">
+              <strong>{rev.customerName}</strong>
+              <div className="review-stars-time">
+                {[1, 2, 3, 4, 5].map((s) => (
+                  <span key={s} className={s <= rev.rating ? "star filled" : "star"}>
+                    ★
                   </span>
-                </div>
-              ))
+                ))}
+              </div>
+            </div>
+            <p className="review-text">"{rev.review}"</p>
+            <span className="review-time">
+              {formatDistanceToNow(new Date(rev.createdAt), { addSuffix: true })}
+            </span>
+          </div>
+        ))}
+
+      {reviews.filter((r) => r.status === "Ordered" || r.status === "Success").length > 2 && (
+      <button className="view-more-btn" onClick={() => setShowAllReviews(!showAllReviews)}>
+          {showAllReviews ? (
+            <>
+              View Less <FontAwesomeIcon icon={faChevronUp} />
+            </>
+          ) : (
+            <>
+              View More <FontAwesomeIcon icon={faChevronDown} />
+            </>
           )}
-        </div>
+        </button>
+      )}
+    </>
+  )}
+</div>
+
       </div>
+      {/* <div className="average-rating-circle">
+  <CircularProgressbar
+    value={averageRating * 20} // Convert rating (out of 5) to percentage
+    text={`${averageRating.toFixed(1)}/5`}
+    styles={buildStyles({
+      textSize: '16px',
+      pathColor: '#f39c12',
+      textColor: '#333',
+      trailColor: '#eee',
+    })}
+  />
+  <p className="avg-label">Average Rating</p>
+</div> */}
+
 
       {/* ========== PRODUCT INFO ========== */}
       <div className="product-info">
@@ -293,17 +331,17 @@ const ProductDetails = () => {
           </span>
         </h2>
 
-        <div className="rating-stars">
+        <div className="stars">
           {[...Array(4)].map((_, i) => (
             <FontAwesomeIcon
               key={i}
               icon={faStar}
-              className="star full-star"
+              className="star-full-star"
             />
           ))}
           <FontAwesomeIcon
             icon={faStarHalfAlt}
-            className="star half-star"
+            className="star-half-star"
           />
         </div>
 

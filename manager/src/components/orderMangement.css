@@ -560,6 +560,31 @@ button:disabled {
     margin-top: 170px;
   }
 
+  .search-container .dropdown {
+    padding: 8px 12px;
+    width: 200px;
+    /* background-color:red; */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-left: 10px;
+    background-color: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+}
+
+.status-filter:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Optional: Add hover effect */
+.status-filter:hover {
+    border-color: #007bff;
+}
+
   .popup-buttons {
     flex-direction: column;
     gap: 8px;

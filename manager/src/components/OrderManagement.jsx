@@ -12,6 +12,8 @@ const Package = () => {
     const [viewOrder, setViewOrder] = useState(null); // For viewing details
     const [currentPage, setCurrentPage] = useState(1); // For pagination
     const [ordersPerPage] = useState(10); // Show 10 records per page
+    const [statusFilter, setStatusFilter] = useState("All");
+
 
     useEffect(() => {
         fetchOrders();
@@ -50,7 +52,11 @@ const Package = () => {
         const orderIdMatch = order._id.toLowerCase().includes(searchQuery.toLowerCase());
         const orderDate = order.createdAt ? new Date(order.createdAt).toISOString().split("T")[0] : "";
         const orderDateMatch = searchDate ? orderDate === searchDate : true;
-        return orderIdMatch && orderDateMatch;
+        const statusMatch =
+        statusFilter === "All" || (order.status && order.status.toLowerCase() === statusFilter.toLowerCase());
+
+        return orderIdMatch && orderDateMatch && statusMatch;
+
     });
 
     const indexOfLastOrder = currentPage * ordersPerPage;
@@ -119,6 +125,30 @@ const Package = () => {
                     onChange={(e) => setSearchDate(e.target.value)}
                     className="date-filter"
                 />
+
+<select
+  value={statusFilter}
+  onChange={(e) => setStatusFilter(e.target.value)}
+  style={{
+    padding: '8px 12px',
+    width: '150px',
+    height: '42px',
+    backgroundColor: '#fff',
+    border: '2px solid #ccc' ,
+    borderRadius: '6px',
+    fontSize: '14px',
+    color: '#333',
+    cursor: 'pointer'
+  }}
+>
+  <option value="All">All</option>
+  <option value="Placed">Placed</option>
+  <option value="Packed">Packed</option>
+  <option value="Shipped">Shipped</option>
+  <option value="Delivered">Delivered</option>
+  <option value="Rejected">Rejected</option>
+</select>
+
             </div>
 
             {/* Orders Table */}
