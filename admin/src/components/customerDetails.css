@@ -15,6 +15,28 @@
   border-collapse: collapse;
   font-size: 14px;
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  max-height: 80vh;
+  overflow-y: auto;
+  width: 90%;
+  max-width: 600px;
+}
+
 
 .customer-table th,
 .customer-table td {
@@ -27,6 +49,39 @@
   background-color: #f2f2f2;
   padding: 10px;
 }
+
+.view-order {
+  background-color: rgb(31, 108, 160);
+  color: white;
+  font-size: 12px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.view-order:hover {
+  background-color: rgb(39, 135, 189); /* Slightly lighter blue */
+  transform: translateY(-3px); /* Elevate on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+.view-order:focus {
+  outline: none;
+}
+
+.view-order:active {
+  background-color: rgb(22, 82, 118); /* Darker blue when pressed */
+  transform: translateY(0); /* Return to original position */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.view-order {
+  font-weight: bold;
+}
+
 
 .delete-btn {
   background: none;

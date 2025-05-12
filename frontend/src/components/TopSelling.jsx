@@ -33,10 +33,26 @@ const TopSelling = () => {
     });
   };
 
+  const handleAddToCart = async (product) => {
+    try {
+      // Example: add to cart API call or local cart handling
+      const response = await axios.post(`${BASE_URL}/cart/add`, {
+        productId: product._id,
+        quantity: 1,
+      });
+  
+      // Optional: show success message or update UI
+      // alert(`${product.name} added to cart!`);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+      // alert("Failed to add product to cart.");
+    }
+  };
+  
   const handleViewProduct = (product) => {
     navigate(`/product/${product._id}`, { state: { product } });
   };
-
+  
   return (
     <section className="recent-products">
       <h2>Recently Added Products</h2>

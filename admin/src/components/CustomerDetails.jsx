@@ -8,7 +8,8 @@ const CustomerDetails = () => {
   const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [selectedOrders, setSelectedOrders] = useState([]);
+  const [showOrderModal, setShowOrderModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const customersPerPage = 10;
 
@@ -30,6 +31,18 @@ const CustomerDetails = () => {
     }
   };
 
+  const fetchOrdersByCustomerId = async (customerId) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/orders/by-customer/${customerId}`
+      );
+      setSelectedOrders(response.data);
+      setShowOrderModal(true); // Show the modal when orders are fetched
+    } catch (err) {
+      console.error("❌ Failed to fetch order details", err);
+    }
+  };
+
   const handleDelete = async (customerId) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
@@ -48,7 +61,7 @@ const CustomerDetails = () => {
       cust.name.toLowerCase().includes(lowerCaseValue)
     );
     setFilteredCustomers(filtered);
-    setCurrentPage(1); // reset to first page on search
+    setCurrentPage(1); // Reset to the first page on search
   };
 
   // Pagination Logic
@@ -58,6 +71,24 @@ const CustomerDetails = () => {
   const totalPages = Math.ceil(filteredCustomers.length / customersPerPage);
 
   const changePage = (pageNumber) => setCurrentPage(pageNumber);
+
+  // Function to determine the color for the status
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "Packed":
+        return "purple";
+      case "Placed":
+        return "Blue";
+      case "Shipped":
+        return "gold";
+      case "Rejected":
+        return "red";
+      case "Delivered":
+        return "green";
+      default:
+        return "gray"; // Default color if status is not recognized
+    }
+  };
 
   return (
     <div className="customer-section">
@@ -72,12 +103,57 @@ const CustomerDetails = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
+      {/* Modal for showing order details */}
+      {showOrderModal && (
+        <div className="order-modal">
+          <div className="modal-content">
+            <button onClick={() => setShowOrderModal(false)} className="close-btn">
+              X
+            </button>
+            <h3>Order Details</h3>
+            {selectedOrders.length > 0 ? (
+              selectedOrders.map((order) => (
+                <div key={order._id} className="order-box">
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    <span
+                      style={{ color: getStatusColor(order.status), fontWeight: "bold" }}
+                    >
+                      {order.status}
+                    </span>
+                  </p>
+                  <p>
+                    {/* <strong>Order Date:</strong> {new Date(order.date).toLocaleDateString()} */}
+                  </p>
+                  <p>
+                    <strong>Items:</strong>
+                  </p>
+                  <ul>
+                    {order.items.map((item, idx) => (
+                      <li key={idx}>
+                        <strong>Product:</strong> {item.productName} —{" "}  <br />
+                        <strong>Product ID:</strong> {item.productId} —{" "}
+                        {/* <strong>Price:</strong> ₹{item.price} × {item.quantity} */}
+                      </li>
+                    ))}
+                  </ul>
+                  <hr />
+                </div>
+              ))
+            ) : (
+              <p>No orders found.</p>
+            )}
+          </div>
+        </div>
+      )}
+
       <table className="customer-table">
         <thead>
           <tr>
             <th>Full Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Orders</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -88,6 +164,11 @@ const CustomerDetails = () => {
                 <td>{customer.name}</td>
                 <td>{customer.email}</td>
                 <td>{customer.phone || "N/A"}</td>
+                <td>
+                  <button className="view-order"onClick={() => fetchOrdersByCustomerId(customer._id)}>
+                    View Orders ({customer.orderCount || 0}) {/* Ensure orderCount is available */}
+                  </button>
+                </td>
                 <td>
                   <button
                     className="delete-btn"
@@ -100,7 +181,7 @@ const CustomerDetails = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="4">No customer data available</td>
+              <td colSpan="5">No customer data available</td>
             </tr>
           )}
         </tbody>

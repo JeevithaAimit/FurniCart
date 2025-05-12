@@ -458,13 +458,53 @@ app.get("/orders", async (req, res) => {
 
 app.get("/customers", async (req, res) => {
   try {
-    const customers = await Customer.find(); // Fetch from customer collection
-    res.status(200).json(customers);
+    // Fetch all customers from the Customer collection
+    const customers = await Customer.find();
+
+    // Aggregate order count grouped by customerId (using $group and $sum)
+    const orderCounts = await Order.aggregate([
+      {
+        $group: {
+          _id: "$customerId",  // Group by customerId from the Order collection
+          count: { $sum: 1 }    // Count the number of orders per customerId
+        }
+      }
+    ]);
+
+    // Map the order counts by customerId for fast lookup
+    const countMap = {};
+    orderCounts.forEach(item => {
+      countMap[item._id.toString()] = item.count;  // Store count with customerId as string key
+    });
+
+    // Enrich customer data with orderCount by matching customer._id with countMap
+    const enrichedCustomers = customers.map(customer => ({
+      ...customer._doc,  // Spread the raw customer data
+      orderCount: countMap[customer._id.toString()] || 0  // Attach the orderCount, default to 0 if not found
+    }));
+
+    // Send the enriched customer data as the response
+    res.status(200).json(enrichedCustomers);
   } catch (error) {
     console.error("❌ Error fetching customers:", error);
     res.status(500).json({ message: "Server error while fetching customers" });
   }
 });
+
+
+app.get("/orders/by-customer/:customerId", async (req, res) => {
+  try {
+    const customer = await Customer.findById(req.params.customerId);
+    if (!customer) return res.status(404).json({ message: "Customer not found" });
+
+    const orders = await Order.find({ customerId: customer._id });  // Use customerId instead of email
+    res.status(200).json(orders);
+  } catch (error) {
+    console.error("❌ Error fetching orders:", error);
+    res.status(500).json({ message: "Server error while fetching orders" });
+  }
+});
+
 
 app.use("/inventory", inventoryRoutes);
 
