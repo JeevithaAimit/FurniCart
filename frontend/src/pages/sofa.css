@@ -96,7 +96,9 @@
 /* 📦 Filters Section */
 .filters {
   flex: 0.25;
-  padding: 15px;
+  width: 250px;
+  padding: 20px;
+  text-align: left;
   background: #f8f8f8;
   border-radius: 8px;
   min-width: 250px;
@@ -288,46 +290,78 @@
   .search-container {
     max-width: 90%;
   }
-
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+     grid-template-columns: repeat(2, 1fr); /* 2 products per row */
   }
 }
 
 /* 📱 For screens up to 768px (tablets/phones) */
 @media (max-width: 768px) {
-  .page-heading {
-    font-size: 28px;
+  .main-content {
+    flex-direction: column;
   }
 
-  .search-container {
-    height: 40px;
-    padding: 4px 8px;
+  .filters {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    margin-top: -70px;
   }
 
-  .search-input {
+  .filter-container {
+    flex: 1;
+    min-width: 45%;
+    margin: 5px;
+  }
+
+  .sort-container label{
+    margin-top: -30px;
+  }
+  .sort-dropdown{
+    margin-top: -30px;
+    width: 150px;
+  }
+
+  .type-links {
+    display: none;
+    flex-direction: column;
+    margin-top: 8px;
+  }
+
+  .type-links.show {
+    display: flex;
+  }
+
+  .type-link {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: #fff;
+    cursor: pointer;
     font-size: 14px;
   }
 
+  .price-checkbox {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+    .product-grid {
+ grid-template-columns: repeat(2, 1fr); /* 2 products per row for tablets */
+    gap: 16px; /* Smaller gap on smaller screens */    /* gap: 20px; */
+  }
+}
+
+@media (max-width: 820px) {
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
-
-  .product-card h4 {
-    font-size: 16px;
-  }
-
-  .product-card .discount-price {
-    font-size: 16px;
-  }
-
-  .view-details, .outOfStock {
-    padding: 8px 16px;
-    font-size: 14px;
-  }
-
-.rating {
-    font-size: 38px;
+    grid-template-columns: repeat(2, 1fr); /* Exactly 2 cards per row */
+    gap: 20px;
   }
 }
 
@@ -339,7 +373,7 @@
   }
 
   .product-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid on mobile */
     gap: 16px;
   }
 
