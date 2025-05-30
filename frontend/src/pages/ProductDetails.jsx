@@ -31,6 +31,8 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   // ← track by index instead of URL
   const [imageIndex, setImageIndex] = useState(0);
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [replyText, setReplyText] = useState("");
 
   const [quantity, setQuantity] = useState(1);
   const [gstRate] = useState(18);
@@ -157,6 +159,34 @@ const ProductDetails = () => {
     }
   };
 
+  const handleReplySubmit = async (reviewId) => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  if (!user.id) {
+    toast.error("Please log in to reply.");
+    return;
+  }
+
+  try {
+    await axios.post("http://localhost:8500/api/reviews/reply", {
+      reviewId,
+      replierId: user.id,
+      replierName: user.name,
+      reply: replyText,
+    });
+    toast.success("Reply submitted!");
+    setReplyText("");
+    setReplyingTo(null);
+    // Optionally: refetch reviews to update the UI
+    const res = await axios.get(
+      `http://localhost:8500/api/reviews/product/${productId}`
+    );
+    setReviews(res.data);
+  } catch (err) {
+    console.error(err);
+    toast.error("Failed to submit reply");
+  }
+};
+
   // GST calculations
   const gstAmount = (product.discountPrice * gstRate) / 100;
   const finalPriceWithGst = product.discountPrice + gstAmount;
@@ -264,22 +294,38 @@ const ProductDetails = () => {
         .filter((r) => r.status === "Ordered" || r.status === "Success")
         .slice(0, showAllReviews ? reviews.length : 1)
         .map((rev, i) => (
-          <div key={i} className="review-item">
-            <div className="review-header">
-              <strong>{rev.customerName}</strong>
-              <div className="review-stars-time">
-                {[1, 2, 3, 4, 5].map((s) => (
-                  <span key={s} className={s <= rev.rating ? "star filled" : "star"}>
-                    ★
-                  </span>
-                ))}
-              </div>
-            </div>
-            <p className="review-text">"{rev.review}"</p>
-            <span className="review-time">
-              {formatDistanceToNow(new Date(rev.createdAt), { addSuffix: true })}
-            </span>
-          </div>
+         <div key={i} className="review-item">
+  <div className="review-header">
+    <strong>{rev.customerName}</strong>
+    <div className="review-stars-time">
+      {[1, 2, 3, 4, 5].map((s) => (
+        <span key={s} className={s <= rev.rating ? "star filled" : "star"}>
+          ★
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <p className="review-text">"{rev.review}"</p>
+  <span className="review-time">
+    {formatDistanceToNow(new Date(rev.createdAt), { addSuffix: true })}
+  </span>
+
+  {/* Replies Section directly below */}
+  {rev.replies && rev.replies.length > 0 && (
+    <div className="replies-section">
+      {rev.replies.map((reply, index) => (
+        <div key={index} className="reply-item">
+          <strong>Reply:</strong> {reply.text}
+          <br />
+          {/* <small>{new Date(reply.date).toLocaleDateString()}</small> */}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
         ))}
 
       {reviews.filter((r) => r.status === "Ordered" || r.status === "Success").length > 2 && (

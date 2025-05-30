@@ -414,6 +414,10 @@ button:hover {
 /* Mobile Screen (max-width: 768px) */
 
 @media (max-width: 768px) {
+
+  body{
+   width: 1000px;
+  }
   .addProduct {
     padding: 15px;
     margin: 10px;
@@ -502,3 +506,236 @@ button:hover {
     font-size: 18px;
   }
 }
+
+.dashboard-container {
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
+}
+
+/* Mobile Add Button */
+.mobile-add-button {
+  position: fixed;
+  bottom: 2000px;
+  right: 740px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 50px;
+  padding: 12px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  align-items: center;
+  gap: 8px;
+  display: none; /* Hide by default on desktop */
+}
+
+.mobile-add-button:hover {
+  background-color: #45a049;
+  transform: translateY(-2px);
+}
+
+/* Form Popup */
+.form-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.form-popup.show {
+  opacity: 1;
+  display: block;
+}
+
+.form-popup-content {
+  position: relative;
+  background-color: white;
+  width: 90%;
+  max-width: 600px;
+  max-height: 90vh;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  overflow-y: auto;
+  transform: translateY(-20px);
+  transition: transform 0.3s ease;
+}
+
+.form-popup.show .form-popup-content {
+  transform: translateY(0);
+}
+
+.close-popup {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 5px;
+}
+
+.close-popup:hover {
+  color: #333;
+}
+
+/* Desktop/Mobile Form Display */
+.desktop-form {
+  display: block;
+}
+
+.desktop-form button[type="submit"] {
+  display: none; /* Hide submit button in desktop form */
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  .desktop-form {
+    display: none;
+  }
+
+  .mobile-add-button {
+    display: flex; /* Only show on mobile */
+  }
+
+  .form-popup-content {
+    margin: 10px;
+    padding: 15px;
+    width: calc(100% - 20px);
+  }
+
+  .form-popup-content input,
+  .form-popup-content select,
+  .form-popup-content textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+    margin-bottom: 10px;
+  }
+
+  .form-popup-content .add-product-form {
+    margin-top: 20px;
+  }
+
+  .form-popup-content button[type="submit"] {
+    display: block; /* Show submit button in popup form */
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+/* Hide edit and delete buttons in main screen on mobile */
+@media (max-width: 768px) {
+  .product-table .icon-btn {
+    display: none;
+  }
+
+  .form-popup .icon-btn {
+    display: inline-flex; /* Show buttons in popup */
+  }
+}
+
+/* Media Queries for Form Popup */
+@media (max-width: 768px) {
+  .form-popup-content {
+    width: 85%;
+    margin: 10px auto;
+    padding: 15px;
+    max-height: 85vh;
+  }
+
+  .form-popup-content h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+
+  .form-popup-content .add-product-form {
+    gap: 12px;
+  }
+
+  .form-popup-content input,
+  .form-popup-content select,
+  .form-popup-content textarea {
+    padding: 8px;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .form-popup-content label {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .form-popup-content textarea {
+    min-height: 80px;
+  }
+
+  .form-popup-content button[type="submit"] {
+    padding: 10px;
+    font-size: 16px;
+  }
+
+  .close-popup {
+    top: 8px;
+    right: 8px;
+    font-size: 20px;
+  }
+
+  /* Adjust spacing between form sections */
+  .form-popup-content input[type="file"] {
+    margin-bottom: 12px;
+  }
+
+  .form-popup-content label + input[type="file"] {
+    margin-top: 4px;
+  }
+}
+
+/* Even smaller screens */
+@media (max-width: 480px) {
+  .form-popup-content {
+    width: 30%;
+    height: 100%;
+    margin: 8px auto;
+    margin-left: 50px;
+    padding: 12px;
+    overflow-y: scroll; /* Enable vertical scrolling */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    position: fixed;
+    top: 0;
+    /* right: 0; */
+    bottom: 0;
+    border-radius: 0;
+    transform: none;
+  }
+
+
+
+  .form-popup-content .add-product-form {
+    padding-bottom: 20px; /* Add some padding at the bottom for better scrolling */
+  }
+
+  .form-popup-content h2 {
+    position: sticky;
+    top: 0;
+    background: white;
+    padding: 10px 0;
+    margin: 0 0 12px 0;
+    z-index: 1;
+  }
+
+  .close-popup {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+  }
+}
+
+

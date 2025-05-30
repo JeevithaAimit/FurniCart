@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddProduct.css";
-import { Eye, Pencil, Trash2 } from "lucide-react"; // or use any icon library like react-icons
+import { Eye, Pencil, Trash2, Plus } from "lucide-react"; // or use any icon library like react-icons
 
 const AddProduct = () => {
 
+    const [showAddForm, setShowAddForm] = useState(false); // New state for form popup
     const [product, setProduct] = useState({
       name: "",
       category: "",
@@ -233,41 +234,83 @@ const AddProduct = () => {
 
   return (
     <div className="addProduct">
-      <h2>{editingProductId ? "Edit Product" : "Add New Product"}</h2>
-      <form className="add-product-form" onSubmit={handleSubmit}>
-        <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" required />
-        <select name="category" value={product.category} onChange={handleChange} required>
-          <option value="">Select Category</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>{cat}</option>
+      {/* Mobile Add Button */}
+      <button className="mobile-add-button" onClick={() => setShowAddForm(true)}>
+        <Plus size={24} /> Add Product
+      </button>
+
+      {/* Form Popup */}
+      <div className={`form-popup ${showAddForm ? 'show' : ''}`}>
+        <div className="form-popup-content">
+          <button className="close-popup" onClick={() => setShowAddForm(false)}>×</button>
+          <h2>{editingProductId ? "Edit Product" : "Add New Product"}</h2>
+          <form className="add-product-form" onSubmit={handleSubmit}>
+            <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" required />
+            <select name="category" value={product.category} onChange={handleChange} required>
+              <option value="">Select Category</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+            <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price (₹)" required />
+            <input type="number" name="discountPrice" value={product.discountPrice} onChange={handleChange} placeholder="Discount Price (₹)" />
+            <input type="text" name="material" value={product.material} onChange={handleChange} placeholder="Material" required />
+            <input type="text" name="color" value={product.color} onChange={handleChange} placeholder="Color" required />
+            <input type="text" name="type" value={product.type} onChange={handleChange} placeholder="Type" required />
+            <input
+              type="number"
+              name="quantity"
+              value={product.quantity}
+              onChange={handleChange}
+              placeholder="Quantity"
+              required
+            />
+            <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required></textarea>
+            <label>Main Product Image:</label>
+            <input type="file" name="mainImage" accept="image/*" onChange={handleImageChange} />
+            <label>Sub Images:</label>
+            {[0, 1, 2, 3].map((index) => (
+              <input key={index} type="file" accept="image/*" onChange={(e) => handleImageChange(e, index)} />
+            ))}
+            <button type="submit" onClick={() => setShowAddForm(false)}>{editingProductId ? "Update Product" : "Add Product"}</button>
+          </form>
+        </div>
+      </div>
+
+      {/* Desktop Form */}
+      <div className="desktop-form">
+        <h2>{editingProductId ? "Edit Product" : "Add New Product"}</h2>
+        <form className="add-product-form" onSubmit={handleSubmit}>
+          <input type="text" name="name" value={product.name} onChange={handleChange} placeholder="Product Name" required />
+          <select name="category" value={product.category} onChange={handleChange} required>
+            <option value="">Select Category</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+          <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price (₹)" required />
+          <input type="number" name="discountPrice" value={product.discountPrice} onChange={handleChange} placeholder="Discount Price (₹)" />
+          <input type="text" name="material" value={product.material} onChange={handleChange} placeholder="Material" required />
+          <input type="text" name="color" value={product.color} onChange={handleChange} placeholder="Color" required />
+          <input type="text" name="type" value={product.type} onChange={handleChange} placeholder="Type" required />
+          <input
+            type="number"
+            name="quantity"
+            value={product.quantity}
+            onChange={handleChange}
+            placeholder="Quantity"
+            required
+          />
+          <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required></textarea>
+          <label>Main Product Image:</label>
+          <input type="file" name="mainImage" accept="image/*" onChange={handleImageChange} />
+          <label>Sub Images:</label>
+          {[0, 1, 2, 3].map((index) => (
+            <input key={index} type="file" accept="image/*" onChange={(e) => handleImageChange(e, index)} />
           ))}
-        </select>
-        <input type="number" name="price" value={product.price} onChange={handleChange} placeholder="Price (₹)" required />
-        <input type="number" name="discountPrice" value={product.discountPrice} onChange={handleChange} placeholder="Discount Price (₹)" />
-        <input type="text" name="material" value={product.material} onChange={handleChange} placeholder="Material" required />
-        <input type="text" name="color" value={product.color} onChange={handleChange} placeholder="Color" required />
-        <input type="text" name="type" value={product.type} onChange={handleChange} placeholder="Type" required />
-        <input
-          type="number"
-          name="quantity"
-          value={product.quantity}
-          onChange={handleChange}
-          placeholder="Quantity"
-          required
-        />
-
-        <textarea name="description" value={product.description} onChange={handleChange} placeholder="Description" required></textarea>
-
-        <label>Main Product Image:</label>
-        <input type="file" name="mainImage" accept="image/*" onChange={handleImageChange} />
-
-        <label>Sub Images:</label>
-        {[0, 1, 2, 3].map((index) => (
-          <input key={index} type="file" accept="image/*" onChange={(e) => handleImageChange(e, index)} />
-        ))}
-
-        <button type="submit">{editingProductId ? "Update Product" : "Add Product"}</button>
-      </form>
+          <button type="submit">{editingProductId ? "Update Product" : "Add Product"}</button>
+        </form>
+      </div>
 
       <br /> <br />
 

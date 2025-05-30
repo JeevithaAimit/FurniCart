@@ -5,8 +5,24 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./ManagerPanel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
-import { FaUserEdit, FaUserTag, FaSignOutAlt, FaCheck, FaTimes, FaCamera } from "react-icons/fa";
+import {
+  faUserCircle,
+  faTachometerAlt,
+  faShoppingCart,
+  faBoxes,
+  faShippingFast,
+  faCheckCircle,
+  faMoneyBillWave,
+  faComments,
+  faStarHalfAlt,
+  faSignOutAlt,
+  faUserShield,
+  faChevronDown,
+  faChevronRight,
+  faBars,
+  faTimes
+} from "@fortawesome/free-solid-svg-icons";
+import { FaUserEdit, FaUserTag, FaCheck, FaTimes as FaTimesIcon } from "react-icons/fa";
 import Package from "./Package";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
@@ -23,6 +39,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 // 🔹 Sidebar
 const Sidebar = ({ onLogout, onClose }) => {
   const [ordersDropdown, setOrdersDropdown] = useState(false);
+  const [financeDropdown, setFinanceDropdown] = useState(false);
   const [manager, setManager] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [isEditingName, setIsEditingName] = useState(false);
@@ -31,7 +48,6 @@ const Sidebar = ({ onLogout, onClose }) => {
   const [profilePicFile, setProfilePicFile] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
-  const [financeDropdown, setFinanceDropdown] = useState(false);
 
 
   const fetchManagerData = async () => {
@@ -82,135 +98,139 @@ const Sidebar = ({ onLogout, onClose }) => {
         console.log(`Server on port ${port} is not available.`);
       }
     }
-
-    alert("None of the Admin Login servers (3001, 3002, 3000) are available.");
+    alert("None of the Admin Login servers are available.");
   };
 
+
+  const handleCloseSidebar = () => {
+  setShowSidebar(false);
+};
+
   return (
-    <>
-      <div className="sidebar">
-      <button className="close-sidebar-btn" onClick={onClose}>✖</button>
-        {manager && (
-          <div
-            className="top-profile"
-            onClick={() => setShowPopup(true)}
-            style={{ cursor: "pointer" }}
-          >
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
-              alt="User Icon"
-              className="manager-avatar"
-            />
-            <h2 className="managerName">{manager.name}</h2>
-          </div>
-        )}
-        <ul>
-  <li><Link to="/dashboard">Dashboard</Link></li>
-  <li><Link to="/dashboard/orderManagement">Order Management</Link></li>
-  
-  <li className="dropdown">
-    <button onClick={() => setOrdersDropdown(!ordersDropdown)} className="dropdown-btn">
-      Our Orders ▼
-    </button>
-    {ordersDropdown && (
-      <ul className="dropdown-menu">
-        <li><Link to="/dashboard/package">Package</Link></li>
-        <li><Link to="/dashboard/shipping">Shipping</Link></li>
-        <li><Link to="/dashboard/delivered">Delivered</Link></li>
-      </ul>
-    )}
-  </li>
+    <div className="sidebar-inner">
+      {/* Close button for mobile */}
+      <button className="close-sidebar-btn" onClick={onClose}>
+        <FontAwesomeIcon icon={faTimes} />
+      </button>
 
-  <li className="dropdown">
-    <button onClick={() => setFinanceDropdown(!financeDropdown)} className="dropdown-btn">
-      Finance ▼
-    </button>
-    {financeDropdown && (
-      <ul className="dropdown-menu">
-        <li><Link to="/dashboard/account">Our Accounts</Link></li>
-        <li><Link to="/dashboard/payment">Customer Payment</Link></li>
-      </ul>
-    )}
-  </li>
-
-  <li><Link to="/dashboard/feedback">Feedback</Link></li>
-  <li><Link to="/dashboard/reviews">Product Reviews</Link></li>
-</ul>
-
-        <button onClick={handleAdminLogin} className="admin-login">Admin Login</button>
-        <button onClick={onLogout} className="logout-btn">Logout</button>
-      </div>
-
-      {/* Profile Popup */}
-      {showPopup && manager && (
-        <div className="popup-overlay" onClick={() => setShowPopup(false)}>
-          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-btn" onClick={() => setShowPopup(false)}>✖</button>
-            <h2>
-              {isEditingName ? (
-                <div className="edit-name-popup">
-                  <input
-                    type="text"
-                    value={newName}
-                    onChange={(e) => setNewName(e.target.value)}
-                    className="edit-name-input"
-                  />
-                  <div className="edit-name-actions">
-                    <button
-                      className="icon-btn"
-                      onClick={async () => {
-                        try {
-                          const res = await axios.put(
-                            `http://localhost:8000/api/managers/${manager._id}/name`,
-                            { name: newName }
-                          );
-                          setManager(res.data);
-                          setIsEditingName(false);
-                        } catch {
-                          alert("Failed to update name");
-                        }
-                      }}
-                    >
-                      <FaCheck />
-                    </button>
-                    <button
-                      className="icon-btn"
-                      onClick={() => setIsEditingName(false)}
-                    >
-                      <FaTimes />
-                    </button>
-                  </div>
-                </div>
-              ) : manager.name}
-            </h2>
-            <p><strong>Email:</strong> {manager.email}</p>
-            <p><strong>Phone:</strong> {manager.phone}</p>
-            <div className="popup-actions-icon">
-              <button
-                className="icon-btn"
-                title="Edit Name"
-                onClick={() => {
-                  setIsEditingName(true);
-                  setNewName(manager.name);
-                }}
-              >
-                <FaUserTag />
-              </button>
-              <button
-                className="icon-btn"
-                title="Logout"
-                onClick={() => {
-                  localStorage.clear();
-                  navigate("/");
-                }}
-              >
-                <FaSignOutAlt />
-              </button>
-            </div>
-          </div>
+      {manager && (
+        <div
+          className="top-profile"
+          onClick={() => setShowPopup(true)}
+          style={{ cursor: "pointer" }}
+        >
+          <img
+            src={manager.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+            alt="User Icon"
+            className="manager-avatar"
+          />
+          <h2 className="managerName">{manager.name}</h2>
         </div>
       )}
-    </>
+      <nav className="sidebar-nav">
+        <ul>
+          <li>
+            <Link to="/dashboard" onClick={onClose}>
+              <FontAwesomeIcon icon={faTachometerAlt} className="nav-icon" />
+              <span>Dashboard</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/orderManagement" onClick={onClose}>
+              <FontAwesomeIcon icon={faShoppingCart} className="nav-icon" />
+              <span>Order Management</span>
+            </Link>
+          </li>
+          
+          <li className="dropdown">
+            <button onClick={() => setOrdersDropdown(!ordersDropdown)} className="dropdown-btn">
+              <div>
+                <FontAwesomeIcon icon={faBoxes} className="nav-icon" />
+                <span>Our Orders</span>
+              </div>
+              <FontAwesomeIcon 
+                icon={ordersDropdown ? faChevronDown : faChevronRight} 
+                className="dropdown-icon"
+              />
+            </button>
+            {ordersDropdown && (
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/dashboard/package" onClick={onClose}>
+                    <FontAwesomeIcon icon={faBoxes} className="nav-icon" />
+                    <span>Package</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/shipping" onClick={onClose}>
+                    <FontAwesomeIcon icon={faShippingFast} className="nav-icon" />
+                    <span>Shipping</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/delivered" onClick={onClose}>
+                    <FontAwesomeIcon icon={faCheckCircle} className="nav-icon" />
+                    <span>Delivered</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          <li className="dropdown">
+            <button onClick={() => setFinanceDropdown(!financeDropdown)} className="dropdown-btn">
+              <div>
+                <FontAwesomeIcon icon={faMoneyBillWave} className="nav-icon" />
+                <span>Finance</span>
+              </div>
+              <FontAwesomeIcon 
+                icon={financeDropdown ? faChevronDown : faChevronRight} 
+                className="dropdown-icon"
+              />
+            </button>
+            {financeDropdown && (
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/dashboard/account" onClick={onClose}>
+                    <FontAwesomeIcon icon={faMoneyBillWave} className="nav-icon" />
+                    <span>Our Accounts</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/dashboard/payment" onClick={onClose}>
+                    <FontAwesomeIcon icon={faMoneyBillWave} className="nav-icon" />
+                    <span>Customer Payment</span>
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </li>
+
+          <li>
+            <Link to="/dashboard/feedback" onClick={onClose}>
+              <FontAwesomeIcon icon={faComments} className="nav-icon" />
+              <span>Feedback</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/dashboard/reviews" onClick={onClose}>
+              <FontAwesomeIcon icon={faStarHalfAlt} className="nav-icon" />
+              <span>Product Reviews</span>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+      <div className="sidebar-buttons">
+        <button onClick={handleAdminLogin} className="admin-login">
+          <FontAwesomeIcon icon={faUserShield} />
+          <span>Admin Login</span>
+        </button>
+        <button onClick={onLogout} className="logout-btn">
+          <FontAwesomeIcon icon={faSignOutAlt} />
+          <span>Logout</span>
+        </button>
+      </div>
+    </div>
   );
 };
 
@@ -229,9 +249,8 @@ const Dashboard = () => {
           axios.get("http://localhost:8000/api/rejected-orders/count"),
         ]);
 
-        console.log("Delivered Orders Response:", deliveredRes.data);
         setTotalOrders(totalRes.data.totalOrders);
-        setDeliveredOrders(deliveredRes.data.length || 0); // ✅ Set to the length of the array
+        setDeliveredOrders(deliveredRes.data.length || 0);
         setRejectedOrders(rejectedRes.data.rejectedCount);
       } catch (error) {
         console.error("Error fetching dashboard data:", error);
@@ -240,33 +259,33 @@ const Dashboard = () => {
     fetchOrders();
   }, []);
 
-  const chartData = {
-    labels: ["Total Orders", "Delivered Orders", "Rejected Orders"],
-    datasets: [{
-      data: [totalOrders, deliveredOrders, rejectedOrders],
-      backgroundColor: ["#36A2EB", "#4CAF50", "#FF6384"],
-    }],
-  };
-
   return (
     <div className="dashboard">
-      <h1>Dashboard</h1>
+      <h1>Dashboard Overview</h1>
       <div className="dashboard-content">
         <div className="cards">
           <div className="card">
-            Total Orders<br />
+            <h3>
+              <FontAwesomeIcon icon={faShoppingCart} />
+              Total Orders
+            </h3>
             <span className="count">{totalOrders}</span>
           </div>
           <div className="card">
-            Delivered Orders<br />
-            <span className="count">{deliveredOrders}</span> {/* This should now show the correct count */}
+            <h3>
+              <FontAwesomeIcon icon={faCheckCircle} />
+              Delivered Orders
+            </h3>
+            <span className="count">{deliveredOrders}</span>
           </div>
           <div className="card">
-            Rejected Orders<br />
+            <h3>
+              <FontAwesomeIcon icon={faTimes} />
+              Rejected Orders
+            </h3>
             <span className="count">{rejectedOrders}</span>
           </div>
         </div>
-        <div className="chart"><Pie data={chartData} /></div>
       </div>
     </div>
   );
@@ -275,8 +294,7 @@ const Dashboard = () => {
 // 🔹 Manager Panel
 const ManagerPanel = () => {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
+  const [sidebarOpen, setSidebarOpen] = useState(true); // Start with sidebar open
 
   const handleLogout = () => {
     localStorage.clear();
@@ -285,17 +303,27 @@ const ManagerPanel = () => {
 
   return (
     <div className="manager-panel">
- {/* Show the sidebar if sidebarOpen is true */}
- {sidebarOpen && <Sidebar onLogout={handleLogout} onClose={() => setSidebarOpen(false)} />}
+      {/* Sidebar Toggle Button (only visible on mobile) */}
+      <button className="open-sidebar-btn" onClick={() => setSidebarOpen(true)}>
+        <FontAwesomeIcon icon={faBars} />
+      </button>
 
-{/* Button to open the sidebar on mobile */}
-{!sidebarOpen && (
-  <button className="open-sidebar-btn" onClick={() => setSidebarOpen(true)}>
-    ☰
-  </button>
-)}
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+       <Sidebar 
+  onLogout={handleLogout}
+  onClose={() => setSidebarOpen(false)}
+/>
 
-      <div className="content">
+      </div>
+
+      {/* Overlay (only visible on mobile when sidebar is open) */}
+      {sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      {/* Main Content */}
+      <div className={`content ${!sidebarOpen ? 'full-width' : ''}`}>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="package" element={<Package />} />

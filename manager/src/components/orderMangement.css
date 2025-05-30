@@ -4,174 +4,70 @@
     margin: auto;
     padding: 20px;
     font-family: Arial, sans-serif;
-  }
-  
-  /* Title */
-  .title {
+}
+
+/* Title */
+.title {
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
     color: #333;
-  }
-  
-  /* Search Filters */
-  .search-container {
+}
+
+/* Search Filters */
+.search-container {
     display: flex;
     justify-content: center;
     gap: 10px;
     margin-bottom: 20px;
-  }
-  
-  .search-bar,
-  .date-filter {
+    flex-wrap: wrap;
+}
+
+.search-bar,
+.date-filter {
     padding: 10px;
     font-size: 14px;
-    /* border: 1px solid #ccc; */
+    border: 1px solid #ccc;
     border-radius: 5px;
-  }
-  
-  /* Orders Table */
-  .orders-table {
+    width: 250px;
+    transition: all 0.3s ease;
+}
+
+/* Orders Table */
+.orders-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 10px;
     background: #fff;
-  }
-  
-  .orders-table th,
-  .orders-table td {
-    padding: 10px;
+    overflow-x: auto;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 12px;
     border: 1px solid #ddd;
     text-align: center;
-  }
-  
-  .orders-table th {
+}
+
+.orders-table th {
     background-color: #2a2a2a;
     color: white;
-  }
-  
-  /* Menu Icon */
-  .menu-icon {
+    white-space: nowrap;
+}
+
+/* Menu Icon */
+.menu-icon {
     cursor: pointer;
     color: #333;
     font-size: 18px;
     transition: 0.3s;
-  }
-  
-  .menu-icon:hover {
+}
+
+.menu-icon:hover {
     color: #007bff;
-  }
-  
-  /* Popup Modal */
-  .popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  .popup-box {
-    position: relative; /* Ensures positioning works */
-    background: white;
-    padding: 20px;
-    width: 50%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
-}
-  /* Popup Buttons */
-  .popup-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 15px;
-  }
-  
-  .popup-buttons button {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    color: white;
-    transition: 0.3s;
-  }
-  
-  .reject-btn {
-    background: red;
-  }
-  
-  .packed-btn {
-    background: orange;
-  }
-  
-  .shipped-btn {
-    background: blue;
-  }
-  
-  .delivered-btn {
-    background: green;
-  }
-  
-  .popup-buttons button:hover {
-    opacity: 0.8;
-  }
-  
-  /* Close Button */
-  .close-btn {
-    margin-top: 15px;
-    background: #333;
-    color: white;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-  }
-  
-  .close-btn:hover {
-    background: #555;
-  }
-  .status-badge {
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-  color: white;
-  display: inline-block;
-  min-width: 80px;
-  text-align: center;
 }
 
-/* Default Pending Status */
-.status-badge.pending {
-  background-color: gray;
-}
-
-/* Packed (Blue) */
-.status-badge.packed {
-  background-color: blue;
-}
-
-/* Shipped (Orange) */
-.status-badge.shipped {
-  background-color: orange;
-}
-
-/* Delivered (Green) */
-.status-badge.delivered {
-  background-color: green;
-}
-
-/* Rejected (Red) */
-.status-badge.rejected {
-  background-color: red;
-}
+/* Status Badges */
 .status-badge {
     padding: 5px 10px;
     border-radius: 5px;
@@ -180,37 +76,17 @@
     display: inline-block;
     min-width: 80px;
     text-align: center;
-  }
-  
-  /* Default Pending Status */
-  .status-badge.pending {
-    background-color: gray;
-  }
-  
-  /* Placed (Blue) */
-  .status-badge.placed {
-    background-color: blue;
-  }
-  
-  /* Shipped (Orange) */
-  .status-badge.shipped {
-    background-color: orange;
-  }
-  
-  /* Delivered (Green) */
-  .status-badge.delivered {
-    background-color: green;
-  }
-  
-  /* Rejected (Red) */
-  .status-badge.rejected {
-    background-color: red;
-  }
-  .status-badge.packed {
-    background-color: rgb(122, 1, 84);
-  }
-  
-  .popup-overlay {
+}
+
+.status-badge.pending { background-color: gray; }
+.status-badge.placed { background-color: blue; }
+.status-badge.shipped { background-color: orange; }
+.status-badge.delivered { background-color: green; }
+.status-badge.rejected { background-color: red; }
+.status-badge.packed { background-color: rgb(122, 1, 84); }
+
+/* Popup Styles */
+.popup-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -220,52 +96,53 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 1000;
 }
 
-.popup-box{
-    text-align: left;
-}
-/* View Order Popup */
-.view-popup {
-    width: 60%;
+.popup-box {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    text-align: left; /* Aligns text to the left */
-    position: relative; /* Needed for close button positioning */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
 }
 
-/* Close Button (X) */
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    font-weight: bold;
-    cursor: pointer;
-    color: #333;
+.popup-boxButton {
+    background: white;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    position: relative;
 }
 
-.close-btn:hover {
-    color: red;
+/* View Order Popup */
+.view-popup {
+    width: 90%;
+    max-width: 800px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
 }
 
-/* Items Section */
+/* Items Container */
 .items-container {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap; /* Allows wrapping on smaller screens */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin: 15px 0;
 }
 
-/* Individual Item Card */
 .item-card {
     border: 1px solid #ddd;
     padding: 10px;
-    text-align: left; /* Ensures content inside is left-aligned */
     border-radius: 10px;
-    width: 150px;
+    text-align: center;
 }
 
 .item-card img {
@@ -274,390 +151,225 @@
     object-fit: contain;
 }
 
-/* Total Price */
-.total-price {
-    font-size: 18px;
-    font-weight: bold;
-    color: green;
-}
-.close-btn {
-    padding: 10px;
-    margin-top: 10px;
-    background: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-
-/* Popup Overlay */
-.popup-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-/* Popup Box */
-.popup-boxButton {
-    background: white;
-    padding: 20px;
-    width: 30%;
-    border-radius: 10px;
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    animation: fadeIn 0.3s ease-in-out;
-    position: relative; /* Needed for absolute positioning of close button */
-}
-
-/* View Order Popup */
-.view-popup {
-    width: 60%;
-}
-
+/* Popup Buttons */
 .popup-buttons {
     display: flex;
-    justify-content: center; /* Centers horizontally */
-    flex-wrap: wrap; /* Allows wrapping for smaller screens */
-    gap: 10px; /* Adds spacing between buttons */
-    margin-top: 10px;
-    margin-left: 33%;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
 }
-/* Popup Buttons - Adjusted Size */
+
 .popup-buttons button {
-    padding: 8px 12px;  /* Reduced padding */
-    margin: 4px;
+    padding: 10px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
-    font-size: 14px; /* Slightly smaller text */
-    width:50%
+    color: white;
+    transition: opacity 0.3s ease;
 }
 
-/* Specific Button Colors */
-.popup-buttons button:nth-child(1) { background: #dc3545; color: white; } /* Rejected */
-.popup-buttons button:nth-child(2) { background: #ffc107; color: black; } /* Packed */
-.popup-buttons button:nth-child(3) { background: #17a2b8; color: white; } /* Shipped */
-.popup-buttons button:nth-child(4) { background: #28a745; color: white; } /* Delivered */
+.popup-buttons button:hover {
+    opacity: 0.9;
+}
+
+.popup-buttons button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Button Colors */
+.reject-btn { background: #dc3545; }
+.packed-btn { background: #ffc107; color: black; }
+.shipped-btn { background: #17a2b8; }
+.delivered-btn { background: #28a745; }
 
 /* Close Button */
-.popup-boxButton .close-btn {
-  position: absolute;
-  top: -7px;
-  right: 15px;
-  background: transparent;
-  border: none;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-  color: #333;
-  z-index: 10;
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+    padding: 5px;
 }
+
 .close-btn:hover {
     color: red;
 }
 
-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
-}
-
-/* Tablets (768px and below) */
-@media (max-width: 768px) {
-  .search-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .popup-buttons button {
-    width: 100%;
-    font-size: 13px;
-  }
-
-  .item-card {
-    max-width: 140px;
-  }
-
-  .title {
-    font-size: 20px;
-  }
-}
-
-/* Phones (480px and below) */
-@media (max-width: 480px) {
-  .popup-box,
-  .view-popup,
-  .popup-boxButton {
-    width: 95%;
-    padding: 15px;
-  }
-
-  .popup-buttons {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .popup-buttons button {
-    width: 100%;
-  }
-
-  .item-card {
-    max-width: 100%;
-  }
-
-  .title {
-    font-size: 18px;
-  }
-
-  .search-bar,
-  .date-filter {
-    font-size: 13px;
-    padding: 8px;
-  }
-}
+/* Pagination */
 .pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 20px;
 }
 
 .page-button {
-  padding: 8px 16px;
-  margin: 0 5px;
-  cursor: pointer;
-  background-color: #f1f1f1;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .page-button.active {
-  background-color: #007bff;
-  color: white;
+    background-color: #007bff;
+    color: white;
 }
 
 .page-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
+    background-color: #ccc;
+    cursor: not-allowed;
 }
 
-.page-button:hover {
-  background-color: #ddd;
+.page-button:hover:not(:disabled) {
+    background-color: #ddd;
 }
 
-.page-dots {
-  padding: 0.5rem 1rem;
-  font-weight: bold;
-  color: #999;
-}
-/* Phones (480px and below) */
-@media (max-width: 480px) {
-  .popup-overlay {
-    background: rgba(0, 0, 0, 0.7); /* Darker overlay for better visibility */
-  }
+/* Responsive Design - Tablets */
+@media (max-width: 1024px) {
+    .container {
+        padding: 15px;
+    }
 
-  .popup-box,
-  .view-popup,
-  .popup-boxButton {
-    width: 90%; /* Adjust the width to 90% for smaller popups */
-    padding: 10px;
-    border-radius: 8px; /* Slightly rounded corners */
-    max-width: 320px; /* Limit the maximum width for smaller screens */
-    margin: auto; /* Center the popup */
-  }
+    .search-container {
+        flex-direction: column;
+        align-items: center;
+    }
 
-  .popup-buttons {
-    flex-direction: column;
-    gap: 8px;
-    align-items: center; /* Center buttons for better mobile view */
-  }
+    .search-bar,
+    .date-filter {
+        width: 100%;
+        max-width: 400px;
+    }
 
-  .popup-buttons button {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 8px; /* Consistent button rounding */
-  }
+    .popup-box,
+    .popup-boxButton {
+        width: 95%;
+        margin: 10px;
+    }
 
-  .item-card {
-    max-width: 100%; /* Cards will take full width */
-    padding: 8px; /* Some padding around items */
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    background: transparent;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #333;
-  }
-
-  .title {
-    font-size: 18px;
-    margin-bottom: 10px; /* Adjust margin for small screens */
-  }
-
-  .search-bar,
-  .date-filter {
-    font-size: 14px;
-    padding: 8px;
-    width: 100%; /* Ensure search bar takes full width */
-  }
-
-  /* Pagination adjustments */
-  .pagination {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .page-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-  }
-
-  .popup-box .close-btn {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-  }
+    .items-container {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    }
 }
 
-/* Tablets (768px and below) */
+/* Responsive Design - Mobile */
 @media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
 
-  .content{
-    width: 1100px;
-  }
-  .popup-overlay {
-    background: rgba(0, 0, 0, 0.6); /* Darker overlay */
-  }
-  
-  .search-container{
-    width: 50%;
-  }
+    .title {
+        font-size: 20px;
+    }
 
-  .date-filter{
-    width: 100%;
-  }
-  .popup-box,
-  .view-popup,
-  .popup-boxButton {
-    width: 85%; /* Slightly smaller for tablet */
-    padding: 15px;
-    max-width: 450px; /* Limit max width */
-    margin: auto; /* Center the popup */
-    margin-left: 550px;
-    margin-top: 170px;
-  }
+    .orders-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
 
-  .search-container .dropdown {
-    padding: 8px 12px;
-    width: 200px;
-    /* background-color:red; */
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-left: 10px;
-    background-color: #fff;
-    color: #333;
-    cursor: pointer;
-    transition: border-color 0.2s ease;
+    .orders-table th,
+    .orders-table td {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .popup-box,
+    .popup-boxButton,
+    .view-popup {
+        width: 95%;
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .items-container {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
+    }
+
+    .popup-buttons button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .pagination {
+        gap: 5px;
+    }
+
+    .page-button {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
 }
 
-.status-filter:focus {
-    outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
-}
+/* Small Mobile Screens */
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+    }
 
-/* Optional: Add hover effect */
-.status-filter:hover {
-    border-color: #007bff;
-}
+    .title {
+        font-size: 18px;
+    }
 
-  .popup-buttons {
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-    margin-left: -5px;
-  }
+    .search-bar,
+    .date-filter {
+        font-size: 13px;
+        padding: 8px;
+    }
 
-  .popup-buttons button {
-    width: 100%;
-    padding: 12px;
-    font-size: 14px;
-  }
+    .orders-table th,
+    .orders-table td {
+        padding: 6px;
+        font-size: 12px;
+    }
 
-  .item-card {
-    max-width: 100%;
-  }
+    .status-badge {
+        padding: 4px 8px;
+        font-size: 12px;
+        min-width: 70px;
+    }
 
-  .title {
-    font-size: 20px;
-  }
+    .popup-box,
+    .popup-boxButton,
+    .view-popup {
+        padding: 12px;
+    }
 
-  .orders-table {
-    font-size: 12px;
-    
-  }
+    .items-container {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+    }
 
-  .popup-box .close-btn {
-    top: 10px;
-    right: 15px;
-  }
+    .item-card {
+        padding: 8px;
+    }
 
-  /* Table container with horizontal scroll for tablets */
-  .popup-box .table-container {
-    width: 100%;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling */
-    margin-top: 15px;
-  }
+    .item-card img {
+        height: 80px;
+    }
 
-  .popup-box .orders-table {
-    width: 100%;
-    table-layout: fixed; /* Fixed layout for table */
-  }
+    .popup-buttons button {
+        padding: 8px;
+        font-size: 13px;
+    }
 
-  .popup-box .orders-table th,
-  .popup-box .orders-table td {
-    padding: 10px;
-    text-align: left;
-    font-size: 14px;
-  }
-}
-/* Large Screen (Desktop) */
-@media (min-width: 1024px) {
-  .popup-box {
-    width: 40%; /* Keep popup moderate size for desktop */
-  }
+    .close-btn {
+        font-size: 18px;
+    }
 
-  .view-popup {
-    width: 50%;
-  }
-
-  .pagination {
-    justify-content: flex-start;
-  }
-}
-
-/* Ultra Large Screen (Large Desktop) */
-@media (min-width: 1440px) {
-  .popup-box {
-    width: 35%; /* Smaller for ultra-large screens */
-  }
-
-  .view-popup {
-    width: 45%;
-  }
+    .page-button {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
 }

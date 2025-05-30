@@ -259,7 +259,7 @@ const BeanBags = () => {
           </div>
         </div>
 
-      <div className="products-container">
+      <div className="products-container">  
                 <h2>Bean Bags</h2>
                 <div className="product-grid">
                   {currentProducts.length > 0 ? (
