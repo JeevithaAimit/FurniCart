@@ -140,6 +140,7 @@ body {
 
 .orders-table tr:last-child td {
     border-bottom: none;
+        text-align: justify;
 }
 
 .orders-table tr:hover {

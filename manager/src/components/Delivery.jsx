@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import "./delivery.css";
 import { FaSearch } from "react-icons/fa";
 
@@ -8,6 +8,9 @@ const Deliver = () => {
   const [searchDate, setSearchDate] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const ordersPerPage = 5;
 
   useEffect(() => {
     fetchDeliveredOrders();
@@ -30,6 +33,14 @@ const Deliver = () => {
     const matchesSearchDate = searchDate ? orderDate === searchDate : true;
     return matchesSearchQuery && matchesSearchDate;
   });
+
+  const currentOrders = useMemo(() => {
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    return filteredOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+  }, [currentPage, filteredOrders]);
+
+  const totalPages = Math.ceil(filteredOrders.length / ordersPerPage);
 
   const openPopup = (products = []) => {
     setSelectedProducts(products);
@@ -66,8 +77,8 @@ const Deliver = () => {
 
       {/* Mobile View */}
       <div className="mobile-view">
-        {filteredOrders.length > 0 ? (
-          filteredOrders.map((order) => (
+        {currentOrders.length > 0 ? (
+          currentOrders.map((order) => (
             <div key={order._id} className="deliver-card">
               <div className="card-header">
                 <strong>Order ID:</strong> {order._id}
@@ -111,7 +122,6 @@ const Deliver = () => {
           <thead>
             <tr>
               <th>Order ID / Name</th>
-              {/* <th>Customer Name</th> */}
               <th>Address</th>
               <th>Phone</th>
               <th>Delivered Date</th>
@@ -121,11 +131,12 @@ const Deliver = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredOrders.length > 0 ? (
-              filteredOrders.map((order) => (
-                   <tr key={order._id}>
-                                   <td data-label="Order ID" style={{fontWeight:"bold"}}>{order._id} <br /><span style={{fontWeight:"normal"}}>{order.name}</span></td>
-
+            {currentOrders.length > 0 ? (
+              currentOrders.map((order) => (
+                <tr key={order._id}>
+                  <td data-label="Order ID" style={{ fontWeight: "bold" }}>
+                    {order._id} <br /><span style={{ fontWeight: "normal" }}>{order.name}</span>
+                  </td>
                   <td>
                     {order.billingAddress
                       ? `${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.state}, ${order.billingAddress.country} - ${order.billingAddress.zipCode}`
@@ -148,7 +159,7 @@ const Deliver = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="8">No orders found</td>
+                <td colSpan="7">No orders found</td>
               </tr>
             )}
           </tbody>
@@ -188,6 +199,19 @@ const Deliver = () => {
           </div>
         </div>
       )}
+
+      {/* Pagination */}
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`page-btn ${currentPage === i + 1 ? "active" : ""}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };
