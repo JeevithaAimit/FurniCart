@@ -1,79 +1,190 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import './order.css'; // Style the table
+import "./order.css";
+import { FaEye } from "react-icons/fa";
 
-const OrderDetails = () => {
-  const [orders, setOrders] = useState([]); // State to hold fetched orders
-  const [loading, setLoading] = useState(true); // Loading state for the data
-  const [error, setError] = useState(null); // Error state to capture any errors
+const OrderPage = () => {
+  const [orders, setOrders] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
 
-  // Fetch order details from the backend API
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const ordersPerPage = 8;
+
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/api/orders"); // Replace with correct backend URL
-        setOrders(response.data); // Update state with the fetched orders
-        setLoading(false); // Set loading to false once data is fetched
-      } catch (error) {
-        setError("Error fetching orders");
+    fetch("http://localhost:5000/orders")
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch orders");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setOrders(data);
+        setError(null);
         setLoading(false);
-      }
-    };
+      })
+      .catch((error) => {
+        console.error("Error fetching orders:", error);
+        setError("Failed to load orders. Please try again.");
+        setLoading(false);
+      });
+  }, []);
 
-    fetchOrders(); // Call the function to fetch orders
-  }, []); // Empty dependency array to call once when the component mounts
+  const handleViewDetails = (order) => {
+    setSelectedOrder(order);
+    setShowPopup(true);
+  };
 
-  // Render loading state, error state, or the data itself
-  if (loading) {
-    return <div>Loading orders...</div>;
-  }
+  const closePopup = () => {
+    setShowPopup(false);
+    setSelectedOrder(null);
+  };
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
+  // Pagination calculations
+  const indexOfLastOrder = currentPage * ordersPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+  const currentOrders = orders.slice(indexOfFirstOrder, indexOfLastOrder);
+  const totalPages = Math.ceil(orders.length / ordersPerPage);
 
   return (
-    <div className="order-details-container">
-      <h1>Order Details</h1>
-      <table className="order-details-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            {/* <th>Address</th> */}
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order._id}</td>
-              <td>{order.name}</td>
-              <td>{order.email}</td>
-              <td>{order.phone}</td>
-             
+    <div className="order-container">
+      <h2>Order Details</h2>
+
+      {error && <p className="error">{error}</p>}
+      {loading && <p className="loading">Loading orders...</p>}
+      {!loading && orders.length === 0 && <p className="no-orders">No orders found</p>}
+
+<>
+<div className="desktop-only">
+  <table className="order-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Status</th>
+        <th>View</th>
+      </tr>
+    </thead>
+    <tbody>
+      {currentOrders.map((order) => (
+        <tr key={order._id}>
+          <td>{order.name}</td>
+          <td>{order.email}</td>
+          <td>{order.phone}</td>
+          <td className={`status-${order.status.toLowerCase()}`}>{order.status}</td>
+          <td>
+            <FaEye
+              className="view-icon"
+              onClick={() => handleViewDetails(order)}
+              title="View Order Details"
+            />
+          </td>
+        </tr>
+      ))}
+    </tbody>
     
-              {/* <td>{order.totalPrice}</td> */}
-              <td className={
-                    order.status === "Placed"
-                      ? "status-placed"
-                      : order.status === "Shipped"
-                      ? "status-shipped"
-                      : order.status === "Delivered"
-                      ? "status-delivered"
-                      : "status-other"
-                  }>
-                  {order.status}
-                </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  </table>
+</div>
+
+
+
+  <div className="mobile-only">
+    {currentOrders.map((order) => (
+      <div key={order._id} className="order-card">
+        <p><strong>Name:</strong> {order.name}</p>
+        <p><strong>Email:</strong> {order.email}</p>
+        <p><strong>Phone:</strong> {order.phone}</p>
+        <p><strong>Status:</strong> {order.status}</p>
+        <FaEye
+          className="view-icon"
+          onClick={() => handleViewDetails(order)}
+          title="View Order Details"
+        />
+      </div>
+    ))}
+  </div>
+</>
+
+
+
+      {/* Pagination Buttons */}
+      <div className="pagination">
+      <button
+        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        disabled={currentPage === 1}
+      >
+        Prev
+      </button>
+
+      {Array.from({ length: totalPages }, (_, index) => (
+        <button
+          key={index + 1}
+          className={currentPage === index + 1 ? "active-page" : ""}
+          onClick={() => setCurrentPage(index + 1)}
+        >
+          {index + 1}
+        </button>
+      ))}
+
+  <button
+    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+    disabled={currentPage === totalPages}
+  >
+    Next
+  </button>
+</div>
+
+
+      {/* Popup for order details */}
+      {showPopup && selectedOrder && (
+        <div className="popup-overlay">
+          <div className="popup-content">
+            <h3>Order Items</h3>
+            <table className="popup-table">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Product Name</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {selectedOrder.items.map((item, index) => (
+                  <tr key={index}>
+                    <td>
+                      <img
+                        src={item.mainImage}
+                        alt={item.productName}
+                        className="product-image"
+                      />
+                    </td>
+                    <td>{item.productName}</td>
+                    <td>₹{item.price ?? "N/A"}</td>
+                    <td>{item.quantity}</td>
+                    <td>
+                      ₹
+                      {item.price && item.quantity
+                        ? (item.price * item.quantity).toFixed(2)
+                        : "N/A"}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <button className="close-btn" onClick={closePopup}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default OrderDetails;
+export default OrderPage;

@@ -5,24 +5,8 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import "./ManagerPanel.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faUserCircle,
-  faTachometerAlt,
-  faShoppingCart,
-  faBoxes,
-  faShippingFast,
-  faCheckCircle,
-  faMoneyBillWave,
-  faComments,
-  faStarHalfAlt,
-  faSignOutAlt,
-  faUserShield,
-  faChevronDown,
-  faChevronRight,
-  faBars,
-  faTimes
-} from "@fortawesome/free-solid-svg-icons";
-import { FaUserEdit, FaUserTag, FaCheck, FaTimes as FaTimesIcon } from "react-icons/fa";
+import { faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { FaUserEdit, FaUserTag, FaSignOutAlt, FaCheck, FaTimes, FaCamera } from "react-icons/fa";
 import Package from "./Package";
 import Payment from "./Payment";
 import Shipping from "./Shipping";
@@ -33,11 +17,10 @@ import Feedback from "./Feedback";
 import Review from "./Review";
 import OrderManagement from "./OrderManagement";
 
-
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-// 🔹 Sidebar
-const Sidebar = ({ onLogout, onClose }) => {
+// Sidebar Component
+const Sidebar = ({ onLogout, onClose, className = '' }) => {
   const [ordersDropdown, setOrdersDropdown] = useState(false);
   const [financeDropdown, setFinanceDropdown] = useState(false);
   const [manager, setManager] = useState(null);
@@ -46,9 +29,7 @@ const Sidebar = ({ onLogout, onClose }) => {
   const [newName, setNewName] = useState("");
   const [showProfilePicPopup, setShowProfilePicPopup] = useState(false);
   const [profilePicFile, setProfilePicFile] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
   const navigate = useNavigate();
-
 
   const fetchManagerData = async () => {
     const managerId = localStorage.getItem("managerId");
@@ -56,6 +37,7 @@ const Sidebar = ({ onLogout, onClose }) => {
       try {
         const res = await axios.get(`http://localhost:8000/api/managers/${managerId}`);
         setManager(res.data);
+        setNewName(res.data.name);
       } catch (err) {
         console.error("Failed to fetch manager:", err);
       }
@@ -70,7 +52,6 @@ const Sidebar = ({ onLogout, onClose }) => {
     if (!profilePicFile) return;
     const formData = new FormData();
     formData.append("profilePic", profilePicFile);
-
     try {
       const res = await axios.put(`http://localhost:8000/api/managers/${manager._id}/profile-pic`, formData);
       setManager((prevManager) => ({
@@ -98,143 +79,169 @@ const Sidebar = ({ onLogout, onClose }) => {
         console.log(`Server on port ${port} is not available.`);
       }
     }
-    alert("None of the Admin Login servers are available.");
+    alert("None of the Admin Login servers (3001, 3002, 3000) are available.");
   };
 
-
-  const handleCloseSidebar = () => {
-  setShowSidebar(false);
-};
-
   return (
-    <div className="sidebar-inner">
-      {/* Close button for mobile */}
-      <button className="close-sidebar-btn" onClick={onClose}>
-        <FontAwesomeIcon icon={faTimes} />
-      </button>
-
-      {manager && (
-        <div
-          className="top-profile"
-          onClick={() => setShowPopup(true)}
-          style={{ cursor: "pointer" }}
-        >
-          <img
-            src={manager.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
-            alt="User Icon"
-            className="manager-avatar"
-          />
-          <h2 className="managerName">{manager.name}</h2>
+    <>
+      <div className={`sidebar ${className}`}>
+        <div className="sidebar-header">
+          <button className="close-sidebar-btn" onClick={onClose}>✖</button>
         </div>
-      )}
-      <nav className="sidebar-nav">
+        {manager && (
+          <div
+            className="top-profile"
+            onClick={() => setShowPopup(true)}
+            style={{ cursor: "pointer" }}
+          >
+            <img
+              src={manager.profilePic || "https://cdn-icons-png.flaticon.com/512/149/149071.png"}
+              alt="User Icon"
+              className="manager-avatar"
+            />
+            <h2 className="managerName">{manager.name}</h2>
+          </div>
+        )}
         <ul>
-          <li>
-            <Link to="/dashboard" onClick={onClose}>
-              <FontAwesomeIcon icon={faTachometerAlt} className="nav-icon" />
-              <span>Dashboard</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/dashboard/orderManagement" onClick={onClose}>
-              <FontAwesomeIcon icon={faShoppingCart} className="nav-icon" />
-              <span>Order Management</span>
-            </Link>
-          </li>
-          
+          <li><Link to="/dashboard">Dashboard</Link></li>
+          <li><Link to="/dashboard/orderManagement">Order Management</Link></li>
           <li className="dropdown">
             <button onClick={() => setOrdersDropdown(!ordersDropdown)} className="dropdown-btn">
-              <div>
-                <FontAwesomeIcon icon={faBoxes} className="nav-icon" />
-                <span>Our Orders</span>
-              </div>
-              <FontAwesomeIcon 
-                icon={ordersDropdown ? faChevronDown : faChevronRight} 
-                className="dropdown-icon"
-              />
+              Our Orders ▼
             </button>
             {ordersDropdown && (
               <ul className="dropdown-menu">
-                <li>
-                  <Link to="/dashboard/package" onClick={onClose}>
-                    <FontAwesomeIcon icon={faBoxes} className="nav-icon" />
-                    <span>Package</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/dashboard/shipping" onClick={onClose}>
-                    <FontAwesomeIcon icon={faShippingFast} className="nav-icon" />
-                    <span>Shipping</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/dashboard/delivered" onClick={onClose}>
-                    <FontAwesomeIcon icon={faCheckCircle} className="nav-icon" />
-                    <span>Delivered</span>
-                  </Link>
-                </li>
+                <li><Link to="/dashboard/package">Package</Link></li>
+                <li><Link to="/dashboard/shipping">Shipping</Link></li>
+                <li><Link to="/dashboard/delivered">Delivered</Link></li>
               </ul>
             )}
           </li>
-
           <li className="dropdown">
             <button onClick={() => setFinanceDropdown(!financeDropdown)} className="dropdown-btn">
-              <div>
-                <FontAwesomeIcon icon={faMoneyBillWave} className="nav-icon" />
-                <span>Finance</span>
-              </div>
-              <FontAwesomeIcon 
-                icon={financeDropdown ? faChevronDown : faChevronRight} 
-                className="dropdown-icon"
-              />
+              Finance ▼
             </button>
             {financeDropdown && (
               <ul className="dropdown-menu">
-                <li>
-                  <Link to="/dashboard/account" onClick={onClose}>
-                    <FontAwesomeIcon icon={faMoneyBillWave} className="nav-icon" />
-                    <span>Our Accounts</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/dashboard/payment" onClick={onClose}>
-                    <FontAwesomeIcon icon={faMoneyBillWave} className="nav-icon" />
-                    <span>Customer Payment</span>
-                  </Link>
-                </li>
+                <li><Link to="/dashboard/account">Our Accounts</Link></li>
+                <li><Link to="/dashboard/payment">Customer Payment</Link></li>
               </ul>
             )}
           </li>
-
+          <li><Link to="/dashboard/feedback">Feedback</Link></li>
+          <li><Link to="/dashboard/reviews">Product Reviews</Link></li>
           <li>
-            <Link to="/dashboard/feedback" onClick={onClose}>
-              <FontAwesomeIcon icon={faComments} className="nav-icon" />
-              <span>Feedback</span>
-            </Link>
+            <button onClick={handleAdminLogin} className="admin-login">Admin Login</button>
           </li>
           <li>
-            <Link to="/dashboard/reviews" onClick={onClose}>
-              <FontAwesomeIcon icon={faStarHalfAlt} className="nav-icon" />
-              <span>Product Reviews</span>
-            </Link>
+            <button onClick={onLogout} className="logout-btn">Logout</button>
           </li>
         </ul>
-      </nav>
-      <div className="sidebar-buttons">
-        <button onClick={handleAdminLogin} className="admin-login">
-          <FontAwesomeIcon icon={faUserShield} />
-          <span>Admin Login</span>
-        </button>
-        <button onClick={onLogout} className="logout-btn">
-          <FontAwesomeIcon icon={faSignOutAlt} />
-          <span>Logout</span>
-        </button>
       </div>
-    </div>
+
+      {/* Profile Popup */}
+      {showPopup && manager && (
+        <div className="popup-overlay" onClick={() => setShowPopup(false)}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setShowPopup(false)}>✖</button>
+            <h2>
+              {isEditingName ? (
+                <div className="edit-name-popup">
+                  <input
+                    type="text"
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="edit-name-input"
+                  />
+                  <div className="edit-name-actions">
+                    <button
+                      className="icon-btn"
+                      onClick={async () => {
+                        try {
+                          const res = await axios.put(
+                            `http://localhost:8000/api/managers/${manager._id}/name`,
+                            { name: newName }
+                          );
+                          setManager(res.data);
+                          setIsEditingName(false);
+                        } catch {
+                          alert("Failed to update name");
+                        }
+                      }}
+                    >
+                      <FaCheck />
+                    </button>
+                    <button
+                      className="icon-btn"
+                      onClick={() => setIsEditingName(false)}
+                    >
+                      <FaTimes />
+                    </button>
+                  </div>
+                </div>
+              ) : manager.name}
+            </h2>
+            <p><strong>Email:</strong> {manager.email}</p>
+            <p><strong>Phone:</strong> {manager.phone}</p>
+            <div className="popup-actions-icon">
+              <button
+                className="icon-btn"
+                title="Edit Name"
+                onClick={() => {
+                  setIsEditingName(true);
+                  setNewName(manager.name);
+                }}
+              >
+                <FaUserTag />
+              </button>
+              <button
+                className="icon-btn"
+                title="Change Profile Picture"
+                onClick={() => setShowProfilePicPopup(true)}
+              >
+                <FaCamera />
+              </button>
+              <button
+                className="icon-btn"
+                title="Logout"
+                onClick={() => {
+                  localStorage.clear();
+                  navigate("/");
+                }}
+              >
+                <FaSignOutAlt />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Profile Picture Upload Popup */}
+      {showProfilePicPopup && (
+        <div className="popup-overlay" onClick={() => setShowProfilePicPopup(false)}>
+          <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={() => setShowProfilePicPopup(false)}>✖</button>
+            <h2>Upload Profile Picture</h2>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setProfilePicFile(e.target.files[0])}
+            />
+            <button
+              className="icon-btn"
+              onClick={handleProfilePicUpload}
+              disabled={!profilePicFile}
+            >
+              Upload
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
-// 🔹 Dashboard
+// Dashboard Component
 const Dashboard = () => {
   const [totalOrders, setTotalOrders] = useState(0);
   const [deliveredOrders, setDeliveredOrders] = useState(0);
@@ -248,7 +255,6 @@ const Dashboard = () => {
           axios.get("http://localhost:8000/api/orders/delivered"),
           axios.get("http://localhost:8000/api/rejected-orders/count"),
         ]);
-
         setTotalOrders(totalRes.data.totalOrders);
         setDeliveredOrders(deliveredRes.data.length || 0);
         setRejectedOrders(rejectedRes.data.rejectedCount);
@@ -259,71 +265,69 @@ const Dashboard = () => {
     fetchOrders();
   }, []);
 
+  const chartData = {
+    labels: ["Total Orders", "Delivered Orders", "Rejected Orders"],
+    datasets: [{
+      data: [totalOrders, deliveredOrders, rejectedOrders],
+      backgroundColor: ["#36A2EB", "#4CAF50", "#FF6384"],
+    }],
+  };
+
   return (
     <div className="dashboard">
-      <h1>Dashboard Overview</h1>
+      <h1>Dashboard</h1>
       <div className="dashboard-content">
         <div className="cards">
           <div className="card">
-            <h3>
-              <FontAwesomeIcon icon={faShoppingCart} />
-              Total Orders
-            </h3>
+            Total Orders<br />
             <span className="count">{totalOrders}</span>
           </div>
           <div className="card">
-            <h3>
-              <FontAwesomeIcon icon={faCheckCircle} />
-              Delivered Orders
-            </h3>
+            Delivered Orders<br />
             <span className="count">{deliveredOrders}</span>
           </div>
           <div className="card">
-            <h3>
-              <FontAwesomeIcon icon={faTimes} />
-              Rejected Orders
-            </h3>
+            Rejected Orders<br />
             <span className="count">{rejectedOrders}</span>
           </div>
         </div>
+        <div className="chart"><Pie data={chartData} /></div>
       </div>
     </div>
   );
 };
 
-// 🔹 Manager Panel
+// Manager Panel Component
 const ManagerPanel = () => {
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(true); // Start with sidebar open
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 600);
 
-  const handleLogout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
+const handleLogout = async () => {
+  const managerId = localStorage.getItem("managerId");
+  if (managerId) {
+    try {
+      await axios.put(`http://localhost:8000/api/managers/${managerId}/status`, {
+        status: "offline",
+      });
+    } catch (err) {
+      console.error("Failed to update status:", err);
+    }
+  }
+
+  localStorage.clear();
+  navigate("/");
+};
+
 
   return (
     <div className="manager-panel">
-      {/* Sidebar Toggle Button (only visible on mobile) */}
-      <button className="open-sidebar-btn" onClick={() => setSidebarOpen(true)}>
-        <FontAwesomeIcon icon={faBars} />
-      </button>
-
-      {/* Sidebar */}
-      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
-       <Sidebar 
-  onLogout={handleLogout}
-  onClose={() => setSidebarOpen(false)}
-/>
-
-      </div>
-
-      {/* Overlay (only visible on mobile when sidebar is open) */}
-      {sidebarOpen && (
-        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+      <Sidebar className={sidebarOpen ? 'open' : ''} onLogout={handleLogout} onClose={() => setSidebarOpen(false)} />
+      {!sidebarOpen && (
+        <button className="open-sidebar-btn" onClick={() => setSidebarOpen(true)}>
+          ☰
+        </button>
       )}
-
-      {/* Main Content */}
-      <div className={`content ${!sidebarOpen ? 'full-width' : ''}`}>
+      <div className="content">
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="package" element={<Package />} />
@@ -344,4 +348,3 @@ const ManagerPanel = () => {
 };
 
 export default ManagerPanel;
-

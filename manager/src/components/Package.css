@@ -111,8 +111,6 @@
 .close-btn:hover {
   background-color: darkred;
 }
-
-
 @media (max-width: 768px) {
   .search-container {
     flex-direction: column;
@@ -172,5 +170,52 @@
     font-size: 12px;
     display: block;
     overflow-x: auto;
+  }
+}
+
+/* Mobile Card View */
+.card-view {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.order-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive view switch */
+@media (max-width: 768px) {
+  .table-view {
+    display: none;
+  }
+
+  .card-view {
+    display: flex;
+  }
+
+  .order-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .order-card p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 12px;
   }
 }

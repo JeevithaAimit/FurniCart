@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Package.css"; // ✅ Using the same CSS as Shipping
+import "./delivery.css"; // ✅ Updated to use delivery.css
 import { FaSearch } from "react-icons/fa";
 
 const Deliver = () => {
@@ -15,7 +15,7 @@ const Deliver = () => {
 
   const fetchDeliveredOrders = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/orders/delivered"); // Fetch "Delivered" orders
+      const response = await fetch("http://localhost:8000/api/orders/delivered");
       if (!response.ok) throw new Error("Failed to fetch delivered orders");
 
       const data = await response.json();
@@ -51,7 +51,6 @@ const Deliver = () => {
 
       {/* ✅ Search & Date Filter */}
       <div className="search-container">
-        {/* <FaSearch className="search-icon" /> */}
         <input
           type="text"
           placeholder="Search by Order ID"
@@ -67,56 +66,84 @@ const Deliver = () => {
         />
       </div>
 
-      {/* ✅ Orders Table */}
-      <table className="order-table">
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer Name</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Delivered Date</th>
-            <th>Total Price</th>
-            <th>Items</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOrders.length > 0 ? (
-            filteredOrders.map((order) => (
-              <tr key={order._id}>
-                <td>{order._id}</td>
-                <td>{order.name || "N/A"}</td>
-                <td>
-                  {order.billingAddress
-                    ? `${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.state}, ${order.billingAddress.country} - ${order.billingAddress.zipCode}`
-                    : "N/A"}
-                </td>
-                <td>{order.phone || "N/A"}</td>
-                <td>{order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</td>
-                <td>₹{order.totalPrice || 0}</td>
-                <td>
-                  <button
-                    className="item-count-btn"
-                    onClick={() => openPopup(order.items || [])}
-                  >
-                    {Array.isArray(order.items) ? order.items.length : "0"}
-                  </button>
-                </td>
-                <td>
-                  <span className={`status-badge ${order.status.toLowerCase()}`}>
-                    {order.status}
-                  </span>
-                </td>
-              </tr>
-            ))
-          ) : (
+      {/* ✅ Table View */}
+      <div className="table-view">
+        <table className="order-table">
+          <thead>
             <tr>
-              <td colSpan="8">No delivered orders found</td>
+              <th>Order ID</th>
+              <th>Customer Name</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Delivered Date</th>
+              <th>Total Price</th>
+              <th>Items</th>
+              <th>Status</th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {filteredOrders.length > 0 ? (
+              filteredOrders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.name || "N/A"}</td>
+                  <td>
+                    {order.billingAddress
+                      ? `${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.state}, ${order.billingAddress.country} - ${order.billingAddress.zipCode}`
+                      : "N/A"}
+                  </td>
+                  <td>{order.phone || "N/A"}</td>
+                  <td>{order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</td>
+                  <td>₹{order.totalPrice || 0}</td>
+                  <td>
+                    <button
+                      className="item-count-btn"
+                      onClick={() => openPopup(order.items || [])}
+                    >
+                      {Array.isArray(order.items) ? order.items.length : "0"}
+                    </button>
+                  </td>
+                  <td>
+                    <span className={`status-badge ${order.status.toLowerCase()}`}>
+                      {order.status}
+                    </span>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8">No delivered orders found</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+
+      {/* ✅ Mobile Card View */}
+      <div className="card-view">
+        {filteredOrders.map((order) => (
+          <div key={order._id} className="order-card">
+            <h3>{order._id}</h3>
+            <p><strong>Name:</strong> {order.name || "N/A"}</p>
+            <p><strong>Address:</strong> {order.billingAddress
+              ? `${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.state}, ${order.billingAddress.country} - ${order.billingAddress.zipCode}`
+              : "N/A"}
+            </p>
+            <p><strong>Phone:</strong> {order.phone || "N/A"}</p>
+            <p><strong>Date:</strong> {order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</p>
+            <p><strong>Total:</strong> ₹{order.totalPrice || 0}</p>
+            <p>
+              <strong>Items:</strong>{" "}
+              <button className="item-count-btn" onClick={() => openPopup(order.items || [])}>
+                {Array.isArray(order.items) ? order.items.length : "0"}
+              </button>
+            </p>
+            <span className={`status-badge ${order.status.toLowerCase()}`}>
+              {order.status}
+            </span>
+          </div>
+        ))}
+      </div>
 
       {/* ✅ Popup for displaying product details */}
       {showPopup && (

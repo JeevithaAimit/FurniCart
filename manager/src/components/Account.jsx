@@ -14,14 +14,13 @@ const AccountPage = () => {
     const [categoryOrders, setCategoryOrders] = useState([]);
 
     const [currentPage, setCurrentPage] = useState(1);
-const recordsPerPage = 4;
+    const recordsPerPage = 4;
 
-// Calculate pagination data
-const indexOfLastRecord = currentPage * recordsPerPage;
-const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-const currentRecords = categoryOrders.slice(indexOfFirstRecord, indexOfLastRecord);
-const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
-
+    // Calculate pagination data
+    const indexOfLastRecord = currentPage * recordsPerPage;
+    const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+    const currentRecords = categoryOrders.slice(indexOfFirstRecord, indexOfLastRecord);
+    const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
 
     // Fetch Order Summary
     useEffect(() => {
@@ -63,11 +62,10 @@ const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
                 </div>
             </div>
 
-
             {/* Table & Chart Container */}
             <div className="table-chart-container">
                 {/* Summary Table */}
-                <table className="order-table">
+                <table className="order-table responsive-table">
                     <thead>
                         <tr>
                             <th>Category</th>
@@ -79,9 +77,9 @@ const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
                         {orderSummary.categorySummary.length > 0 ? (
                             orderSummary.categorySummary.map((category) => (
                                 <tr key={category._id}>
-                                    <td>{category._id || "Uncategorized"}</td>
-                                    <td>{category.totalOrders}</td>
-                                    <td>₹{category.totalSales.toLocaleString()}</td>
+                                    <td data-th="Category">{category._id || "Uncategorized"}</td>
+                                    <td data-th="Total Orders">{category.totalOrders}</td>
+                                    <td data-th="Total Sales">₹{category.totalSales.toLocaleString()}</td>
                                 </tr>
                             ))
                         ) : (
@@ -95,16 +93,29 @@ const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
                 {/* Chart */}
                 <div className="chart-container">
                     <ResponsiveContainer width="100%" height={350}>
-                        <BarChart data={orderSummary.categorySummary} margin={{ bottom: 50 }}>
+                        <BarChart 
+                            data={orderSummary.categorySummary} 
+                            margin={{ top: 20, right: 30, left: 20, bottom: 70 }}
+                        >
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="_id" angle={-30} textAnchor="end" interval={0} />
+                            <XAxis 
+                                dataKey="_id" 
+                                angle={-30} 
+                                textAnchor="end" 
+                                interval={0} 
+                                tick={{ fontSize: 12 }}
+                            />
                             <YAxis 
                                 tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}K`} 
                                 domain={[0, Math.ceil(orderSummary.totalSales / 50000) * 50000]} 
                                 ticks={[10000, 50000, 100000, 150000]} 
                             />
                             <Tooltip />
-                            <Legend />
+                            <Legend 
+                                verticalAlign="top"
+                                align="center"
+                                height={36}
+                            />
                             <Bar dataKey="totalOrders" fill="#8884d8" name="Total Orders" />
                             <Bar dataKey="totalSales" fill="#82ca9d" name="Total Sales (₹)" />
                         </BarChart>
@@ -113,88 +124,85 @@ const totalPages = Math.ceil(categoryOrders.length / recordsPerPage);
             </div>
 
             {/* Category Orders Section */}
-            {/* Category Orders Section */}
-<div className="category-orders-section">
-    <h3>Filter Orders by Category</h3>
+            <div className="category-orders-section">
+                <h3>Filter Orders by Category</h3>
 
-    {/* Category Buttons */}
-    <div className="category-buttons">
-        {orderSummary.categorySummary.map((category) => (
-            <button 
-                key={category._id} 
-                className={selectedCategory === category._id ? "active" : ""}
-                onClick={() => setSelectedCategory(category._id)}
-            >
-                {category._id || "Uncategorized"}
-            </button>
-        ))}
-    </div>
+                {/* Category Buttons */}
+                <div className="category-buttons">
+                    {orderSummary.categorySummary.map((category) => (
+                        <button 
+                            key={category._id} 
+                            className={selectedCategory === category._id ? "active" : ""}
+                            onClick={() => setSelectedCategory(category._id)}
+                        >
+                            {category._id || "Uncategorized"}
+                        </button>
+                    ))}
+                </div>
 
-    {/* Orders Table (Only Shows if a Category is Selected) */}
-    {selectedCategory && categoryOrders.length > 0 ? (
-    <>
-        <table className="category-orders-table">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Category</th>
-                    <th>Total</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                {currentRecords.map(order => (
-                    <tr key={order.orderId}>
-                        <td>{order.orderId}</td>
-                        <td>{order.name}</td>
-                        <td>{order.email}</td>
-                        <td>{order.phone}</td>
-                        <td>{order.category}</td>
-                        <td>{order.totalPrice}</td>
-                        <td>{order.quantity}</td>
-                        <td className={`status ${order.status.toLowerCase()}`}>{order.status}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+                {/* Orders Table (Only Shows if a Category is Selected) */}
+                {selectedCategory && categoryOrders.length > 0 ? (
+                    <>
+                        <table className="category-orders-table responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Category</th>
+                                    <th>Total</th>
+                                    <th>Quantity</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {currentRecords.map(order => (
+                                    <tr key={order.orderId}>
+                                        <td data-th="Order ID">{order.orderId}</td>
+                                        <td data-th="Name">{order.name}</td>
+                                        <td data-th="Email">{order.email}</td>
+                                        <td data-th="Phone">{order.phone}</td>
+                                        <td data-th="Category">{order.category}</td>
+                                        <td data-th="Total">{order.totalPrice}</td>
+                                        <td data-th="Quantity">{order.quantity}</td>
+                                        <td data-th="Status" className={`status ${order.status.toLowerCase()}`}>{order.status}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
 
-        {/* Pagination Controls */}
-        <div className="pagination">
-            <button 
-                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
-                disabled={currentPage === 1}
-            >
-                Prev
-            </button>
+                        {/* Pagination Controls */}
+                        <div className="pagination">
+                            <button 
+                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))} 
+                                disabled={currentPage === 1}
+                            >
+                                Prev
+                            </button>
 
-            {Array.from({ length: totalPages }, (_, index) => (
-                <button 
-                    key={index + 1}
-                    className={currentPage === index + 1 ? "active" : ""}
-                    onClick={() => setCurrentPage(index + 1)}
-                >
-                    {index + 1}
-                </button>
-            ))}
+                            {Array.from({ length: totalPages }, (_, index) => (
+                                <button 
+                                    key={index + 1}
+                                    className={currentPage === index + 1 ? "active" : ""}
+                                    onClick={() => setCurrentPage(index + 1)}
+                                >
+                                    {index + 1}
+                                </button>
+                            ))}
 
-            <button 
-                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
-                disabled={currentPage === totalPages}
-            >
-                Next
-            </button>
-        </div>
-    </>
-) : selectedCategory && categoryOrders.length === 0 ? (
-    <p>No orders found for this category.</p>
-) : null}
-
-</div>
-
+                            <button 
+                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))} 
+                                disabled={currentPage === totalPages}
+                            >
+                                Next
+                            </button>
+                        </div>
+                    </>
+                ) : selectedCategory && categoryOrders.length === 0 ? (
+                    <p>No orders found for this category.</p>
+                ) : null}
+            </div>
         </div>
     );
 };

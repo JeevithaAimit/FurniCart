@@ -1,136 +1,231 @@
-.deliver-container {
-    width: 100%;
-    padding: 20px;
-    text-align: center;
+.container {
+  padding: 20px;
 }
 
-h2 {
-    margin-bottom: 20px;
-    color: #333;
+.title {
+  text-align: center;
+  color: #333;
 }
 
-/* Grid Layout for Orders */
-.order-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 20px;
-    padding: 20px;
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
-/* Order Card */
+.search-bar, .date-filter {
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* Order Table */
+.order-table {
+  width: 102%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-table th, .order-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.order-table th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Item Count Button */
+.item-count-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.item-count-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Popup Styling */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* Ensure popup is above other content */
+}
+
+.popup-content {
+  background: rgb(255, 255, 255);
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  text-align: center;
+  max-height: 80vh; /* Limit height to 80% of viewport height */
+  overflow-y: auto; /* Enable vertical scrolling if content overflows */
+}
+
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-table th {
+  background: #232222;
+}
+
+.popup-product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.close-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-btn:hover {
+  background-color: darkred;
+}
+
+/* Mobile Card View */
+.card-view {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
 .order-card {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
-    transition: transform 0.3s ease-in-out;
-}
-
-.order-card:hover {
-    transform: scale(1.02);
-}
-
-.order-card h3 {
-    color: #444;
-    font-size: 18px;
-}
-
-.total-price {
-    font-size: 18px;
-    color: #007bff;
-    font-weight: bold;
-}
-
-/* Item Container */
-.items-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-/* Item Card */
-.item-card {
-    background: #f8f9fa;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: center;
-    width: 120px;
-}
-
-.item-image {
-    width: 100%;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 5px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Responsive */
 @media (max-width: 768px) {
-    .order-grid {
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    }
+  .table-view {
+    display: none;
+  }
+
+  .card-view {
+    display: flex;
+  }
+
+  .order-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+
+  .order-card p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+
+  .status-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background-color: #4caf50;
+    color: white;
+    font-size: 12px;
+  }
+
+  .search-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-bar, .date-filter {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .popup-content {
+    width: 90%; /* Reduced width to fit mobile screen */
+    padding: 15px;
+    margin: 0; /* Remove problematic margins */
+    max-height: 85vh; /* Slightly increased height for mobile */
+    overflow-y: auto; /* Ensure scrollability */
+    box-sizing: border-box; /* Include padding in width/height calculations */
+  }
+
+  .order-table th,
+  .order-table td,
+  .product-table th,
+  .product-table td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .popup-product-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .popup-content .close-btn {
+    margin-top: 5px; /* Adjusted for better spacing */
+    font-size: 16px;
+  }
 }
 
-@media (max-width: 768px) {
-    .search-container {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  
-    .search-bar, .date-filter {
-      width: 100%;
-      font-size: 14px;
-    }
-  
-    .popup-content {
-      width: 95%;
-      padding: 15px;
-      margin-left: 260px;
-      margin-top: -300px;
-  
-    }
-  
-    .order-table th,
-    .order-table td,
-    .product-table th,
-    .product-table td {
-      font-size: 13px;
-      padding: 8px;
-    }
-  
-    .popup-product-image {
-      width: 40px;
-      height: 40px;
-    }
-  
-   .popup-content .close-btn{
-    margin-top: 1px;
-    font-size: 16px;
-   }
+/* Phones */
+@media (max-width: 480px) {
+  .title {
+    font-size: 20px;
   }
-  
-  /* Phones */
-  @media (max-width: 480px) {
-    .title {
-      font-size: 20px;
-    }
-  
-    .popup-content {
-      width: 95%;
-      padding: 10px;
-      margin-left: 20px;
-    }
-  
-    .close-btn {
-      padding: 8px;
-      font-size: 14px;
-    }
-  
-    .order-table, .product-table {
-      font-size: 12px;
-      display: block;
-      overflow-x: auto;
-    }
+
+  .popup-content {
+    width: 95%; /* Further reduced width for smaller screens */
+    padding: 10px;
+    margin: 0; /* Remove margins */
+    max-height: 90vh; /* Maximize height for very small screens */
+    overflow-y: auto; /* Ensure scrollability */
+    box-sizing: border-box;
   }
+
+  .close-btn {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .order-table, .product-table {
+    font-size: 12px;
+    display: block;
+    overflow-x: auto;
+  }
+
+  .popup-product-image {
+    width: 35px; /* Slightly smaller images for very small screens */
+    height: 35px;
+  }
+}

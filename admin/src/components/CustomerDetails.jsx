@@ -187,6 +187,45 @@ const CustomerDetails = () => {
         </tbody>
       </table>
 
+       <div className="customer-card-container">
+      {currentCustomers.length > 0 ? (
+        currentCustomers.map((customer) => (
+          <div key={customer._id} className="customer-card">
+            <div className="customer-card-header">
+              <div className="customer-name">{customer.name}</div>
+              <div className="customer-actions">
+                <button 
+                  className="view-order" 
+                  onClick={() => fetchOrdersByCustomerId(customer._id)}
+                >
+                  View Orders ({customer.orderCount || 0})
+                </button>
+                <button 
+                  className="delete-btn" 
+                  onClick={() => handleDelete(customer._id)}
+                >
+                  <Trash2 size={18} color="red" />
+                </button>
+              </div>
+            </div>
+            <div className="customer-details">
+              <div className="detail-row">
+                <div className="detail-label">Email:</div>
+                <div className="detail-value">{customer.email}</div>
+              </div>
+              <div className="detail-row">
+                <div className="detail-label">Phone:</div>
+                <div className="detail-value">{customer.phone || "N/A"}</div>
+              </div>
+            </div>
+          </div>
+        ))
+      ) : (
+        <div className="no-data">No customer data available</div>
+      )}
+    </div>
+
+
       {/* Pagination */}
       <div className="pagination">
         <button

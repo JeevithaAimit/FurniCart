@@ -8,10 +8,20 @@ const OrderPage = () => {
   const [loading, setLoading] = useState(true);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
   const ordersPerPage = 8;
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     fetch("http://localhost:5000/orders")
@@ -57,62 +67,96 @@ const OrderPage = () => {
       {loading && <p className="loading">Loading orders...</p>}
       {!loading && orders.length === 0 && <p className="no-orders">No orders found</p>}
 
-      <table className="order-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Status</th>
-            <th>View</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentOrders.map((order) => (
-            <tr key={order._id}>
-              <td>{order.name}</td>
-              <td>{order.email}</td>
-              <td>{order.phone}</td>
-              <td className={`status-${order.status.toLowerCase()}`}>{order.status}</td>
-              <td>
-                <FaEye
-                  className="view-icon"
-                  onClick={() => handleViewDetails(order)}
-                  title="View Order Details"
-                />
-              </td>
+      {!isMobile ? (
+        <table className="order-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Status</th>
+              <th>View</th>
             </tr>
+          </thead>
+          <tbody>
+            {currentOrders.map((order) => (
+              <tr key={order._id}>
+                <td>{order.name}</td>
+                <td>{order.email}</td>
+                <td>{order.phone}</td>
+                <td className={`status-${order.status.toLowerCase()}`}>{order.status}</td>
+                <td>
+                  <FaEye
+                    className="view-icon"
+                    onClick={() => handleViewDetails(order)}
+                    title="View Order Details"
+                  />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="order-cards">
+          {currentOrders.map((order) => (
+            <div className="order-card" key={order._id}>
+              <div className="card-row">
+                <span className="card-label">Name:</span>
+                <span className="card-value">{order.name}</span>
+              </div>
+              <div className="card-row">
+                <span className="card-label">Email:</span>
+                <span className="card-value">{order.email}</span>
+              </div>
+              <div className="card-row">
+                <span className="card-label">Phone:</span>
+                <span className="card-value">{order.phone}</span>
+              </div>
+              <div className="card-row">
+                <span className="card-label">Status:</span>
+                <span className={`card-value status-badge status-${order.status.toLowerCase()}`}>
+                  {order.status}
+                </span>
+              </div>
+              <div className="card-actions">
+                <button 
+                  className="view-btn"
+                  onClick={() => handleViewDetails(order)}
+                >
+                  <FaEye className="view-icon" /> View Details
+                </button>
+              </div>
+            </div>
           ))}
-        </tbody>
-      </table>
+        </div>
+      )}
 
       {/* Pagination Buttons */}
       <div className="pagination">
-      <button
-        onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-        disabled={currentPage === 1}
-      >
-        Prev
-      </button>
-
-      {Array.from({ length: totalPages }, (_, index) => (
         <button
-          key={index + 1}
-          className={currentPage === index + 1 ? "active-page" : ""}
-          onClick={() => setCurrentPage(index + 1)}
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
         >
-          {index + 1}
+          Prev
         </button>
-      ))}
 
-  <button
-    onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
-    disabled={currentPage === totalPages}
-  >
-    Next
-  </button>
-</div>
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index + 1}
+            className={currentPage === index + 1 ? "active-page" : ""}
+            onClick={() => setCurrentPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
 
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
 
       {/* Popup for order details */}
       {showPopup && selectedOrder && (
@@ -152,7 +196,7 @@ const OrderPage = () => {
                 ))}
               </tbody>
             </table>
-            <button className="close-btn" onClick={closePopup}>
+            <button className="close-btn1" onClick={closePopup}>
               Close
             </button>
           </div>

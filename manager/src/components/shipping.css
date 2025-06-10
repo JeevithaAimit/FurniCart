@@ -72,47 +72,180 @@ h2 {
   margin-top: 10px;
 }
 
-/* ✅ Delivered Orders - Blue Background */
-.delivered-card {
-  background-color: #7dabdc !important; /* Light Blue */
-  color: white !important; /* White text */
-  border: 2px solid #0056b3; /* Darker blue border */
+/* Container (consistent with Package.css) */
+.container {
+  padding: 20px;
 }
 
-/* ✅ Ensure text inside delivered card is visible */
-.delivered-card p, 
-.delivered-card h3, 
-.delivered-card strong {
-  color: white !important;
+.title {
+  text-align: center;
+  color: #333;
 }
 
-/* ✅ Deliver Button */
-.deliver-btn {
-  background-color: #007bff; /* Blue */
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar, .date-filter {
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* Order Table (Desktop) */
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-table th, .order-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+.order-table th {
+  background-color: #4CAF50;
   color: white;
-  padding: 10px 15px;
+}
+
+/* Item Count Button */
+.item-count-btn {
+  background-color: #007bff;
+  color: white;
   border: none;
+  padding: 5px 10px;
   cursor: pointer;
   border-radius: 5px;
-  transition: background 0.3s ease;
 }
 
-.deliver-btn:hover {
+.item-count-btn:hover {
   background-color: #0056b3;
 }
 
-/* ✅ Green Deliver Button when order is delivered */
-.delivered-btn {
-  background-color: #00b315 !important; /* Green */
-  color: white !important;
-  cursor: not-allowed;
-  padding: 8px;
-  border-radius: 8px;
-  border: none;
+/* Popup Styling */
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 60%;
+  max-width: 600px;
+  text-align: center;
+}
 
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.product-table th, .product-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.product-table th {
+  background: #232222;
+}
+
+.popup-product-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.close-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.close-btn:hover {
+  background-color: darkred;
+}
+
+/* Mobile Card View (aligned with Package.css) */
+.mobile-card-list {
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.mobile-card {
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-card .card-header {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.mobile-card .card-section {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+.mobile-card .item-count-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.mobile-card .item-count-btn:hover {
+  background-color: #0056b3;
+}
+
+.status-badge {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 12px;
+}
+
+/* Responsive Styles */
 @media (max-width: 768px) {
+  .order-table {
+    display: none;
+  }
+
+  .mobile-card-list {
+    display: flex;
+  }
+
   .search-container {
     flex-direction: column;
     align-items: stretch;
@@ -128,7 +261,6 @@ h2 {
     padding: 15px;
     margin-left: 260px;
     margin-top: -300px;
-
   }
 
   .order-table th,
@@ -144,10 +276,10 @@ h2 {
     height: 40px;
   }
 
- .popup-content .close-btn{
-  margin-top: 1px;
-  font-size: 16px;
- }
+  .popup-content .close-btn {
+    margin-top: 1px;
+    font-size: 16px;
+  }
 }
 
 /* Phones */
@@ -171,5 +303,17 @@ h2 {
     font-size: 12px;
     display: block;
     overflow-x: auto;
+  }
+
+  .mobile-card .card-header {
+    font-size: 16px;
+  }
+
+  .mobile-card .card-section {
+    font-size: 14px;
+  }
+
+  .status-badge {
+    font-size: 12px;
   }
 }

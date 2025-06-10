@@ -63,21 +63,36 @@ router.post('/register', upload.single('profile'), async (req, res) => {
 });
 
 // Manager Login Route
+// Manager Login Route
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    console.log("🔐 Login attempt:", email, password);
+
     const manager = await Manager.findOne({ email });
-    if (!manager || manager.password !== password) {
+
+    if (!manager) {
+      console.log("❌ Manager not found");
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
+    if (manager.password !== password) {
+      console.log("❌ Incorrect password");
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    manager.status = 'online';
+    await manager.save();
+
     res.status(200).json({ message: 'Login successful', manager });
   } catch (error) {
-    console.error('Login error:', error);
-    res.status(500).json({ message: 'Server error' });
+    console.error('❌ Login error:', error);
+    res.status(500).json({ message: 'Server error during login' });
   }
 });
+
+
 
 // Get Manager by ID
 // router.get("/manager-profile-pic/:id", async (req, res) => {
@@ -139,5 +154,26 @@ router.put('/:id/profile-pic', upload.single('profilePic'), async (req, res) => 
   }
 });
 
-  
+  router.post('/logout/:id', async (req, res) => {
+  try {
+    const manager = await Manager.findByIdAndUpdate(req.params.id, { status: 'offline' }, { new: true });
+    res.status(200).json({ message: 'Logout successful', manager });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error during logout' });
+  }
+});
+// backend/routes/managerRoutes.js
+router.put('/:id/status', async (req, res) => {
+  try {
+    const manager = await Manager.findByIdAndUpdate(
+      req.params.id,
+      { status: req.body.status },
+      { new: true }
+    );
+    res.json(manager);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating status" });
+  }
+});
+
 module.exports = router;
