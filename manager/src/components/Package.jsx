@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Package.css";
 import axios from "axios";
+import { faWeight } from "@fortawesome/free-solid-svg-icons";
 
 const Package = () => {
   const [orders, setOrders] = useState([]);
@@ -82,32 +83,33 @@ const Package = () => {
   };
 
   return (
-    <div className="container">
-      <h1 className="title">Order List</h1>
+    <div className="package-container">
+      <h1 className="package-title">Order List</h1>
 
-      <div className="search-container">
+      <div className="package-search-container">
         <input
           type="text"
           placeholder="Search by Order ID"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-bar"
+          className="package-search-bar"
         />
         <input
           type="date"
           value={searchDate}
           onChange={(e) => setSearchDate(e.target.value)}
-          className="date-filter"
+          className="package-date-filter"
         />
       </div>
 
-      {/* TABLE VIEW */}
-      <div className="table-view">
-        <table className="order-table">
+      {/* TABLE VIEW - shown on larger screens */}
+      <div className="package-table-view">
+        <table className="package-order-table">
           <thead>
             <tr>
-              <th>Order ID</th>
-              <th>Customer Name</th>
+
+              <th>Order ID / Name</th>
+              {/* <th>Customer Name</th> */}
               <th>Address</th>
               <th>Phone</th>
               <th>Order Date</th>
@@ -120,26 +122,26 @@ const Package = () => {
             {filteredOrders.length > 0 ? (
               filteredOrders.map((order) => (
                 <tr key={order._id}>
-                  <td>{order._id}</td>
-                  <td>{order.name || "N/A"}</td>
-                  <td>
+                  <td data-label="Order ID" style={{fontWeight:"bold"}}>{order._id} <br /><span style={{fontWeight:"normal"}}>{order.name}</span></td>
+                  {/* <td data-label="Customer Name">{order.name || "N/A"}</td> */}
+                  <td data-label="Address">
                     {order.billingAddress
                       ? `${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.state}, ${order.billingAddress.country} - ${order.billingAddress.zipCode}`
                       : "N/A"}
                   </td>
-                  <td>{order.phone || "N/A"}</td>
-                  <td>{order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</td>
-                  <td>₹{order.totalPrice || 0}</td>
-                  <td>
+                  <td data-label="Phone">{order.phone || "N/A"}</td>
+                  <td data-label="Order Date">{order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</td>
+                  <td data-label="Total Price">₹{order.totalPrice || 0}</td>
+                  <td data-label="Items">
                     <button
-                      className="item-count-btn"
+                      className="date-input"
                       onClick={() => openPopup(order.items || [])}
                     >
                       {Array.isArray(order.items) ? order.items.length : "0"}
                     </button>
                   </td>
-                  <td>
-                    <span className={`status-badge ${order.status.toLowerCase()}`}>
+                  <td data-label="Status">
+                    <span className={`package-status-badge ${order.status.toLowerCase()}`}>
                       {order.status}
                     </span>
                   </td>
@@ -154,70 +156,83 @@ const Package = () => {
         </table>
       </div>
 
-      {/* MOBILE CARD VIEW */}
-      <div className="card-view">
-        {filteredOrders.map((order) => (
-          <div key={order._id} className="order-card">
-            <h3>{order._id}</h3>
-            <p><strong>Name:</strong> {order.name || "N/A"}</p>
-            <p><strong>Address:</strong> {order.billingAddress
-              ? `${order.billingAddress.address}, ${order.billingAddress.city}, ${order.billingAddress.state}, ${order.billingAddress.country} - ${order.billingAddress.zipCode}`
-              : "N/A"}
-            </p>
-            <p><strong>Phone:</strong> {order.phone || "N/A"}</p>
-            <p><strong>Date:</strong> {order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</p>
-            <p><strong>Total:</strong> ₹{order.totalPrice || 0}</p>
-            <p>
-              <strong>Items:</strong>{" "}
-              <button className="item-count-btn" onClick={() => openPopup(order.items || [])}>
-                {Array.isArray(order.items) ? order.items.length : "0"}
-              </button>
-            </p>
-            <span className={`status-badge ${order.status.toLowerCase()}`}>
-              {order.status}
-            </span>
-          </div>
-        ))}
+      {/* MOBILE CARD VIEW - shown on smaller screens */}
+      <div className="package-card-view">
+        {filteredOrders.length > 0 ? (
+          filteredOrders.map((order) => (
+            <div key={order._id} className="package-order-card">
+              <div className="package-card-header">
+                <h3>Order ID: {order._id}</h3>
+                <span className={`package-status-badge ${order.status.toLowerCase()}`}>
+                  {order.status}
+                </span>
+              </div>
+              <div className="package-card-body">
+                <p><strong>Name:</strong> {order.name || "N/A"}</p>
+                <p><strong>Address:</strong> {order.billingAddress
+                  ? `${order.billingAddress.address}, ${order.billingAddress.city}`
+                  : "N/A"}
+                </p>
+                <p><strong>Phone:</strong> {order.phone || "N/A"}</p>
+                <p><strong>Date:</strong> {order.createdAt ? new Date(order.createdAt).toLocaleDateString() : "N/A"}</p>
+                <div className="package-card-footer">
+                  <p><strong>Total:</strong> ₹{order.totalPrice || 0}</p>
+                  <button 
+                    className="package-item-count-btn" 
+                    onClick={() => openPopup(order.items || [])}
+                  >
+                    {Array.isArray(order.items) ? `${order.items.length} Items` : "0 Items"}
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="package-no-orders">No orders found</div>
+        )}
       </div>
 
       {/* Popup */}
       {showPopup && (
-        <div className="popup">
-          <div className="popup-content">
+        <div className="package-popup">
+          <div className="package-popup-content">
             <h2>Product Details</h2>
-            <table className="product-table">
-              <thead>
-                <tr>
-                  <th>Image</th>
-                  <th>Product Name</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedProducts.length > 0 ? (
-                  selectedProducts.map((product, index) => (
-                    <tr key={index}>
-                      <td>
-                        <img
-                          src={product.mainImage}
-                          alt={product.productName}
-                          className="popup-product-image"
-                        />
-                      </td>
-                      <td>{product.productName}</td>
-                      <td>{product.quantity}</td>
-                      <td>₹{product.price}</td>
-                    </tr>
-                  ))
-                ) : (
+            <div className="package-popup-table-container">
+              <table className="package-product-table">
+                <thead>
                   <tr>
-                    <td colSpan="4">No items found.</td>
+                    <th>Image</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
-            <button className="close-btn" onClick={closePopup}>Close</button>
+                </thead>
+                <tbody>
+                  {selectedProducts.length > 0 ? (
+                    selectedProducts.map((product, index) => (
+                      <tr key={index}>
+                        <td data-label="Image">
+                          <img
+                            src={product.mainImage}
+                            alt={product.productName}
+                            className="package-popup-product-image"
+                          />
+                        </td>
+                        <td data-label="Product Name">{product.productName}</td>
+                        <td data-label="Quantity">{product.quantity}</td>
+                        <td data-label="Price">₹{product.price}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="4">No items found.</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+            
+            <button className="package-close-btn" onClick={closePopup}>Close</button>
           </div>
         </div>
       )}

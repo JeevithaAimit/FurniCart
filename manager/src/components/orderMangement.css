@@ -232,8 +232,9 @@ body {
 }
 
 .status-badge.shipped {
-    background-color: rgba(63, 55, 201, 0.1);
-    color: #3f37c9;
+    background-color: rgba(16, 185, 129, 0.1);
+
+    color: #920b94;
     border: 1px solid #3f37c9;
 }
 
