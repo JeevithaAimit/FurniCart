@@ -599,12 +599,12 @@
 }
 
 .card-packed {
-  background-color: #9966FF;
+  background-color: #ffffff;
   color: white;
 }
 
 .card-packed:hover {
-  background-color: #7d55cc;
+  /* background-color: #7d55cc; */
 }
 
 /* Update the cards grid if needed to accommodate the new card */
