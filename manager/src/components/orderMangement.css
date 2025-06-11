@@ -136,6 +136,7 @@ body {
     padding: 1rem;
     border-bottom: 1px solid var(--light-gray);
     vertical-align: middle;
+    text-align: justify;
 }
 
 .orders-table tr:last-child td {
@@ -711,6 +712,10 @@ body {
     .card-footer button.view-btn {
         border-right: none;
         border-bottom: 1px solid var(--light-gray);
+    }
+    .popup-content{
+        /* background-color: red; */
+        margin-left: 20px;
     }
 }
 
